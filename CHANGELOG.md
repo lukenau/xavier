@@ -3,6 +3,35 @@
 All notable changes to Xavier are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## Unreleased
+
+### Added
+
+- **Live voice chat.** A Live page, opened from a card on Home, for hands-free
+  conversation with Xavier. The phone streams its microphone to the hub
+  (`/api/live`), the hub streams it to Deepgram's Flux speech-to-text, each
+  finished turn goes into a pinned "Live" thread like a typed message, and the
+  reply is spoken back through Flux text-to-speech as Hermes writes it, with a
+  short acknowledgement while Xavier works. Needs `DEEPGRAM_API_KEY` on the server;
+  without it the page says voice is not set up. See
+  [docs/FEATURES.md](docs/FEATURES.md#live-voice-chat) and
+  [docs/SERVICES.md](docs/SERVICES.md#live-voice-deepgram).
+- A native audio module (`app/modules/live-audio`) that runs Live on Apple's
+  voice processing, so you can talk over a reply. The `react-native-audio-api`
+  engine stays as a fallback without echo cancellation, switchable over the air
+  (`app/src/lib/live/aec.ts`). Both are native code, so Live needs a new app
+  build rather than an over-the-air update.
+
+### Changed
+
+- The terminal's WebSocket `Origin` check now guards the Live socket too
+  (`_ws_origin_ok` in `server/app.py`).
+- `websockets` is a direct server requirement; it used to arrive only through
+  `uvicorn[standard]`.
+- The iOS Face ID and microphone purpose strings name Xavier.
+- The body of `POST /api/chat/threads/{id}/send` moved into a helper that the
+  Live socket shares; typed sends behave as before.
+
 ## 0.1.0 — first public release
 
 The first public cut of the repository. Everything below ships in it.

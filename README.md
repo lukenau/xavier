@@ -208,6 +208,9 @@ which piece does what:
   behind one key. The hub itself only reads your credit balance and spend.
 - **[Supermemory](https://supermemory.ai)**: optional hosted long-term memory for
   Hermes. Hosted means the memories you store there leave your machine.
+- **[Deepgram](https://deepgram.com)**: optional speech-to-text and
+  text-to-speech for Live voice, with your own key. Your server streams the
+  audio to it, so your voice leaves your machine while a session is open.
 - **[Tailscale](https://tailscale.com)**: the private mesh that lets the app
   reach a server you never expose to the internet.
 - **[Expo](https://expo.dev)** and **[React Native](https://reactnative.dev)**:
@@ -271,6 +274,8 @@ crash-reporting SDK. Data leaves your machine only to services you turn on:
  conversation and its local memory             update checks with a per-install client id
                                              → hosted memory or search you connect:
                                                whatever Hermes sends them
+                                             → api.deepgram.com, when Live voice is on:
+                                               your microphone audio and the spoken replies
 ```
 
 - **Your model provider sees your conversations.** Every prompt, with the context
@@ -286,6 +291,10 @@ crash-reporting SDK. Data leaves your machine only to services you turn on:
   whoever built it.
 - **Hosted memory and search** that you connect to Hermes (Supermemory, Exa,
   and the like) receive whatever Hermes sends them.
+- **Live voice goes through Deepgram.** With `DEEPGRAM_API_KEY` set, a Live
+  session streams your microphone from the phone to your server, and your server
+  streams it on to Deepgram, which transcribes it and speaks the replies. No
+  audio is stored; what you said is kept as the text of your messages.
 - **Everything else stays put.** What the hub stores lives in
   `${HUB_DATA_DIR:-./data}` on the machine you installed it on. The app talks
   to the server address you enter (plus the web addresses of any product photos
@@ -306,8 +315,9 @@ The same, claim by claim against the source: **[docs/PRIVACY.md](docs/PRIVACY.md
 - The server binds to **loopback only** by default; nothing is reachable from
   the network until *you* put a mesh or proxy in front of it.
 - **Chat needs Face ID; most other reads need only network reach.** Chat
-  threads, messages, attachments and the live chat socket require a session
-  cookie minted by a Face ID ceremony on a paired device. Most other reads carry
+  threads, messages, attachments, the live chat socket and the Live voice
+  socket require a session cookie minted by a Face ID ceremony on a paired
+  device. Most other reads carry
   no credential at all, including the agent's full session transcripts
   (`/api/sessions/{id}/messages`), the calendar, the brief, files under the
   configured roots, config and costs. Anything that can reach the port can read
@@ -377,6 +387,7 @@ developer program.
 | [Cloudflare Tunnel](https://www.cloudflare.com) | Free (Zero Trust free plan) | Free |
 | [Apple Developer Program](https://developer.apple.com/programs/) | $99/year, needed to build and install the app on an iPhone. Includes WeatherKit | Annual |
 | [Browser Use](https://browser-use.com) | Free tier, then paid by usage | Optional |
+| [Deepgram](https://deepgram.com/pricing) (for Live voice) | $200 of free credit, then pay as you go: Flux speech-to-text $0.0077/min, Flux text-to-speech $0.045 per 1,000 characters. The microphone streams for the whole session, so every open minute counts | Optional, per minute and per character |
 
 **The short version:** if you already have a computer to leave on, the cheapest
 sane setup is **$1–4/month** in electricity plus whatever your model use costs,

@@ -27,6 +27,7 @@ you have not configured show a 503 or an empty card rather than crash.
 | **ttyd** and **hub-tmuxd** on the host (`host/` kit) | The terminal and the shell picker | The terminal is unavailable; the picker shows an error line |
 | Your own cron jobs or scripts | Health and backup status, the calendar snapshot, the daily brief, decision cards | Those panels show an empty state |
 | An iMessage MCP server on your Mac | iMessage drafts you approve in the app | No drafts |
+| A Deepgram account (`DEEPGRAM_API_KEY`) | Live voice: speech-to-text and the spoken replies | The Live page says voice is not set up |
 
 The full catalogue, with the exact environment variables the server reads, what
 each service requires, and a copy-pasteable `.env` block for each, is in

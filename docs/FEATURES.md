@@ -54,6 +54,48 @@ Anything not yet built is under [Roadmap](#roadmap-not-built-yet) at the end.
   (`POST /api/chat/threads/{id}/media`). The server's media route takes images
   only, so other file types cannot be attached yet.
 
+## Live voice chat
+
+**Needs:** Hermes with the hub-platform plugin, a paired phone, and a Deepgram
+API key on the server (`DEEPGRAM_API_KEY`). Without the key the Live page says
+voice is not set up and nothing is sent to Deepgram.
+
+- **Talk instead of typing.** The Live page, opened from a card on Home, streams
+  your microphone over a websocket to your server (`/api/live`,
+  `server/live_session.py`), which streams it on to Deepgram's Flux
+  speech-to-text (`server/live_deepgram.py`). Flux decides when you have finished
+  a turn; the server waits a further second, so a pause mid-sentence does not
+  split one turn into two, then sends the turn into the thread exactly like a
+  typed message (`send_user_text` in `server/chat/routes.py`). If Hermes does not
+  take it, Live says so rather than waiting. The socket needs the Face ID chat
+  session.
+- **Replies spoken as they are written.** The reply's text streams from the
+  thread into Flux text-to-speech and back to the phone as audio, with the words
+  on screen as they play. Only reply text is read aloud: never reasoning, tool
+  calls or Hermes's busy notices (`server/live_reply.py`). A short
+  acknowledgement ("Okay.", "Got it.") plays while Xavier works, and a soft tone
+  repeats while he thinks.
+- **Talk over him.** On a build with the native audio module
+  (`app/modules/live-audio`), Apple's voice processing cancels the speaker's
+  echo, so speech that starts during a reply turns it down, a couple of real
+  words cut it off, and the rest of that reply stays unsaid; a lone "mm-hm" is
+  not taken as a turn. A tap on the dots stops the speech and, while Xavier is
+  still working on the reply, the turn too (`/stop`, as in chat). On the
+  fallback engine (`react-native-audio-api`, chosen in `app/src/lib/live/aec.ts`)
+  there is no echo cancellation, so speech that starts while Xavier talks is
+  ignored as his own voice. Talking over a turn that is still running asks
+  Hermes to redirect it; stock Hermes applies its own `busy_input_mode` instead,
+  as with the composer's choice above.
+- **One running conversation.** Voice turns land in a pinned "Live" thread that
+  is named after the first real thing you say ("Live · …"), so the transcript is
+  on the page and in the Chat list (`app/src/chat/liveThread.ts`). "New session"
+  starts a fresh thread.
+- **Hands-free.** A session keeps running with the screen locked (the build
+  carries iOS's background audio mode), pauses for a phone call or Siri, follows
+  headphones coming and going, and ends itself after four quiet minutes. Voice,
+  speed and expressivity are in the page's settings sheet; a new setting applies
+  to the next session.
+
 ## Rich custom widgets in chat
 
 A reply is not limited to plain text. The assistant can emit structured `widget`
@@ -213,7 +255,7 @@ server holds none.
 - **Your server holds your data.** Xavier is the server plus the app. You run the
   server on a box you control, reached over a private network or mesh. There is
   no Xavier cloud. What does leave the machine (your model provider, Expo and
-  Apple for push, EAS Update) is listed in
+  Apple for push, EAS Update, Deepgram for Live voice) is listed in
   [the README](../README.md#privacy--plainly) and [PRIVACY.md](PRIVACY.md).
 - **Chat needs Face ID; most other reads need only the network, and that is
   stated plainly.** Anything that can reach the server can read its
@@ -260,3 +302,6 @@ server holds none.
 - **Shells on other machines.** The picker can show several hosts, but the
   kit's hub-tmuxd only manages its own; reaching another machine (over ssh, say)
   is not built.
+- **Voice samples in Live settings.** The voice list has no way to hear a voice
+  before choosing it; the settings body can show a sample button per voice, but
+  nothing plays samples yet, so the button is not shown.

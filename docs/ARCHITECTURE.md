@@ -28,7 +28,7 @@ does the thinking:
   the web and Android targets build from the same tree for development only.
 - **`server/`**: **hub-api**, a FastAPI (Python) service. Runs in Docker, listens
   on `8090` inside the container, speaks JSON over HTTP(S) plus WebSockets for
-  chat and the terminal.
+  chat, Live voice and the terminal.
 - **`hermes-plugin/hub-platform/`**: the plugin you install into Hermes. It
   carries chat, approvals and automation runs between Hermes and the hub.
 - **`hub-bridge/`**: an opt-in, authenticated sidecar that runs a fixed,
@@ -40,8 +40,8 @@ does the thinking:
 There is no Xavier cloud service in between. The app talks directly to the
 server you installed, over your own mesh. Data leaves only to services you turn
 on: your model provider (through Hermes), Expo and Apple for push notifications,
-EAS Update for over-the-air update checks, and any hosted service you connect;
-see [PRIVACY.md](PRIVACY.md).
+EAS Update for over-the-air update checks, Deepgram for Live voice, and any
+hosted service you connect; see [PRIVACY.md](PRIVACY.md).
 
 ## Server internals
 
@@ -53,6 +53,7 @@ see [PRIVACY.md](PRIVACY.md).
 | `pair_local.py` / `pair_cli.py` | The local unix socket behind `./install.sh --pair`. |
 | `files.py` | Read-only multi-root file browser (`/api/files/{roots,browse,read}`), traversal-guarded, size-capped. |
 | `hub_calendar.py` | The calendar read surface and sync request. |
+| `live_session.py`, `live_deepgram.py`, `live_reply.py` | Live voice: the `/api/live` socket, which relays the phone's microphone to Deepgram's Flux speech-to-text, sends each finished turn through the same send path as a typed message, and streams the reply's text to Flux text-to-speech and the audio back to the phone. |
 | `ha_actions.py` | A Home Assistant challenge and dry-run apply. Not wired to Home Assistant yet: a live apply returns 501. |
 | `Dockerfile` | `python:3.12-slim`, `requirements.txt` only, non-root user (uid = `HUB_UID`, default 1000), uvicorn on `0.0.0.0:8090` inside the container. |
 
@@ -71,8 +72,10 @@ see [PRIVACY.md](PRIVACY.md).
   gated differently by design (the plugin's shared key, per-item brief tokens,
   the one-time enrolment code) or not at all (a calendar sync request, starting a
   connector login); SECURITY.md lists them.
-- **WebSockets**: the chat socket (`/api/chat/ws`) and the terminal
-  (`/terminal/ws`), each behind its own session cookie.
+- **WebSockets**: the chat socket (`/api/chat/ws`) and the Live voice socket
+  (`/api/live`), both behind the chat session cookie, and the terminal
+  (`/terminal/ws`) behind its own. The Live and terminal sockets also refuse a
+  browser `Origin` that is not this hub.
 
 ## Runtime shape
 

@@ -82,7 +82,13 @@ and account for the paths in [PRIVACY.md](PRIVACY.md): push notifications carry
 thread titles and the start of replies through Expo and Apple, and a build with
 over-the-air updates sends a per-install client id to EAS Update on every
 launch and, after a crash, up to 1,024 characters of the last fatal error
-message. The app has no analytics or crash-reporting SDK of its own.
+message. Live voice records audio: while a session is open the app streams the
+microphone to the server it is paired with, which relays it to Deepgram for
+transcription, and the app declares the microphone purpose string and iOS's
+background audio mode (`UIBackgroundModes: audio`, from the `expo-audio`
+config plugin) so a session keeps running with the screen locked. Account for
+audio data in your answers, and be ready to explain the background audio use if
+review asks. The app has no analytics or crash-reporting SDK of its own.
 
 ## 9. Legal disclaimer
 

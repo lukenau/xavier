@@ -19,6 +19,7 @@ These are the paths that exist in the code:
 | You turn on | What goes out | Where it goes |
 |---|---|---|
 | **The agent**: Hermes, with the hub-platform plugin (`HERMES_API_BASE`) | Every message you send in chat, and the attachments you add, go to Hermes. Hermes then sends each prompt with the context it adds (conversation history, memory, tool results, file contents it read) to its model provider | Hermes runs where you install it, usually the same machine. The model provider is whatever Hermes is configured for: OpenRouter and, through it, the model's own provider, or another provider |
+| **Live voice** (`DEEPGRAM_API_KEY`) | While a Live session is open: the raw microphone audio, streamed the whole time the session runs (muted stretches are sent as silence), and the text of everything Live says out loud, which is Xavier's replies and its short acknowledgements. The words you said come back as text | `api.deepgram.com` (Deepgram). The audio goes from the phone to your server, and your server streams it on to Deepgram; the phone never talks to Deepgram itself |
 | **Push notifications** (you allow them in the app) | To get a push token, the app asks Expo's servers for one. After that, for each finished reply the server sends the thread title (up to 48 characters) and the first ~140 characters of the reply; for an automation, its job name and the first ~140 characters of its report. Your push token goes with each message | `exp.host` (Expo's push service), which delivers through Apple's push service |
 | **Over-the-air updates** (a build made with `EAS_PROJECT_ID`) | On launch the app asks for new JavaScript, sending its platform, runtime version, update channel and a random per-install client id, and after a crash up to 1,024 characters of the last fatal error message. Like any request, it also carries your IP address | `u.expo.dev`, the EAS Update service, for the project of whoever built the app |
 | **Hosted memory or search** connected to Hermes (for example Supermemory or Exa) | Whatever Hermes stores or queries there: memories, search terms, documents | That provider |
@@ -37,6 +38,13 @@ choose the provider in Hermes with that in mind. With OpenRouter, your account's
 privacy settings can also restrict routing to endpoints with a zero-data-retention
 policy (a toggle for each model group); that is a setting on your OpenRouter
 account, not something this repository configures.
+
+With Live voice on, your voice leaves too. The phone streams the microphone audio
+to your server for as long as a Live session is open, and your server streams it
+on to Deepgram, which turns it into text and speaks the replies. That leg is
+governed by Deepgram's terms. Without a `DEEPGRAM_API_KEY` nothing goes to
+Deepgram: the server ends the session at once and the Live page says voice is
+not set up.
 
 About app builds: whoever builds the app chooses its over-the-air update project
 (`EAS_PROJECT_ID`) and its default server address. If you install a build
@@ -59,6 +67,12 @@ keeps no copy anywhere else. The main things in it:
   every scheduled job, for the Automations tab. Tool calls and the final reply
   pass through Hermes's secret redaction first; streamed text and reasoning do
   not.
+- What you say in Live, as the text of your messages in the same database:
+  a spoken turn is stored like a typed one. No audio is stored, on the server
+  or the phone; the server only relays it. Live's diagnostics (the kind of
+  audio input and its format, mic level, timing; never your words or a device's
+  name) go to the server's console log, which Docker keeps beside its other
+  output.
 - Device keys (the public halves of the keys that authorise writes) and
   passkeys, in JSON files under `/data/hub`.
 - Push tokens, if you enabled push, in `/data/hub/data/push_tokens.json`.

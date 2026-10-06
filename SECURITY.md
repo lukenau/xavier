@@ -15,7 +15,7 @@ paired; the writes that do not are listed under
 | **Loopback bind** (`HUB_BIND=127.0.0.1`) | Only the machine it runs on can reach the port | Nothing, once you bind wider |
 | **Private mesh** (Tailscale, WireGuard, Headscale) | Encrypts traffic and limits reachability to your devices | Identify individual users |
 | **Host allowlist** | Answers only to the host names in `HUB_ORIGIN`, `localhost`/`127.0.0.1`/`::1`, and any in `HUB_ALLOWED_HOSTS`; anything else gets a 421. This blocks DNS rebinding from a web page you visit | Stop a client that can reach the port and sends an allowed host name |
-| **Chat session** (cookie minted by Face ID) | Gates chat threads, messages, attachments, the live chat socket and the automations list | Gate the other reads |
+| **Chat session** (cookie minted by Face ID) | Gates chat threads, messages, attachments, the live chat socket, the Live voice socket and the automations list | Gate the other reads |
 | **Terminal session** (cookie minted by Face ID) | Gates the `/terminal` proxy and the tmux session lists | Gate the other reads |
 | **Device key or passkey signature** | Authorises each write, bound to its exact payload | Gate reads |
 
@@ -55,6 +55,14 @@ you add a route, assume it is unauthenticated unless it says otherwise.
   (`/api/chat/challenge`, `/session`, `/logout`) and the static model list. The
   cookie is minted by a fresh device-key or passkey assertion and lasts an hour
   by default (`HUB_CHAT_SESSION_TTL_S`).
+- **Live voice.** The `/api/live` websocket, which streams the microphone and
+  sends what you say into a thread, needs the same `hub_chat_session` cookie.
+  Like the terminal's websocket it also refuses a browser `Origin` that is not
+  this hub (see [the terminal and Claude Code shells](#the-terminal-and-claude-code-shells)):
+  without that check, a page served from another port of the hub's host, or from
+  another machine in the same tailnet, could open the socket with your cookie.
+  Like the chat socket, an open Live socket re-checks the session every second
+  and closes as soon as it expires or you lock chat again.
 - **The terminal.** The `/terminal` proxy to ttyd and the tmux session lists
   (`/api/tmux/*`) need the `hub_term_session` cookie, minted the same way. The
   terminal's websocket also refuses an `Origin` that is not this hub (see
@@ -180,7 +188,8 @@ unlock, and the filesystem decides who else can.
 - **Cross-site hijacking.** The session cookie is `SameSite=Strict`, but every
   port of the hub's host and every machine in the same tailnet is the same site,
   and websockets are not covered by the same-origin policy. The terminal websocket
-  therefore also requires the browser's `Origin` to be this hub.
+  therefore also requires the browser's `Origin` to be this hub, and so does the
+  Live voice websocket (`_ws_origin_ok` in `server/app.py` checks both).
 - **hub-tmuxd** runs only the configured Claude Code binary, with no
   permission-bypass flag unless you set
   `XAVIER_CLAUDE_DANGEROUSLY_SKIP_PERMISSIONS=1`, in directories inside
@@ -199,8 +208,9 @@ unlock, and the filesystem decides who else can.
 
 There is no telemetry and nothing reports to the project. Data leaves only to
 services you turn on: your model provider (through Hermes), Expo and Apple for
-push notifications, EAS Update for over-the-air update checks, and any hosted
-memory or search you connect. The details, route by route:
+push notifications, EAS Update for over-the-air update checks, Deepgram for Live
+voice (your microphone audio and the spoken replies), and any hosted memory or
+search you connect. The details, route by route:
 [docs/PRIVACY.md](docs/PRIVACY.md).
 
 ## Therefore

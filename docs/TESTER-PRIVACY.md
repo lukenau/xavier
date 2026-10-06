@@ -7,23 +7,26 @@ with data is in [PRIVACY.md](PRIVACY.md).
 **The notice, in full — five points:**
 
 1. **What the server stores about you:** your messages to the agent and any
-   images you attach; the public half of your device key and any passkey, which
+   images you attach (what you say in Live voice is kept as text, never as
+   audio); the public half of your device key and any passkey, which
    authorise your writes; a push token if you turned notifications on; and
    ordinary logs that your device connected and what it did. The agent (Hermes)
    that answers you keeps its own copy of the conversations.
 2. **Where it lives, and what travels:** on the machine of whoever runs that
-   server. There is no Xavier cloud in the middle. Three things do travel:
+   server. There is no Xavier cloud in the middle. These things do travel:
    everything you say to the agent is sent, with its context, to the AI model
    provider the host chose; if you allow notifications, each thread's title and
    the first ~140 characters of each reply pass through Expo and Apple to reach
-   your phone; and the app checks the builder's Expo project for updates, with a
-   random per-install id. Anyone who can reach the server's network address can
+   your phone; the app checks the builder's Expo project for updates, with a
+   random per-install id; and if you use Live voice, your voice is streamed
+   through the server to Deepgram, a speech service, which turns it into text
+   and speaks the replies. Anyone who can reach the server's network address can
    read the agent's transcripts, so ask how it has been locked down.
 3. **How long:** nothing expires by itself; it stays until it is deleted.
 4. **How to get it deleted:** ask whoever runs the server. They can delete your
    messages and the agent's copy of them, remove your device key and clear your
-   push token. What the model provider keeps is governed by that provider's
-   terms.
+   push token. What the model provider (and, for Live voice, Deepgram) keeps
+   is governed by that provider's terms.
 5. **Who to contact:** that same person: ____________________. If you installed
    through TestFlight, the app's TestFlight feedback button also reaches them;
    note that TestFlight shares crash reports and any feedback you send with the

@@ -117,7 +117,9 @@ holds chat history. Chat answers need Hermes with the hub-platform plugin; the
 config, cron and skills panels need the hub-bridge sidecar (in this repository,
 opt-in); the terminal needs ttyd and hub-tmuxd on the host (the `host/` kit sets them up). Unset,
 those panels show an empty state rather than crash, so tell testers which ones
-to expect empty.
+to expect empty. Live voice needs a Deepgram key on the server
+(`DEEPGRAM_API_KEY`): without one the Live page says voice is not set up, and
+with one the tester's voice goes to Deepgram, so tell them that too.
 
 ---
 

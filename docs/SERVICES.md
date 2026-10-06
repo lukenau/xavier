@@ -210,6 +210,39 @@ delivery targets, writes the live snapshot, and clears `pending_sync`. Nothing i
 this repository does that. Until the config file exists, the page reports that
 it has not been written yet.
 
+## Voice
+
+### Live voice (Deepgram)
+
+Hands-free voice conversations with Xavier from the app's Live page. The phone
+streams its microphone to the hub over the `/api/live` socket, and the hub
+streams that audio to [Deepgram](https://deepgram.com): Flux speech-to-text
+decides when you have finished a turn, the turn goes into a chat thread like a
+typed message, and Flux text-to-speech speaks the reply back as Hermes writes
+it. The socket needs the Face ID chat session and refuses a browser `Origin`
+that is not this hub.
+
+```ini
+DEEPGRAM_API_KEY=
+```
+
+Requires: a Deepgram account and an API key, and Hermes with the hub-platform
+plugin for the replies (a spoken turn Hermes does not take is kept in the
+thread, and Live says so). Usage is billed to your Deepgram account. The microphone
+streams for as long as a session is open, not just while you speak, so
+speech-to-text minutes run for the whole session; a session ends itself after
+four quiet minutes. The audio and every spoken reply pass through Deepgram (see
+[PRIVACY.md](PRIVACY.md)). Without the key, Live never contacts Deepgram: the
+socket ends the session at once and the app says voice is not set up. To check
+a key against the real service, run `server/scripts/live_probe.py` with it in
+the environment.
+
+Talking over a turn that is still running asks Hermes to redirect it, which the
+plugin passes on as the message's busy mode. Stock Hermes ignores a per-message
+mode and applies its own `display.busy_input_mode`, so on a stock gateway a
+spoken interruption is queued, steered or interrupted as that setting says (see
+[FEATURES.md](FEATURES.md)).
+
 ## Notifications
 
 ### Push notifications (Expo)
