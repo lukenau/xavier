@@ -21,6 +21,14 @@ All notable changes to Xavier are documented here. The format follows
   engine stays as a fallback without echo cancellation, switchable over the air
   (`app/src/lib/live/aec.ts`). Both are native code, so Live needs a new app
   build rather than an over-the-air update.
+- On the native engine, a Mic Mode button on the Live page opens iOS's picker,
+  where Voice Isolation keeps other voices out; a build whose native module
+  predates it shows no button.
+- `LIVE_VP_BYPASS` in `app/src/lib/live/aec.ts`, an over-the-air A/B switch that
+  bypasses voice processing to hear whether it changes how Xavier sounds. It
+  ships off.
+- Each committed Live turn's log line carries an echo score: how much of it
+  matched what Live said in the last 10 seconds. Measurement only.
 
 ### Changed
 
