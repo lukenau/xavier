@@ -16,6 +16,7 @@ import { fonts } from '../../theme/fonts';
 import { useTheme } from '../../theme/useTheme';
 import { PRESSED_OPACITY } from '../shell';
 import { externalFeedHref, runToneToken } from './feedModel';
+import { DEMO_ORIGIN, useDemoMode } from '../../demo/mode';
 
 export function FeedDetailSheet({ item, onClose }: { item: FeedItem | null; onClose: () => void }) {
   const { t } = useTheme();
@@ -23,7 +24,10 @@ export function FeedDetailSheet({ item, onClose }: { item: FeedItem | null; onCl
   const { height } = useWindowDimensions();
   // Feed.tsx:209's `max-h-[60dvh]` on the summary block.
   const summaryMaxHeight = height * 0.6;
-  const href = externalFeedHref(item?.link);
+  const demo = useDemoMode((s) => s.active);
+  const link = externalFeedHref(item?.link);
+  // A link onto the hub has nowhere to go in the demo: there is no hub.
+  const href = demo && link?.startsWith(DEMO_ORIGIN) ? null : link;
 
   return (
     <Modal

@@ -22,6 +22,7 @@ import { CONFIG_GROUPS, PAGE_ROWS, configGroupOf } from './groups';
 import { ChevronRight, HomeLink } from './parts';
 import { ThemeToggle } from './ThemeToggle';
 import { WhimsyToggle } from '../../whimsy';
+import { DemoConfigRow } from '../../demo/ConfigRow';
 
 function GroupRow({
   label,
@@ -133,6 +134,7 @@ export function ConfigHome() {
         href="/config/server"
         isLast={false}
       />
+      <DemoConfigRow />
       <SectionHead label="Xavier" />
       <View style={styles.themeSlot}>
         <WhimsyToggle />

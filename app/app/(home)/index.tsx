@@ -29,6 +29,7 @@ import {
   failedRunCount,
 } from '../../src/components/home';
 import { useCalendar } from '../../src/components/calendar/useCalendar';
+import { HomeCard } from '../../src/demo/HomeCard';
 import { api } from '../../src/lib/api';
 import { QUERY_TUNING, usePoll } from '../../src/lib/query';
 import { fonts } from '../../src/theme/fonts';
@@ -80,6 +81,9 @@ export default function HomeScreen() {
           </Rise>
         }
       >
+        {/* First run: connect a server or explore the demo. In the demo: what it is. */}
+        <HomeCard />
+
         <Rise index={1}>
           <DecisionsBanner decisions={decisions.data?.open ?? []} />
         </Rise>

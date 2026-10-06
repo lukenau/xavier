@@ -13,6 +13,7 @@ import WebView from 'react-native-webview';
 import { useTheme } from '../../theme/useTheme';
 import { StatePanel } from '../shell';
 import { decideTrustedNavigation } from './webViewPolicy';
+import { ServerOnlyPanel, useDemoActive } from '../../demo/ServerOnly';
 
 export interface TrustedPageViewProps {
   /** Absolute https(s) URL on the hub host, e.g. `${HUB_ORIGIN}/oura/`. */
@@ -25,6 +26,7 @@ export function TrustedPageView({ uri, style, testID }: TrustedPageViewProps) {
   const { t } = useTheme();
   const ref = useRef<WebView>(null);
   const [error, setError] = useState<string | null>(null);
+  const demo = useDemoActive();
 
   const onShouldStartLoadWithRequest = useCallback((req: { url: string }) => {
     const decision = decideTrustedNavigation(req.url);
@@ -34,6 +36,10 @@ export function TrustedPageView({ uri, style, testID }: TrustedPageViewProps) {
     }
     return decision === 'allow';
   }, []);
+
+  if (demo) {
+    return <ServerOnlyPanel title="Runs on your own server" detail="This page is built on your own server from your own data." />;
+  }
 
   if (error) {
     return <StatePanel tone="error" title="Page unavailable" detail={error} />;

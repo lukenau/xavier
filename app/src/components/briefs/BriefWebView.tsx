@@ -23,6 +23,8 @@ import WebView from 'react-native-webview';
 import { useTheme } from '../../theme/useTheme';
 import { StatePanel } from '../shell';
 import { decideBriefNavigation } from './webViewPolicy';
+import { DemoPageView } from '../../demo/DemoPage';
+import { useDemoActive } from '../../demo/ServerOnly';
 
 export interface BriefWebViewProps {
   /** Absolute https(s) URL on the hub host — resolve with `resolveBriefUri`
@@ -36,6 +38,7 @@ export function BriefWebView({ uri, style, testID }: BriefWebViewProps) {
   const { t } = useTheme();
   const ref = useRef<WebView>(null);
   const [error, setError] = useState<string | null>(null);
+  const demo = useDemoActive();
 
   const onShouldStartLoadWithRequest = useCallback((req: { url: string }) => {
     const decision = decideBriefNavigation(req.url);
@@ -45,6 +48,8 @@ export function BriefWebView({ uri, style, testID }: BriefWebViewProps) {
     }
     return decision === 'allow';
   }, []);
+
+  if (demo) return <DemoPageView uri={uri} style={style} testID={testID} />;
 
   if (error) {
     return <StatePanel tone="error" title="Page unavailable" detail={error} />;

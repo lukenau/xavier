@@ -13,6 +13,7 @@ import { useChatLock } from '../../chat/lock';
 import { fonts } from '../../theme/fonts';
 import { useTheme } from '../../theme/useTheme';
 import { Screen } from '../shell';
+import { useDemoMode } from '../../demo/mode';
 
 export interface ChatLockGateProps {
   header?: ReactNode;
@@ -24,6 +25,9 @@ export interface ChatLockGateProps {
 }
 
 const DEFAULT_COPY = 'Chat with Xavier. Unlock with Face ID — the session stays live for an hour.';
+/** The demo's lock asks the phone's owner instead of a paired key, so it names
+ * every way that can answer. */
+const DEMO_COPY = 'This is the demo. Unlock with Face ID or your passcode, as on your own server. Nothing leaves this iPhone.';
 
 export function ChatLockGate({ header, children, copy = DEFAULT_COPY, unlockLabel = 'Unlock chat' }: ChatLockGateProps) {
   const unlocked = useChatLock((s) => s.unlocked);
@@ -78,12 +82,13 @@ function LockBody({
   onUnlock: () => void;
 }) {
   const { t } = useTheme();
+  const demo = useDemoMode((s) => s.active);
   return (
     <View style={styles.body}>
       <View style={[styles.padlock, { backgroundColor: t('accent-soft'), borderColor: t('accent-border') }]}>
         <SymbolView name="lock" size={24} tintColor={t('accent')} weight="regular" />
       </View>
-      <Text style={[styles.copy, { color: t('fg-2') }]}>{copy}</Text>
+      <Text style={[styles.copy, { color: t('fg-2') }]}>{demo ? DEMO_COPY : copy}</Text>
       {error ? (
         <Text accessibilityRole="alert" style={[styles.error, { color: t('status-down') }]}>
           {error}
@@ -96,7 +101,7 @@ function LockBody({
         style={[styles.unlock, { backgroundColor: t('accent-soft'), borderColor: t('accent-border'), opacity: busy ? 0.6 : 1 }]}
       >
         <Text style={[styles.unlockLabel, { color: t('accent') }]}>
-          {busy ? 'Waiting for Face ID…' : unlockLabel}
+          {busy ? (demo ? 'Waiting…' : 'Waiting for Face ID…') : unlockLabel}
         </Text>
       </Pressable>
     </View>

@@ -8,8 +8,13 @@
 // validates before it persists, and Test probes the address's /api/healthz
 // and reports the outcome — success, an HTTP status, or the failure reason —
 // without ever throwing into the UI.
+//
+// It is also one of the demo's two doors (src/demo/): the Explore demo button,
+// and `demo` typed as the address. In the demo the screen says so, offers the
+// way out, and probes nothing it was not explicitly given.
 import { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { router } from 'expo-router';
 import { SheetScreen, PRESSED_OPACITY } from '../shell';
 import {
   clearUserApiBase,
@@ -22,6 +27,8 @@ import {
 import { testServerConnection, validateServerUrl } from '../../lib/serverUrl';
 import { fonts } from '../../theme/fonts';
 import { useTheme } from '../../theme/useTheme';
+import { isDemoAddress, useDemoMode } from '../../demo/mode';
+import { enterDemo, exitDemo } from '../../demo/session';
 
 const SOURCE_LABEL: Record<ApiBaseSource, string> = {
   user: 'user-set',
@@ -38,7 +45,8 @@ export function ServerPage() {
   const { t } = useTheme();
   const [value, setValue] = useState('');
   const [effective, setEffective] = useState<EffectiveServer | null>(null);
-  const [busy, setBusy] = useState<'save' | 'test' | 'clear' | null>(null);
+  const [busy, setBusy] = useState<'save' | 'test' | 'clear' | 'demo' | null>(null);
+  const demo = useDemoMode((s) => s.active);
   const [error, setError] = useState<string | null>(null);
   const [note, setNote] = useState<string | null>(null);
   const [testLine, setTestLine] = useState<{ ok: boolean; text: string } | null>(null);
@@ -66,16 +74,42 @@ export function ServerPage() {
   }
 
   async function onSave() {
+    if (isDemoAddress(value)) {
+      if (demo) setNote('This is the demo already.');
+      else await onDemo();
+      return;
+    }
     setBusy('save');
     clearMessages();
     try {
-      const check = await setUserApiBase(value);
+      const check = validateServerUrl(value);
       if (!check.ok) {
         setError(check.error);
         return;
       }
+      // A real address while in the demo is the way out of it, to that server.
+      if (demo) await exitDemo();
+      await setUserApiBase(check.url);
       refreshEffective();
       setNote(`Saved — this build now talks to ${check.url}.`);
+    } finally {
+      setBusy(null);
+    }
+  }
+
+  async function onDemo() {
+    setBusy('demo');
+    clearMessages();
+    try {
+      if (demo) {
+        await exitDemo();
+        setValue(getUserApiBase() ?? '');
+        refreshEffective();
+        setNote('Left the demo. Enter your server address above.');
+        return;
+      }
+      await enterDemo();
+      router.dismissTo('/');
     } finally {
       setBusy(null);
     }
@@ -100,7 +134,16 @@ export function ServerPage() {
     try {
       // The address in the field, if it validates; otherwise what the app is
       // actually using right now. Either way the line names what was probed.
+      // The demo has no address of its own, so there only a typed one is.
       const input = value.trim();
+      if (isDemoAddress(input)) {
+        setNote('“demo” opens the built-in demo, with fictional data. Tap Save to explore it.');
+        return;
+      }
+      if (demo && !input) {
+        setNote('The demo makes no network requests. Type an address to test it.');
+        return;
+      }
       let target = resolveApiBase().base;
       if (input) {
         const check = validateServerUrl(input);
@@ -126,7 +169,13 @@ export function ServerPage() {
     <SheetScreen eyebrow="Server" title="Server address">
       {/* (3): the effective server and its provenance, always visible so the
           state is never ambiguous. */}
-      {effective ? (
+      {demo ? (
+        <View style={styles.effective}>
+          <Text style={[styles.effectiveLabel, { color: t('fg-4') }]}>Effective server</Text>
+          <Text style={[styles.effectiveBase, { color: t('fg-0') }]}>demo</Text>
+          <Text style={[styles.effectiveSource, { color: t('accent') }]}>built-in demo · fictional data, on this iPhone</Text>
+        </View>
+      ) : effective ? (
         <View style={styles.effective}>
           <Text style={[styles.effectiveLabel, { color: t('fg-4') }]}>Effective server</Text>
           <Text style={[styles.effectiveBase, { color: t('fg-0') }]}>{effective.base}</Text>
@@ -143,7 +192,7 @@ export function ServerPage() {
 
       <Text style={[styles.note, { color: t('fg-3') }]}>
         Point this build at any hub. https:// for any server; http:// only for localhost or 127.0.0.1.
-        Clear to use the built-in address.
+        Clear to use the built-in address. No server yet? Explore the demo, or type demo.
       </Text>
 
       <TextInput
@@ -212,6 +261,26 @@ export function ServerPage() {
         </Pressable>
       </View>
 
+      <Pressable
+        onPress={() => void onDemo()}
+        disabled={busy !== null}
+        accessibilityRole="button"
+        accessibilityLabel={demo ? 'Exit demo' : 'Explore demo'}
+        style={({ pressed }) => [
+          styles.demoButton,
+          { backgroundColor: t('accent-soft'), borderColor: t('accent-border') },
+          busy !== null && { opacity: 0.5 },
+          pressed && busy === null && { opacity: PRESSED_OPACITY },
+        ]}
+      >
+        <Text style={[styles.buttonLabel, { color: t('accent') }]}>
+          {busy === 'demo' ? (demo ? 'Leaving…' : 'Opening…') : demo ? 'Exit demo' : 'Explore demo'}
+        </Text>
+        <Text style={[styles.demoSub, { color: t('fg-3') }]}>
+          {demo ? 'back to your own server' : 'fictional data, no server needed'}
+        </Text>
+      </Pressable>
+
       {error ? <Text style={[styles.error, { color: t('status-down') }]}>{error}</Text> : null}
       {note ? <Text style={[styles.note, { color: t('status-up') }]}>{note}</Text> : null}
       {testLine ? (
@@ -249,5 +318,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   buttonLabel: { fontFamily: fonts.sans(550), fontSize: 13 },
+  demoButton: {
+    minHeight: 52,
+    borderRadius: 12,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 8,
+    marginBottom: 12,
+  },
+  demoSub: { fontFamily: fonts.sans(400), fontSize: 11, marginTop: 2 },
   error: { fontFamily: fonts.sans(400), fontSize: 12, lineHeight: 18, paddingHorizontal: 4, marginBottom: 12 },
 });

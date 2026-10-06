@@ -20,6 +20,7 @@ import { BackupsSection } from './BackupsSection';
 import { BoardLine } from './BoardLine';
 import { api } from '../../lib/api';
 import { QUERY_TUNING, usePoll } from '../../lib/query';
+import { ShellsDemo, useDemoActive } from '../../demo/ServerOnly';
 
 /** The top jump-off card, in order. */
 export const OPS_NAV_ROWS: NavRow[] = [
@@ -41,6 +42,7 @@ export function OpsScreen() {
   const kanban = usePoll(['kanban'], api.kanban, QUERY_TUNING.kanban);
   const shells = usePoll(['tmux-sessions'], api.tmuxSessions, QUERY_TUNING['tmux-sessions']);
   const backups = usePoll(['backups'], api.backups, QUERY_TUNING.backups);
+  const demo = useDemoActive();
 
   return (
     <Screen
@@ -55,7 +57,7 @@ export function OpsScreen() {
       <NavCard rows={OPS_NAV_ROWS} style={{ marginBottom: 10 }} />
       <NeedsYou q={pairing} attention={chatAttention} />
       <SessionsSection q={sessions} />
-      <ShellsSection q={shells} />
+      {demo ? <ShellsDemo /> : <ShellsSection q={shells} />}
       <JobsSection q={cron} />
       <RunsSection q={cronLogs} />
       <BackupsSection q={backups} />

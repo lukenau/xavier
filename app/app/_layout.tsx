@@ -41,6 +41,8 @@ import { loadStoredApiBase } from '../src/lib/api';
 import { watchPresence } from '../src/chat/presence';
 import { wireFocusManager } from '../src/lib/query';
 import { onNotificationTap } from '../src/lib/push';
+import { demoReady } from '../src/demo/mode';
+import { DemoBadge } from '../src/demo/DemoBadge';
 
 // Fonts are embedded by the expo-font config plugin (app.json), i.e. they are
 // registered before the first JS frame — there is no runtime load to await and
@@ -57,6 +59,9 @@ export default function RootLayout() {
     // api.ts resolves every call path at call time, so whichever calls race
     // ahead of this simply use the build-time base until it lands.
     void loadStoredApiBase();
+    // Demo mode is read here too, and api.ts waits for it before any request
+    // leaves, so a relaunch inside the demo never reaches a server.
+    void demoReady();
   }, [hydrate]);
 
   // Arms the write gate. api.ts owns the challenge -> sign -> apply sequence for
@@ -167,6 +172,8 @@ function ThemedShell() {
           ) : null}
         </NativeTabs.Trigger>
       </NativeTabs>
+      {/* Over every tab and push while the demo is on; nothing otherwise. */}
+      <DemoBadge />
     </ThemeProvider>
   );
 }
