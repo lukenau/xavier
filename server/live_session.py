@@ -237,6 +237,10 @@ class LiveSession:
         self._cut_why = "user"
         self._cut_ev = asyncio.Event()
         self._rx_frames = 0
+        # Mic loudness (RMS per 80 ms frame) while Xavier is audible vs not:
+        # the size of the echo voice processing leaves, logged per reply.
+        self._lvl_speaking: list[int] = []
+        self._lvl_quiet: list[int] = []
         self._mic_rate = 16000
         self._rx_peak = 0
         self._eot_at: float | None = None
@@ -285,6 +289,11 @@ class LiveSession:
                 self._played_ms = int(frame["played_ms"])
         elif kind == "drained":
             log.info("[live %s] drained turn %s (current %s)", self._sid, frame.get("turn_id"), self._turn_id)
+            if self._lvl_speaking:
+                sp, qu = sorted(self._lvl_speaking), sorted(self._lvl_quiet) or [0]
+                log.info("[live %s] mic while speaking rms p50=%d p90=%d max=%d n=%d | quiet p50=%d",
+                         self._sid, sp[len(sp) // 2], sp[len(sp) * 9 // 10], sp[-1], len(sp), qu[len(qu) // 2])
+                self._lvl_speaking = []
             if frame.get("turn_id") == self._turn_id and not self._speech_open:
                 self._speaking = False
                 self._drained_ev.set()
@@ -321,6 +330,11 @@ class LiveSession:
         self._rx_frames += 1
         self._rx_peak = max(self._rx_peak, max((abs(v) for v in memoryview(pcm).cast("h")), default=0)
                             if len(pcm) % 2 == 0 else 0)
+        if len(pcm) % 2 == 0 and pcm:
+            samples = memoryview(pcm).cast("h")
+            rms = int((sum(v * v for v in samples) / len(samples)) ** 0.5)
+            (self._lvl_speaking if self._speaking else self._lvl_quiet).append(rms)
+            del self._lvl_quiet[:-200]
         if self._rx_frames % 62 == 1:
             log.info("[live %s] mic frames=%d bytes=%d peak=%d", self._sid, self._rx_frames, len(pcm), self._rx_peak)
             self._rx_peak = 0

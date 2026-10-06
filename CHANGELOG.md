@@ -33,6 +33,12 @@ All notable changes to Xavier are documented here. The format follows
   speaker leaks past echo cancellation: speech that starts during a reply, or
   just after it, is dropped if it mostly repeats what he just said, and
   mid-reply an interruption takes two real words or a stop word.
+- On the native engine, the audio session asks for 48 kHz before it activates,
+  so that turning voice processing on does not renegotiate the route and
+  restart the engine, which threw away what the echo canceller had learned.
+  Voice processing's automatic gain is off: it raised the leftover echo after a
+  pause. Each reply logs the mic level while Xavier spoke against the level
+  while he was quiet.
 
 ### Changed
 

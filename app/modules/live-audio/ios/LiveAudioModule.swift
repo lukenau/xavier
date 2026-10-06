@@ -142,6 +142,11 @@ public class LiveAudioModule: Module {
     // HFP, and every extra option is another way for iOS to renegotiate the
     // route.
     try session.setCategory(.playAndRecord, mode: .voiceChat, options: [.defaultToSpeaker])
+    // Ask for the hardware's own rate before activating, so turning voice
+    // processing on does not renegotiate the route. That renegotiation
+    // restarted the engine right after start and threw away the echo
+    // canceller's learned state — the first replies leaked back as turns.
+    try? session.setPreferredSampleRate(48000)
     try session.setActive(true)
 
     if !configured {
@@ -170,7 +175,7 @@ public class LiveAudioModule: Module {
       "sampleRate": LiveAudioModule.sampleRate,
       "micMode": LiveAudioModule.micModeName(),
     ]
-    diag("started voiceProcessing=\(input.isVoiceProcessingEnabled) route=\(route) input=\(input.outputFormat(forBus: 0))")
+    diag("started voiceProcessing=\(input.isVoiceProcessingEnabled) agc=\(input.isVoiceProcessingAGCEnabled) micMode=\(LiveAudioModule.micModeName()) route=\(route) \(sessionState())")
     return info
   }
 
@@ -191,6 +196,9 @@ public class LiveAudioModule: Module {
 
     // Engine stopped, nothing connected yet: the only state Apple supports.
     try engine.inputNode.setVoiceProcessingEnabled(true)
+    // Automatic gain raises the mic during silence, which amplifies whatever
+    // echo is left at the start of the next reply. Deepgram does not need it.
+    engine.inputNode.isVoiceProcessingAGCEnabled = false
 
     let mixer = engine.mainMixerNode
     engine.connect(speech, to: mixer, format: format)
@@ -207,8 +215,18 @@ public class LiveAudioModule: Module {
       queue: .main
     ) { [weak self] _ in
       guard let self = self else { return }
-      self.diag("engine configuration change (running=\(self.engine.isRunning))")
+      self.diag("engine configuration change (running=\(self.engine.isRunning)) \(self.sessionState())")
       self.restartIfStopped()
+    })
+
+    observers.append(NotificationCenter.default.addObserver(
+      forName: AVAudioSession.routeChangeNotification,
+      object: AVAudioSession.sharedInstance(),
+      queue: .main
+    ) { [weak self] note in
+      guard let self = self, self.active else { return }
+      let raw = note.userInfo?[AVAudioSessionRouteChangeReasonKey] as? UInt ?? 0
+      self.diag("route change reason=\(raw) \(self.sessionState())")
     })
 
     observers.append(NotificationCenter.default.addObserver(
@@ -363,6 +381,13 @@ public class LiveAudioModule: Module {
         self?.sendEvent("onPlayed", ["tag": tag, "ms": ms])
       }
     }
+  }
+
+  // Outputs by kind (Speaker, BluetoothA2DPOutput…), never by name: a
+  // Bluetooth device's name is often its owner's, and this goes to the log.
+  private func sessionState() -> String {
+    let s = AVAudioSession.sharedInstance()
+    return "rate=\(Int(s.sampleRate)) io=\(Int(s.ioBufferDuration * 1000))ms mode=\(s.mode.rawValue) out=\(s.currentRoute.outputs.map { $0.portType.rawValue }.joined(separator: ",")) vol=\(String(format: "%.2f", s.outputVolume))"
   }
 
   private func renderedSample() -> Int64? {

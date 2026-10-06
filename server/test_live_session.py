@@ -4,6 +4,7 @@ acknowledgements and the notes that ride with a spoken turn.
 Driven directly (no HTTP) against fake Flux streams and a fake chat store,
 except the auth tests, which go through the real route. The Origin check
 through the whole app is test_live_origin.py."""
+import array
 import asyncio
 import json
 import logging
@@ -1309,6 +1310,79 @@ def test_the_echo_score_ignores_the_acknowledgement_of_the_turn_itself(env, monk
     assert [line for line in lines if "turn committed" in line][0].endswith("echo_score=0.00")
     assert env.spoken() == ["Okay."]
 
+
+
+def frame(level, samples=1280):
+    """A mic frame (80 ms at 16 kHz by default) whose RMS is `level`."""
+    return array.array("h", [level] * samples).tobytes()
+
+
+def test_each_reply_logs_the_mic_level_while_he_spoke_against_the_quiet_level(env):
+    """The size of the echo voice processing leaves: the mic's loudness while
+    Xavier was audible against while he was not, reported once per reply, as
+    numbers only."""
+    lines: list[str] = []
+
+    class Grab(logging.Handler):
+        def emit(self, record):
+            lines.append(record.getMessage())
+
+    grab = Grab()
+    ls.log.addHandler(grab)
+    try:
+        async def go():
+            s = await started(env, aec=True)
+            for level in (5, 7, 5):
+                await s.on_audio(frame(level))
+            env.listen.push("StartOfTurn", "weather")
+            env.listen.push("EndOfTurn", "weather tomorrow")
+            assert await wait_for(lambda: env.sent_messages)
+            env.store.reply("a", "Sunny all day.")
+            assert await wait_for(lambda: "speak_end" in env.types())
+            # Still audible: the phone has not said it finished playing.
+            for level in (10, 20, 30, 40, 50, 60, 70, 80, 90, 100):
+                await s.on_audio(frame(level))
+            await s.on_audio(b"")
+            await s.on_audio(b"\x01\x02\x03")
+            await s.on_text({"type": "drained", "turn_id": s._turn_id})
+            # Reported once: the next drained has nothing new to report.
+            await s.on_text({"type": "drained", "turn_id": s._turn_id})
+            await s.close()
+
+        run(go())
+    finally:
+        ls.log.removeHandler(grab)
+    levels = [line.split("] ", 1)[1] for line in lines if "mic while speaking" in line]
+    assert levels == ["mic while speaking rms p50=60 p90=100 max=100 n=10 | quiet p50=5"]
+    assert not any(word in line.lower() for line in lines for word in ("weather", "sunny"))
+
+
+def test_the_quiet_level_is_the_room_just_now_not_the_whole_session(env):
+    lines: list[str] = []
+
+    class Grab(logging.Handler):
+        def emit(self, record):
+            lines.append(record.getMessage())
+
+    grab = Grab()
+    ls.log.addHandler(grab)
+    try:
+        async def go():
+            s = await started(env, aec=True)
+            for _ in range(300):
+                await s.on_audio(frame(1000, samples=16))
+            # The last 200 frames (16 s) are the baseline.
+            for _ in range(200):
+                await s.on_audio(frame(10, samples=16))
+            s._speaking = True
+            await s.on_audio(frame(50, samples=16))
+            await s.on_text({"type": "drained", "turn_id": s._turn_id})
+            await s.close()
+
+        run(go())
+    finally:
+        ls.log.removeHandler(grab)
+    assert [line for line in lines if "mic while speaking" in line][0].endswith("n=1 | quiet p50=10")
 
 
 # ── echo filter: candidates must qualify ───────────────────────────────────
