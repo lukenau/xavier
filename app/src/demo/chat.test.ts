@@ -8,8 +8,8 @@ import { selectMessages, useChatStore } from '../chat/store';
 import { sendChatMessage } from '../chat/hooks';
 import { turnStateOf } from '../chat/turnState';
 import { resetDemoModeForTests, setDemoFlag } from './mode';
-import { cannedReply } from './chat';
-import { resetDemoWorld } from './server';
+import { cannedReply, REPLY_DELAY_MS } from './chat';
+import { createDemoSocket, resetDemoWorld } from './server';
 
 const fetchSpy = jest.fn();
 
@@ -95,6 +95,34 @@ test('Stop ends the reply where it stands', async () => {
   await api.chatStopThread(thread.id);
   await until(() => selectMessages(thread.id)(useChatStore.getState()).at(-1)?.status === 'complete');
   expect(useChatStore.getState().chat.threads[thread.id].thread.status).toBe('idle');
+});
+
+test('Stop before the reply has started still ends the turn', async () => {
+  const { thread } = await openThread('Trip planning with Xavier');
+  await send(thread.id, 'hello there');
+  await api.chatStopThread(thread.id);
+  await until(() => selectMessages(thread.id)(useChatStore.getState()).at(-1)?.role === 'assistant');
+
+  const rows = selectMessages(thread.id)(useChatStore.getState());
+  expect(rows.at(-1)).toMatchObject({ status: 'complete', parts: [{ type: 'text', text: 'Stopped.' }] });
+  expect(turnStateOf(rows)).toBe('idle');
+  // The cancelled reply never turns up afterwards.
+  await new Promise((resolve) => setTimeout(resolve, REPLY_DELAY_MS + 200));
+  expect(selectMessages(thread.id)(useChatStore.getState())).toHaveLength(rows.length);
+});
+
+test('the demo socket answers a subscribe on a later tick, as a network would', async () => {
+  const thread = (await api.chatBootstrap()).threads[0];
+  const socket = createDemoSocket();
+  const received: string[] = [];
+  socket.onmessage = (ev) => received.push(JSON.parse(ev.data).type);
+  await until(() => socket.readyState === 1);
+
+  socket.send(JSON.stringify({ type: 'subscribe', thread_id: thread.id, after_seq: thread.last_seq }));
+  // wsClient arms its wait for `synced` right after sending; it must not miss it.
+  expect(received).toEqual([]);
+  await until(() => received.includes('synced'));
+  socket.close();
 });
 
 test('a new conversation is created, named from its first message, and answered', async () => {

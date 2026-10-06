@@ -31,9 +31,11 @@ interface DemoModeState {
   /** False until the stored flag has been read; screens that must not guess
    * (the first-run card) wait for it. */
   hydrated: boolean;
+  /** The read has started (the root layout starts it as the app loads). */
+  reading: boolean;
 }
 
-export const useDemoMode = create<DemoModeState>(() => ({ active: false, hydrated: false }));
+export const useDemoMode = create<DemoModeState>(() => ({ active: false, hydrated: false, reading: false }));
 
 let hydration: Promise<void> | null = null;
 
@@ -42,6 +44,7 @@ let hydration: Promise<void> | null = null;
  * demo existed. */
 export function demoReady(): Promise<void> {
   if (!hydration) {
+    useDemoMode.setState({ reading: true });
     hydration = Promise.resolve()
       .then(() => AsyncStorage.getItem(DEMO_STORAGE_KEY))
       .then(
@@ -74,5 +77,5 @@ export async function setDemoFlag(active: boolean): Promise<void> {
 /** Test-only: forget the flag and the read of it, as a fresh launch would. */
 export function resetDemoModeForTests(): void {
   hydration = null;
-  useDemoMode.setState({ active: false, hydrated: false });
+  useDemoMode.setState({ active: false, hydrated: false, reading: false });
 }

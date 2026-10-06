@@ -33,7 +33,10 @@ interface ThreadRecord {
   /** Frames emitted since the demo started, for a subscribe that resumes from
    * an earlier seq. The seeded history comes from the REST snapshot instead. */
   frames: (ChatFrame & { seq: number })[];
+  /** A reply's delay before it starts, then its stream's ticks. */
   timers: ReturnType<typeof setTimeout>[];
+  /** True from a send until its reply starts streaming. */
+  awaiting: boolean;
   streaming: string | null;
 }
 
@@ -142,6 +145,7 @@ export class DemoChat {
         messages: detail.messages,
         frames: [],
         timers: [],
+        awaiting: false,
         streaming: null,
       });
     }
@@ -193,7 +197,7 @@ export class DemoChat {
       origin_run_id: null,
       working: false,
     };
-    this.threads.set(thread.id, { thread, messages: [], frames: [], timers: [], streaming: null });
+    this.threads.set(thread.id, { thread, messages: [], frames: [], timers: [], awaiting: false, streaming: null });
     this.order.push(thread.id);
     return { ...thread };
   }
@@ -265,11 +269,14 @@ export class DemoChat {
     this.upsertFrame(record, message);
     const title = record.thread.title ? null : autoTitle(text);
     if (title) this.patch(threadId, { title });
+    record.awaiting = true;
     record.timers.push(setTimeout(() => this.reply(record, cannedReply(text, images.length)), REPLY_DELAY_MS));
     return { message: { ...message }, deduped: false };
   }
 
-  /** Ends the reply in flight where it stands, as the gateway's /stop does. */
+  /** Ends the reply in flight where it stands, as the gateway's /stop does. A
+   * reply that had not started yet still answers, with a word, so the
+   * transcript's last row is the agent's and it stops reading as working. */
   stop(threadId: string): boolean {
     const record = this.threads.get(threadId);
     if (!record) return false;
@@ -277,7 +284,9 @@ export class DemoChat {
     record.timers = [];
     const live = record.messages.find((m) => m.id === record.streaming);
     if (live) this.finish(record, live, live.parts);
+    else if (record.awaiting) this.say(record, [{ type: 'text', text: 'Stopped.' }]);
     else this.setStatus(record, 'idle');
+    record.awaiting = false;
     return true;
   }
 
@@ -327,9 +336,8 @@ export class DemoChat {
   }
 
   // --- the reply ------------------------------------------------------------
-  private reply(record: ThreadRecord, parts: Part[]): void {
-    const text = parts[0]?.type === 'text' ? parts[0].text : '';
-    this.setStatus(record, 'running');
+  /** A new agent row at the thread's next seq. */
+  private agentMessage(record: ThreadRecord, status: string, parts: Part[]): ChatMessage {
     const now = new Date().toISOString();
     const seq = record.thread.last_seq + 1;
     const message: ChatMessage = {
@@ -340,16 +348,30 @@ export class DemoChat {
       role: 'assistant',
       author_type: 'agent',
       run_id: this.nextId('run'),
-      status: 'streaming',
+      status,
       client_msg_id: null,
       cron_run_id: null,
       created_at: now,
       updated_at: now,
-      parts: [{ type: 'text', text: '' }],
+      parts,
     };
-    record.streaming = message.id;
     record.messages.push(message);
     this.upsertFrame(record, message);
+    return message;
+  }
+
+  /** A complete reply in one piece, with no stream. */
+  private say(record: ThreadRecord, parts: Part[]): void {
+    this.agentMessage(record, 'complete', parts);
+    this.setStatus(record, 'idle');
+  }
+
+  private reply(record: ThreadRecord, parts: Part[]): void {
+    const text = parts[0]?.type === 'text' ? parts[0].text : '';
+    record.awaiting = false;
+    this.setStatus(record, 'running');
+    const message = this.agentMessage(record, 'streaming', [{ type: 'text', text: '' }]);
+    record.streaming = message.id;
 
     const pieces = chunks(text);
     pieces.forEach((delta, i) => {
@@ -479,8 +501,15 @@ class DemoSocket implements ChatSocket {
     this.chat.subscribe(this, msg.thread_id, msg.after_seq ?? 0);
   }
 
+  /** On a later tick, as a network would deliver it: the client re-sends its
+   * subscriptions on foreground and only then arms the wait for their `synced`,
+   * so an answer in the same tick would land before anyone was listening. */
   push(frame: ChatFrame): void {
-    if (this.readyState === OPEN) this.onmessage?.({ data: JSON.stringify(frame) });
+    if (this.readyState !== OPEN) return;
+    const data = JSON.stringify(frame);
+    setTimeout(() => {
+      if (this.readyState === OPEN) this.onmessage?.({ data });
+    }, 0);
   }
 
   close(): void {

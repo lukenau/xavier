@@ -49,6 +49,7 @@ export function BriefWebView({ uri, style, testID }: BriefWebViewProps) {
     return decision === 'allow';
   }, []);
 
+  if (demo === null) return null;
   if (demo) return <DemoPageView uri={uri} style={style} testID={testID} />;
 
   if (error) {

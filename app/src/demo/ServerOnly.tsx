@@ -9,14 +9,20 @@ import { fonts } from '../theme/fonts';
 import { useTheme } from '../theme/useTheme';
 import { DEMO_REPO, useDemoMode } from './mode';
 
-export function useDemoActive(): boolean {
-  return useDemoMode((s) => s.active);
+/** Whether the demo is on, or null while the stored flag is being read. A
+ * screen that would load something from the hub on mount (a page, the
+ * terminal) waits for the answer rather than guess "off" on a cold launch;
+ * the root layout starts the read before any screen renders. */
+export function useDemoActive(): boolean | null {
+  return useDemoMode((s) => (s.hydrated ? s.active : s.reading ? null : false));
 }
 
 /** A route that is the real screen outside the demo and `Demo` inside it. */
 export function inDemo<P extends object>(Real: ComponentType<P>, Demo: ComponentType<P>): ComponentType<P> {
   function DemoAware(props: P) {
-    return useDemoActive() ? <Demo {...props} /> : <Real {...props} />;
+    const demo = useDemoActive();
+    if (demo === null) return null;
+    return demo ? <Demo {...props} /> : <Real {...props} />;
   }
   return DemoAware;
 }

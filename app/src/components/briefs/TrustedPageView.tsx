@@ -37,6 +37,7 @@ export function TrustedPageView({ uri, style, testID }: TrustedPageViewProps) {
     return decision === 'allow';
   }, []);
 
+  if (demo === null) return null;
   if (demo) {
     return <ServerOnlyPanel title="Runs on your own server" detail="This page is built on your own server from your own data." />;
   }

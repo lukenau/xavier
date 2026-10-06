@@ -8,7 +8,7 @@ import TestRenderer, { act } from 'react-test-renderer';
 import { SafeAreaProvider, type Metrics } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
-import { api, clearUserApiBase } from '../lib/api';
+import { api, clearUserApiBase, resolveApiBase } from '../lib/api';
 import { ServerPage } from '../components/config/ServerPage';
 import { DEMO_STORAGE_KEY, demoReady, isDemoActive, resetDemoModeForTests, setDemoFlag } from './mode';
 import { HomeCard } from './HomeCard';
@@ -182,6 +182,19 @@ test('Exit demo in Config leaves the demo, clears its state and returns to the a
   });
   const again = await api.brief();
   expect(again.buckets.now.map((i) => i.item_id)).toContain(item.item_id);
+});
+
+test('saving a real address from inside the demo leaves the demo for that server', async () => {
+  await enterDemo();
+  const tree = await render(<ServerPage />);
+  await act(async () => {
+    tree.root.findByType(TextInput).props.onChangeText('https://hub.example.net');
+  });
+  await press(tree, 'Save server address');
+  await until(() => !isDemoActive());
+  expect(await AsyncStorage.getItem('hub.apiBase')).toBe('https://hub.example.net');
+  expect(resolveApiBase()).toEqual({ base: 'https://hub.example.net', source: 'user' });
+  expect(await AsyncStorage.getItem(DEMO_STORAGE_KEY)).toBeNull();
 });
 
 test('Exit demo on the server screen keeps the address saved before the demo', async () => {

@@ -49,6 +49,12 @@ import { DemoBadge } from '../src/demo/DemoBadge';
 // no splash screen to hold. fonts.sans()/fonts.mono() only ever return family
 // names that assets/fonts/ ships.
 
+// Demo mode's stored flag, read as the app loads rather than from an effect:
+// api.ts waits for it before any request leaves, and a screen that would load
+// a hub page on mount waits too, so a relaunch inside the demo never reaches a
+// server — not even from the very first frame.
+void demoReady();
+
 export default function RootLayout() {
   const hydrate = useAppStore((s) => s.hydrate);
   useEffect(() => {
@@ -59,9 +65,6 @@ export default function RootLayout() {
     // api.ts resolves every call path at call time, so whichever calls race
     // ahead of this simply use the build-time base until it lands.
     void loadStoredApiBase();
-    // Demo mode is read here too, and api.ts waits for it before any request
-    // leaves, so a relaunch inside the demo never reaches a server.
-    void demoReady();
   }, [hydrate]);
 
   // Arms the write gate. api.ts owns the challenge -> sign -> apply sequence for

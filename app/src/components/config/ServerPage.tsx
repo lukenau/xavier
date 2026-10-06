@@ -88,8 +88,10 @@ export function ServerPage() {
         return;
       }
       // A real address while in the demo is the way out of it, to that server.
-      if (demo) await exitDemo();
+      // Saved first: leaving refetches everything, and that must reach this
+      // address, not the one stored before. The demo's origin holds until then.
       await setUserApiBase(check.url);
+      if (demo) await exitDemo();
       refreshEffective();
       setNote(`Saved — this build now talks to ${check.url}.`);
     } finally {
