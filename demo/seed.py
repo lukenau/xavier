@@ -726,6 +726,87 @@ def seed_chat() -> None:
 
 
 # ---------------------------------------------------------------------------
+# Automations (chat/automation_store.py -> /api/chat/automations, the badge)
+# ---------------------------------------------------------------------------
+def seed_automations() -> None:
+    """The Automations tab: the stub bridge's four cron jobs and a few days of
+    their runs, fed through the server's own AutomationStore the way the
+    hub-platform plugin's sync feeds it. The healthcheck's newest run is a
+    warning, so one job needs you and the tab carries a badge; the backup job is
+    paused and writes only `local`, so its failure is background."""
+    sys.path.insert(0, str(SERVER_DIR))
+    from chat.automation_store import AutomationStore
+    from chat.store import ChatStore
+
+    now = datetime.now(timezone.utc).replace(microsecond=0)
+
+    def ago(**kw) -> str:
+        return (now - timedelta(**kw)).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+    def ahead(**kw) -> str:
+        return (now + timedelta(**kw)).isoformat()
+
+    jobs = [
+        {"id": "demo-briefing", "name": "Morning briefing", "schedule": "30 7 * * *",
+         "deliver": "discord:brief", "state": "active", "mode": "agent",
+         "next_run_at": ahead(hours=14), "last_status": "ok"},
+        {"id": "demo-healthcheck", "name": "Service healthcheck", "schedule": "*/15 * * * *",
+         "deliver": "discord:ops", "state": "active", "mode": "script",
+         "next_run_at": ahead(minutes=9), "last_status": "ok"},
+        {"id": "demo-inbox-sweep", "name": "Inbox sweep", "schedule": "0 */2 * * *",
+         "deliver": "discord:ops", "state": "active", "mode": "agent",
+         "next_run_at": ahead(hours=1), "last_status": "ok"},
+        {"id": "demo-nightly-backup", "name": "Nightly backup", "schedule": "0 3 * * *",
+         "deliver": "local", "state": "paused", "mode": "script",
+         "last_status": "failed", "last_error": "target volume 'demo-archive' not mounted"},
+    ]
+    briefing = ("Built today's briefing: 6 items.\n"
+                "- Reply to Xavier about the demo trip\n"
+                "- Approve the demo garage scope\n"
+                "- Demo standup at 11:00\n"
+                "- Package arriving today\n"
+                "- Renew the demo domain\n"
+                "- Demo newsletter, 3 releases worth a look")
+    runs = [
+        ("demo-briefing", ago(hours=10), "ok", briefing),
+        ("demo-briefing", ago(days=1, hours=10), "ok",
+         "Built the briefing: 5 items.\n- Demo review moved to Thursday\n- Two parcels out for delivery\n"
+         "- Demo newsletter, 2 releases\n- Garage quote arrived\n- Trip dates still open"),
+        ("demo-briefing", ago(days=2, hours=10), "ok",
+         "Built the briefing: 4 items.\n- Demo standup at 09:30\n- Renewal reminder for the demo domain\n"
+         "- One parcel delivered\n- Nothing waiting on you"),
+        ("demo-healthcheck", ago(minutes=75), "ok", ""),
+        ("demo-healthcheck", ago(minutes=60), "ok", ""),
+        ("demo-healthcheck", ago(minutes=45), "ok", ""),
+        ("demo-healthcheck", ago(minutes=30), "ok", ""),
+        ("demo-healthcheck", ago(minutes=15), "ok",
+         "⚠️ demo-backup degraded: the archive volume is not mounted.\n- 5 of 6 demo services up\n"
+         "- last good snapshot 2 days ago"),
+        ("demo-inbox-sweep", ago(hours=5), "ok", ""),
+        ("demo-inbox-sweep", ago(hours=3), "ok", "Swept 9 messages, nothing flagged."),
+        ("demo-inbox-sweep", ago(hours=1), "ok",
+         "Swept 14 messages: filed 3, flagged 1 for the approvals queue.\n"
+         "- Demo Market: order confirmation\n- Demo Post: delivery window\n- Demo Bank: statement ready"),
+        ("demo-nightly-backup", ago(days=2, hours=5), "ok", "Snapshot demo-snap-0002 saved: 1.2 GiB, 18301 files."),
+        ("demo-nightly-backup", ago(days=1, hours=5), "failed",
+         "demo-backup: target volume 'demo-archive' not mounted; skipped."),
+    ]
+    names = {j["id"]: j["name"] for j in jobs}
+
+    store = ChatStore(CHAT_DB, CHAT_MEDIA)
+    try:
+        autos = AutomationStore(store)
+        autos.upsert_jobs(jobs, complete=True)
+        autos.upsert_runs([
+            {"run_id": f"{job_id}:run-{i:02d}", "job_id": job_id,
+             "job_name": names[job_id], "run_time": run_time, "status": status, "output": output}
+            for i, (job_id, run_time, status, output) in enumerate(runs)
+        ], source="file")
+    finally:
+        store.close()
+
+
+# ---------------------------------------------------------------------------
 # Calendar snapshot (hub_calendar.py -> /api/calendar)
 # ---------------------------------------------------------------------------
 def seed_calendar() -> None:
@@ -888,6 +969,7 @@ def main() -> int:
     seed_finance()
     seed_my_pages()
     seed_chat()
+    seed_automations()
     seed_calendar()
     seed_misc()
     print(f"seeded demo data under {DEMO_ROOT}")
