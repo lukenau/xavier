@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generated_at": "2026-10-06T17:41:56Z",
+  "generated_at": "2026-10-06T23:08:16Z",
   "anchor_date": "2026-10-06",
   "source": "demo/seed.py via app/scripts/demo-fixtures.py"
  },
@@ -25,7 +25,7 @@
    "body": {
     "latest": {
      "id": "demo-snap-0003",
-     "ts": "2026-10-06T09:41:56+00:00",
+     "ts": "2026-10-06T15:08:16+00:00",
      "size": "1.2 GiB",
      "files": 18432
     },
@@ -34,19 +34,19 @@
     "snapshots": [
      {
       "id": "demo-snap-0001",
-      "ts": "2026-10-04T17:41:56+00:00",
+      "ts": "2026-10-04T23:08:16+00:00",
       "size": "1.2 GiB",
       "files": 18210
      },
      {
       "id": "demo-snap-0002",
-      "ts": "2026-10-05T17:41:56+00:00",
+      "ts": "2026-10-05T23:08:16+00:00",
       "size": "1.2 GiB",
       "files": 18301
      },
      {
       "id": "demo-snap-0003",
-      "ts": "2026-10-06T09:41:56+00:00",
+      "ts": "2026-10-06T15:08:16+00:00",
       "size": "1.2 GiB",
       "files": 18432
      }
@@ -60,7 +60,7 @@
    "status": 200,
    "body": {
     "date": "2026-10-06",
-    "generated_at": "2026-10-06T17:41:56+00:00",
+    "generated_at": "2026-10-06T23:08:16+00:00",
     "buckets": {
      "now": [
       {
@@ -252,7 +252,7 @@
       "unconfirmed": false
      }
     ],
-    "synced_at": "2026-10-06T17:41:56+00:00",
+    "synced_at": "2026-10-06T23:08:17+00:00",
     "window": {
      "from": "2026-09-28",
      "to": "2026-10-25"
@@ -261,23 +261,23 @@
     "weeks": [
      {
       "monday": "2026-09-28",
-      "work": "2026-10-06T17:41:56+00:00",
-      "personal": "2026-10-06T17:41:56+00:00"
+      "work": "2026-10-06T23:08:17+00:00",
+      "personal": "2026-10-06T23:08:17+00:00"
      },
      {
       "monday": "2026-10-05",
-      "work": "2026-10-06T17:41:56+00:00",
-      "personal": "2026-10-06T17:41:56+00:00"
+      "work": "2026-10-06T23:08:17+00:00",
+      "personal": "2026-10-06T23:08:17+00:00"
      },
      {
       "monday": "2026-10-12",
-      "work": "2026-10-06T17:41:56+00:00",
-      "personal": "2026-10-06T17:41:56+00:00"
+      "work": "2026-10-06T23:08:17+00:00",
+      "personal": "2026-10-06T23:08:17+00:00"
      },
      {
       "monday": "2026-10-19",
-      "work": "2026-10-06T17:41:56+00:00",
-      "personal": "2026-10-06T17:41:56+00:00"
+      "work": "2026-10-06T23:08:17+00:00",
+      "personal": "2026-10-06T23:08:17+00:00"
      }
     ],
     "sync_requested_at": null
@@ -301,7 +301,7 @@
       "deliver": "discord:ops",
       "state": "active",
       "mode": "script",
-      "next_run_at": "2026-10-06T17:50:56+00:00",
+      "next_run_at": "2026-10-06T23:17:17+00:00",
       "last_status": "ok",
       "last_error": null,
       "notify": "push",
@@ -313,7 +313,7 @@
        "job_id": "demo-healthcheck",
        "job_name": "Service healthcheck",
        "category": "ops",
-       "run_time": "2026-10-06T17:26:56Z",
+       "run_time": "2026-10-06T22:53:17Z",
        "day": "2026-10-06",
        "status": "ok",
        "severity": "warn",
@@ -329,12 +329,12 @@
        "unchanged": false,
        "new_lines": 0,
        "streak": 1,
-       "since": "2026-10-06T17:26:56Z",
+       "since": "2026-10-06T22:53:17Z",
        "read": false,
        "replies": 0
       },
       "last_run": {
-       "run_time": "2026-10-06T17:26:56Z",
+       "run_time": "2026-10-06T22:53:17Z",
        "status": "ok"
       },
       "unread": 1,
@@ -356,7 +356,7 @@
       "deliver": "discord:ops",
       "state": "active",
       "mode": "agent",
-      "next_run_at": "2026-10-06T18:41:56+00:00",
+      "next_run_at": "2026-10-07T00:08:17+00:00",
       "last_status": "ok",
       "last_error": null,
       "notify": "push",
@@ -368,7 +368,7 @@
        "job_id": "demo-inbox-sweep",
        "job_name": "Inbox sweep",
        "category": "ops",
-       "run_time": "2026-10-06T16:41:56Z",
+       "run_time": "2026-10-06T22:08:17Z",
        "day": "2026-10-06",
        "status": "ok",
        "severity": "info",
@@ -384,12 +384,12 @@
        "unchanged": false,
        "new_lines": 4,
        "streak": 1,
-       "since": "2026-10-06T16:41:56Z",
+       "since": "2026-10-06T22:08:17Z",
        "read": false,
        "replies": 0
       },
       "last_run": {
-       "run_time": "2026-10-06T16:41:56Z",
+       "run_time": "2026-10-06T22:08:17Z",
        "status": "ok"
       },
       "unread": 2,
@@ -411,7 +411,7 @@
       "deliver": "discord:brief",
       "state": "active",
       "mode": "agent",
-      "next_run_at": "2026-10-07T07:41:56+00:00",
+      "next_run_at": "2026-10-07T13:08:17+00:00",
       "last_status": "ok",
       "last_error": null,
       "notify": "push",
@@ -423,7 +423,7 @@
        "job_id": "demo-briefing",
        "job_name": "Morning briefing",
        "category": "ops",
-       "run_time": "2026-10-06T07:41:56Z",
+       "run_time": "2026-10-06T13:08:17Z",
        "day": "2026-10-06",
        "status": "ok",
        "severity": "info",
@@ -439,12 +439,12 @@
        "unchanged": false,
        "new_lines": 7,
        "streak": 1,
-       "since": "2026-10-06T07:41:56Z",
+       "since": "2026-10-06T13:08:17Z",
        "read": false,
        "replies": 0
       },
       "last_run": {
-       "run_time": "2026-10-06T07:41:56Z",
+       "run_time": "2026-10-06T13:08:17Z",
        "status": "ok"
       },
       "unread": 3,
@@ -478,7 +478,7 @@
        "job_id": "demo-nightly-backup",
        "job_name": "Nightly backup",
        "category": "background",
-       "run_time": "2026-10-05T12:41:56Z",
+       "run_time": "2026-10-05T18:08:17Z",
        "day": "2026-10-05",
        "status": "failed",
        "severity": "failed",
@@ -492,12 +492,12 @@
        "unchanged": false,
        "new_lines": 1,
        "streak": 1,
-       "since": "2026-10-05T12:41:56Z",
+       "since": "2026-10-05T18:08:17Z",
        "read": false,
        "replies": 0
       },
       "last_run": {
-       "run_time": "2026-10-05T12:41:56Z",
+       "run_time": "2026-10-05T18:08:17Z",
        "status": "failed"
       },
       "unread": 0,
@@ -517,7 +517,7 @@
      "unread": 6,
      "jobs": 4
     },
-    "generated_at": "2026-10-06T17:42:04Z"
+    "generated_at": "2026-10-06T23:08:28Z"
    }
   },
   "GET /chat/automations#read": {
@@ -532,7 +532,7 @@
       "deliver": "discord:ops",
       "state": "active",
       "mode": "script",
-      "next_run_at": "2026-10-06T17:50:56+00:00",
+      "next_run_at": "2026-10-06T23:17:17+00:00",
       "last_status": "ok",
       "last_error": null,
       "notify": "push",
@@ -544,7 +544,7 @@
        "job_id": "demo-healthcheck",
        "job_name": "Service healthcheck",
        "category": "ops",
-       "run_time": "2026-10-06T17:26:56Z",
+       "run_time": "2026-10-06T22:53:17Z",
        "day": "2026-10-06",
        "status": "ok",
        "severity": "warn",
@@ -560,12 +560,12 @@
        "unchanged": false,
        "new_lines": 0,
        "streak": 1,
-       "since": "2026-10-06T17:26:56Z",
+       "since": "2026-10-06T22:53:17Z",
        "read": true,
        "replies": 0
       },
       "last_run": {
-       "run_time": "2026-10-06T17:26:56Z",
+       "run_time": "2026-10-06T22:53:17Z",
        "status": "ok"
       },
       "unread": 0,
@@ -587,7 +587,7 @@
       "deliver": "discord:ops",
       "state": "active",
       "mode": "agent",
-      "next_run_at": "2026-10-06T18:41:56+00:00",
+      "next_run_at": "2026-10-07T00:08:17+00:00",
       "last_status": "ok",
       "last_error": null,
       "notify": "push",
@@ -599,7 +599,7 @@
        "job_id": "demo-inbox-sweep",
        "job_name": "Inbox sweep",
        "category": "ops",
-       "run_time": "2026-10-06T16:41:56Z",
+       "run_time": "2026-10-06T22:08:17Z",
        "day": "2026-10-06",
        "status": "ok",
        "severity": "info",
@@ -615,12 +615,12 @@
        "unchanged": false,
        "new_lines": 4,
        "streak": 1,
-       "since": "2026-10-06T16:41:56Z",
+       "since": "2026-10-06T22:08:17Z",
        "read": true,
        "replies": 0
       },
       "last_run": {
-       "run_time": "2026-10-06T16:41:56Z",
+       "run_time": "2026-10-06T22:08:17Z",
        "status": "ok"
       },
       "unread": 0,
@@ -642,7 +642,7 @@
       "deliver": "discord:brief",
       "state": "active",
       "mode": "agent",
-      "next_run_at": "2026-10-07T07:41:56+00:00",
+      "next_run_at": "2026-10-07T13:08:17+00:00",
       "last_status": "ok",
       "last_error": null,
       "notify": "push",
@@ -654,7 +654,7 @@
        "job_id": "demo-briefing",
        "job_name": "Morning briefing",
        "category": "ops",
-       "run_time": "2026-10-06T07:41:56Z",
+       "run_time": "2026-10-06T13:08:17Z",
        "day": "2026-10-06",
        "status": "ok",
        "severity": "info",
@@ -670,12 +670,12 @@
        "unchanged": false,
        "new_lines": 7,
        "streak": 1,
-       "since": "2026-10-06T07:41:56Z",
+       "since": "2026-10-06T13:08:17Z",
        "read": true,
        "replies": 0
       },
       "last_run": {
-       "run_time": "2026-10-06T07:41:56Z",
+       "run_time": "2026-10-06T13:08:17Z",
        "status": "ok"
       },
       "unread": 0,
@@ -709,7 +709,7 @@
        "job_id": "demo-nightly-backup",
        "job_name": "Nightly backup",
        "category": "background",
-       "run_time": "2026-10-05T12:41:56Z",
+       "run_time": "2026-10-05T18:08:17Z",
        "day": "2026-10-05",
        "status": "failed",
        "severity": "failed",
@@ -723,12 +723,12 @@
        "unchanged": false,
        "new_lines": 1,
        "streak": 1,
-       "since": "2026-10-05T12:41:56Z",
+       "since": "2026-10-05T18:08:17Z",
        "read": true,
        "replies": 0
       },
       "last_run": {
-       "run_time": "2026-10-05T12:41:56Z",
+       "run_time": "2026-10-05T18:08:17Z",
        "status": "failed"
       },
       "unread": 0,
@@ -748,7 +748,7 @@
      "unread": 0,
      "jobs": 4
     },
-    "generated_at": "2026-10-06T17:42:05Z"
+    "generated_at": "2026-10-06T23:08:31Z"
    }
   },
   "GET /chat/automations/jobs/demo-briefing": {
@@ -762,7 +762,7 @@
      "deliver": "discord:brief",
      "state": "active",
      "mode": "agent",
-     "next_run_at": "2026-10-07T07:41:56+00:00",
+     "next_run_at": "2026-10-07T13:08:17+00:00",
      "last_status": "ok",
      "last_error": null,
      "notify": "push",
@@ -774,7 +774,7 @@
       "job_id": "demo-briefing",
       "job_name": "Morning briefing",
       "category": "ops",
-      "run_time": "2026-10-06T07:41:56Z",
+      "run_time": "2026-10-06T13:08:17Z",
       "day": "2026-10-06",
       "status": "ok",
       "severity": "info",
@@ -790,12 +790,12 @@
       "unchanged": false,
       "new_lines": 7,
       "streak": 1,
-      "since": "2026-10-06T07:41:56Z",
+      "since": "2026-10-06T13:08:17Z",
       "read": false,
       "replies": 0
      },
      "last_run": {
-      "run_time": "2026-10-06T07:41:56Z",
+      "run_time": "2026-10-06T13:08:17Z",
       "status": "ok"
      },
      "unread": 3,
@@ -817,7 +817,7 @@
        "job_id": "demo-briefing",
        "job_name": "Morning briefing",
        "category": "ops",
-       "run_time": "2026-10-06T07:41:56Z",
+       "run_time": "2026-10-06T13:08:17Z",
        "day": "2026-10-06",
        "status": "ok",
        "severity": "info",
@@ -833,7 +833,7 @@
        "unchanged": false,
        "new_lines": 7,
        "streak": 1,
-       "since": "2026-10-06T07:41:56Z",
+       "since": "2026-10-06T13:08:17Z",
        "read": false,
        "replies": 0
       }
@@ -845,7 +845,7 @@
        "job_id": "demo-briefing",
        "job_name": "Morning briefing",
        "category": "ops",
-       "run_time": "2026-10-05T07:41:56Z",
+       "run_time": "2026-10-05T13:08:17Z",
        "day": "2026-10-05",
        "status": "ok",
        "severity": "info",
@@ -861,7 +861,7 @@
        "unchanged": false,
        "new_lines": 6,
        "streak": 1,
-       "since": "2026-10-05T07:41:56Z",
+       "since": "2026-10-05T13:08:17Z",
        "read": false,
        "replies": 0
       }
@@ -873,7 +873,7 @@
        "job_id": "demo-briefing",
        "job_name": "Morning briefing",
        "category": "ops",
-       "run_time": "2026-10-04T07:41:56Z",
+       "run_time": "2026-10-04T13:08:17Z",
        "day": "2026-10-04",
        "status": "ok",
        "severity": "info",
@@ -889,7 +889,7 @@
        "unchanged": false,
        "new_lines": 0,
        "streak": 1,
-       "since": "2026-10-04T07:41:56Z",
+       "since": "2026-10-04T13:08:17Z",
        "read": false,
        "replies": 0
       }
@@ -908,7 +908,7 @@
      "deliver": "discord:brief",
      "state": "active",
      "mode": "agent",
-     "next_run_at": "2026-10-07T07:41:56+00:00",
+     "next_run_at": "2026-10-07T13:08:17+00:00",
      "last_status": "ok",
      "last_error": null,
      "notify": "push",
@@ -920,7 +920,7 @@
       "job_id": "demo-briefing",
       "job_name": "Morning briefing",
       "category": "ops",
-      "run_time": "2026-10-06T07:41:56Z",
+      "run_time": "2026-10-06T13:08:17Z",
       "day": "2026-10-06",
       "status": "ok",
       "severity": "info",
@@ -936,12 +936,12 @@
       "unchanged": false,
       "new_lines": 7,
       "streak": 1,
-      "since": "2026-10-06T07:41:56Z",
+      "since": "2026-10-06T13:08:17Z",
       "read": true,
       "replies": 0
      },
      "last_run": {
-      "run_time": "2026-10-06T07:41:56Z",
+      "run_time": "2026-10-06T13:08:17Z",
       "status": "ok"
      },
      "unread": 0,
@@ -963,7 +963,7 @@
        "job_id": "demo-briefing",
        "job_name": "Morning briefing",
        "category": "ops",
-       "run_time": "2026-10-06T07:41:56Z",
+       "run_time": "2026-10-06T13:08:17Z",
        "day": "2026-10-06",
        "status": "ok",
        "severity": "info",
@@ -979,7 +979,7 @@
        "unchanged": false,
        "new_lines": 7,
        "streak": 1,
-       "since": "2026-10-06T07:41:56Z",
+       "since": "2026-10-06T13:08:17Z",
        "read": true,
        "replies": 0
       }
@@ -991,7 +991,7 @@
        "job_id": "demo-briefing",
        "job_name": "Morning briefing",
        "category": "ops",
-       "run_time": "2026-10-05T07:41:56Z",
+       "run_time": "2026-10-05T13:08:17Z",
        "day": "2026-10-05",
        "status": "ok",
        "severity": "info",
@@ -1007,7 +1007,7 @@
        "unchanged": false,
        "new_lines": 6,
        "streak": 1,
-       "since": "2026-10-05T07:41:56Z",
+       "since": "2026-10-05T13:08:17Z",
        "read": true,
        "replies": 0
       }
@@ -1019,7 +1019,7 @@
        "job_id": "demo-briefing",
        "job_name": "Morning briefing",
        "category": "ops",
-       "run_time": "2026-10-04T07:41:56Z",
+       "run_time": "2026-10-04T13:08:17Z",
        "day": "2026-10-04",
        "status": "ok",
        "severity": "info",
@@ -1035,7 +1035,7 @@
        "unchanged": false,
        "new_lines": 0,
        "streak": 1,
-       "since": "2026-10-04T07:41:56Z",
+       "since": "2026-10-04T13:08:17Z",
        "read": true,
        "replies": 0
       }
@@ -1054,7 +1054,7 @@
      "deliver": "discord:ops",
      "state": "active",
      "mode": "script",
-     "next_run_at": "2026-10-06T17:50:56+00:00",
+     "next_run_at": "2026-10-06T23:17:17+00:00",
      "last_status": "ok",
      "last_error": null,
      "notify": "push",
@@ -1066,7 +1066,7 @@
       "job_id": "demo-healthcheck",
       "job_name": "Service healthcheck",
       "category": "ops",
-      "run_time": "2026-10-06T17:26:56Z",
+      "run_time": "2026-10-06T22:53:17Z",
       "day": "2026-10-06",
       "status": "ok",
       "severity": "warn",
@@ -1082,12 +1082,12 @@
       "unchanged": false,
       "new_lines": 0,
       "streak": 1,
-      "since": "2026-10-06T17:26:56Z",
+      "since": "2026-10-06T22:53:17Z",
       "read": false,
       "replies": 0
      },
      "last_run": {
-      "run_time": "2026-10-06T17:26:56Z",
+      "run_time": "2026-10-06T22:53:17Z",
       "status": "ok"
      },
      "unread": 1,
@@ -1109,7 +1109,7 @@
        "job_id": "demo-healthcheck",
        "job_name": "Service healthcheck",
        "category": "ops",
-       "run_time": "2026-10-06T17:26:56Z",
+       "run_time": "2026-10-06T22:53:17Z",
        "day": "2026-10-06",
        "status": "ok",
        "severity": "warn",
@@ -1125,7 +1125,7 @@
        "unchanged": false,
        "new_lines": 0,
        "streak": 1,
-       "since": "2026-10-06T17:26:56Z",
+       "since": "2026-10-06T22:53:17Z",
        "read": false,
        "replies": 0
       }
@@ -1134,8 +1134,8 @@
       "kind": "span",
       "span": "silent",
       "count": 4,
-      "from": "2026-10-06T16:26:56Z",
-      "to": "2026-10-06T17:11:56Z"
+      "from": "2026-10-06T21:53:17Z",
+      "to": "2026-10-06T22:38:17Z"
      }
     ]
    }
@@ -1151,7 +1151,7 @@
      "deliver": "discord:ops",
      "state": "active",
      "mode": "script",
-     "next_run_at": "2026-10-06T17:50:56+00:00",
+     "next_run_at": "2026-10-06T23:17:17+00:00",
      "last_status": "ok",
      "last_error": null,
      "notify": "push",
@@ -1163,7 +1163,7 @@
       "job_id": "demo-healthcheck",
       "job_name": "Service healthcheck",
       "category": "ops",
-      "run_time": "2026-10-06T17:26:56Z",
+      "run_time": "2026-10-06T22:53:17Z",
       "day": "2026-10-06",
       "status": "ok",
       "severity": "warn",
@@ -1179,12 +1179,12 @@
       "unchanged": false,
       "new_lines": 0,
       "streak": 1,
-      "since": "2026-10-06T17:26:56Z",
+      "since": "2026-10-06T22:53:17Z",
       "read": true,
       "replies": 0
      },
      "last_run": {
-      "run_time": "2026-10-06T17:26:56Z",
+      "run_time": "2026-10-06T22:53:17Z",
       "status": "ok"
      },
      "unread": 0,
@@ -1206,7 +1206,7 @@
        "job_id": "demo-healthcheck",
        "job_name": "Service healthcheck",
        "category": "ops",
-       "run_time": "2026-10-06T17:26:56Z",
+       "run_time": "2026-10-06T22:53:17Z",
        "day": "2026-10-06",
        "status": "ok",
        "severity": "warn",
@@ -1222,7 +1222,7 @@
        "unchanged": false,
        "new_lines": 0,
        "streak": 1,
-       "since": "2026-10-06T17:26:56Z",
+       "since": "2026-10-06T22:53:17Z",
        "read": true,
        "replies": 0
       }
@@ -1231,8 +1231,8 @@
       "kind": "span",
       "span": "silent",
       "count": 4,
-      "from": "2026-10-06T16:26:56Z",
-      "to": "2026-10-06T17:11:56Z"
+      "from": "2026-10-06T21:53:17Z",
+      "to": "2026-10-06T22:38:17Z"
      }
     ]
    }
@@ -1248,7 +1248,7 @@
      "deliver": "discord:ops",
      "state": "active",
      "mode": "agent",
-     "next_run_at": "2026-10-06T18:41:56+00:00",
+     "next_run_at": "2026-10-07T00:08:17+00:00",
      "last_status": "ok",
      "last_error": null,
      "notify": "push",
@@ -1260,7 +1260,7 @@
       "job_id": "demo-inbox-sweep",
       "job_name": "Inbox sweep",
       "category": "ops",
-      "run_time": "2026-10-06T16:41:56Z",
+      "run_time": "2026-10-06T22:08:17Z",
       "day": "2026-10-06",
       "status": "ok",
       "severity": "info",
@@ -1276,12 +1276,12 @@
       "unchanged": false,
       "new_lines": 4,
       "streak": 1,
-      "since": "2026-10-06T16:41:56Z",
+      "since": "2026-10-06T22:08:17Z",
       "read": false,
       "replies": 0
      },
      "last_run": {
-      "run_time": "2026-10-06T16:41:56Z",
+      "run_time": "2026-10-06T22:08:17Z",
       "status": "ok"
      },
      "unread": 2,
@@ -1303,7 +1303,7 @@
        "job_id": "demo-inbox-sweep",
        "job_name": "Inbox sweep",
        "category": "ops",
-       "run_time": "2026-10-06T16:41:56Z",
+       "run_time": "2026-10-06T22:08:17Z",
        "day": "2026-10-06",
        "status": "ok",
        "severity": "info",
@@ -1319,7 +1319,7 @@
        "unchanged": false,
        "new_lines": 4,
        "streak": 1,
-       "since": "2026-10-06T16:41:56Z",
+       "since": "2026-10-06T22:08:17Z",
        "read": false,
        "replies": 0
       }
@@ -1331,7 +1331,7 @@
        "job_id": "demo-inbox-sweep",
        "job_name": "Inbox sweep",
        "category": "ops",
-       "run_time": "2026-10-06T14:41:56Z",
+       "run_time": "2026-10-06T20:08:17Z",
        "day": "2026-10-06",
        "status": "ok",
        "severity": "info",
@@ -1345,7 +1345,7 @@
        "unchanged": false,
        "new_lines": 0,
        "streak": 1,
-       "since": "2026-10-06T14:41:56Z",
+       "since": "2026-10-06T20:08:17Z",
        "read": false,
        "replies": 0
       }
@@ -1354,8 +1354,8 @@
       "kind": "span",
       "span": "silent",
       "count": 1,
-      "from": "2026-10-06T12:41:56Z",
-      "to": "2026-10-06T12:41:56Z"
+      "from": "2026-10-06T18:08:17Z",
+      "to": "2026-10-06T18:08:17Z"
      }
     ]
    }
@@ -1371,7 +1371,7 @@
      "deliver": "discord:ops",
      "state": "active",
      "mode": "agent",
-     "next_run_at": "2026-10-06T18:41:56+00:00",
+     "next_run_at": "2026-10-07T00:08:17+00:00",
      "last_status": "ok",
      "last_error": null,
      "notify": "push",
@@ -1383,7 +1383,7 @@
       "job_id": "demo-inbox-sweep",
       "job_name": "Inbox sweep",
       "category": "ops",
-      "run_time": "2026-10-06T16:41:56Z",
+      "run_time": "2026-10-06T22:08:17Z",
       "day": "2026-10-06",
       "status": "ok",
       "severity": "info",
@@ -1399,12 +1399,12 @@
       "unchanged": false,
       "new_lines": 4,
       "streak": 1,
-      "since": "2026-10-06T16:41:56Z",
+      "since": "2026-10-06T22:08:17Z",
       "read": true,
       "replies": 0
      },
      "last_run": {
-      "run_time": "2026-10-06T16:41:56Z",
+      "run_time": "2026-10-06T22:08:17Z",
       "status": "ok"
      },
      "unread": 0,
@@ -1426,7 +1426,7 @@
        "job_id": "demo-inbox-sweep",
        "job_name": "Inbox sweep",
        "category": "ops",
-       "run_time": "2026-10-06T16:41:56Z",
+       "run_time": "2026-10-06T22:08:17Z",
        "day": "2026-10-06",
        "status": "ok",
        "severity": "info",
@@ -1442,7 +1442,7 @@
        "unchanged": false,
        "new_lines": 4,
        "streak": 1,
-       "since": "2026-10-06T16:41:56Z",
+       "since": "2026-10-06T22:08:17Z",
        "read": true,
        "replies": 0
       }
@@ -1454,7 +1454,7 @@
        "job_id": "demo-inbox-sweep",
        "job_name": "Inbox sweep",
        "category": "ops",
-       "run_time": "2026-10-06T14:41:56Z",
+       "run_time": "2026-10-06T20:08:17Z",
        "day": "2026-10-06",
        "status": "ok",
        "severity": "info",
@@ -1468,7 +1468,7 @@
        "unchanged": false,
        "new_lines": 0,
        "streak": 1,
-       "since": "2026-10-06T14:41:56Z",
+       "since": "2026-10-06T20:08:17Z",
        "read": true,
        "replies": 0
       }
@@ -1477,8 +1477,8 @@
       "kind": "span",
       "span": "silent",
       "count": 1,
-      "from": "2026-10-06T12:41:56Z",
-      "to": "2026-10-06T12:41:56Z"
+      "from": "2026-10-06T18:08:17Z",
+      "to": "2026-10-06T18:08:17Z"
      }
     ]
    }
@@ -1506,7 +1506,7 @@
       "job_id": "demo-nightly-backup",
       "job_name": "Nightly backup",
       "category": "background",
-      "run_time": "2026-10-05T12:41:56Z",
+      "run_time": "2026-10-05T18:08:17Z",
       "day": "2026-10-05",
       "status": "failed",
       "severity": "failed",
@@ -1520,12 +1520,12 @@
       "unchanged": false,
       "new_lines": 1,
       "streak": 1,
-      "since": "2026-10-05T12:41:56Z",
+      "since": "2026-10-05T18:08:17Z",
       "read": false,
       "replies": 0
      },
      "last_run": {
-      "run_time": "2026-10-05T12:41:56Z",
+      "run_time": "2026-10-05T18:08:17Z",
       "status": "failed"
      },
      "unread": 0,
@@ -1547,7 +1547,7 @@
        "job_id": "demo-nightly-backup",
        "job_name": "Nightly backup",
        "category": "background",
-       "run_time": "2026-10-05T12:41:56Z",
+       "run_time": "2026-10-05T18:08:17Z",
        "day": "2026-10-05",
        "status": "failed",
        "severity": "failed",
@@ -1561,7 +1561,7 @@
        "unchanged": false,
        "new_lines": 1,
        "streak": 1,
-       "since": "2026-10-05T12:41:56Z",
+       "since": "2026-10-05T18:08:17Z",
        "read": false,
        "replies": 0
       }
@@ -1573,7 +1573,7 @@
        "job_id": "demo-nightly-backup",
        "job_name": "Nightly backup",
        "category": "background",
-       "run_time": "2026-10-04T12:41:56Z",
+       "run_time": "2026-10-04T18:08:17Z",
        "day": "2026-10-04",
        "status": "ok",
        "severity": "info",
@@ -1587,7 +1587,7 @@
        "unchanged": false,
        "new_lines": 0,
        "streak": 1,
-       "since": "2026-10-04T12:41:56Z",
+       "since": "2026-10-04T18:08:17Z",
        "read": false,
        "replies": 0
       }
@@ -1618,7 +1618,7 @@
       "job_id": "demo-nightly-backup",
       "job_name": "Nightly backup",
       "category": "background",
-      "run_time": "2026-10-05T12:41:56Z",
+      "run_time": "2026-10-05T18:08:17Z",
       "day": "2026-10-05",
       "status": "failed",
       "severity": "failed",
@@ -1632,12 +1632,12 @@
       "unchanged": false,
       "new_lines": 1,
       "streak": 1,
-      "since": "2026-10-05T12:41:56Z",
+      "since": "2026-10-05T18:08:17Z",
       "read": true,
       "replies": 0
      },
      "last_run": {
-      "run_time": "2026-10-05T12:41:56Z",
+      "run_time": "2026-10-05T18:08:17Z",
       "status": "failed"
      },
      "unread": 0,
@@ -1659,7 +1659,7 @@
        "job_id": "demo-nightly-backup",
        "job_name": "Nightly backup",
        "category": "background",
-       "run_time": "2026-10-05T12:41:56Z",
+       "run_time": "2026-10-05T18:08:17Z",
        "day": "2026-10-05",
        "status": "failed",
        "severity": "failed",
@@ -1673,7 +1673,7 @@
        "unchanged": false,
        "new_lines": 1,
        "streak": 1,
-       "since": "2026-10-05T12:41:56Z",
+       "since": "2026-10-05T18:08:17Z",
        "read": true,
        "replies": 0
       }
@@ -1685,7 +1685,7 @@
        "job_id": "demo-nightly-backup",
        "job_name": "Nightly backup",
        "category": "background",
-       "run_time": "2026-10-04T12:41:56Z",
+       "run_time": "2026-10-04T18:08:17Z",
        "day": "2026-10-04",
        "status": "ok",
        "severity": "info",
@@ -1699,7 +1699,7 @@
        "unchanged": false,
        "new_lines": 0,
        "streak": 1,
-       "since": "2026-10-04T12:41:56Z",
+       "since": "2026-10-04T18:08:17Z",
        "read": true,
        "replies": 0
       }
@@ -1719,7 +1719,7 @@
         "job_id": "demo-healthcheck",
         "job_name": "Service healthcheck",
         "category": "ops",
-        "run_time": "2026-10-06T17:26:56Z",
+        "run_time": "2026-10-06T22:53:17Z",
         "day": "2026-10-06",
         "status": "ok",
         "severity": "warn",
@@ -1735,7 +1735,7 @@
         "unchanged": false,
         "new_lines": 0,
         "streak": 1,
-        "since": "2026-10-06T17:26:56Z",
+        "since": "2026-10-06T22:53:17Z",
         "read": false,
         "replies": 0
        },
@@ -1744,7 +1744,7 @@
         "job_id": "demo-inbox-sweep",
         "job_name": "Inbox sweep",
         "category": "ops",
-        "run_time": "2026-10-06T16:41:56Z",
+        "run_time": "2026-10-06T22:08:17Z",
         "day": "2026-10-06",
         "status": "ok",
         "severity": "info",
@@ -1760,7 +1760,7 @@
         "unchanged": false,
         "new_lines": 4,
         "streak": 1,
-        "since": "2026-10-06T16:41:56Z",
+        "since": "2026-10-06T22:08:17Z",
         "read": false,
         "replies": 0
        },
@@ -1769,7 +1769,7 @@
         "job_id": "demo-inbox-sweep",
         "job_name": "Inbox sweep",
         "category": "ops",
-        "run_time": "2026-10-06T14:41:56Z",
+        "run_time": "2026-10-06T20:08:17Z",
         "day": "2026-10-06",
         "status": "ok",
         "severity": "info",
@@ -1783,7 +1783,7 @@
         "unchanged": false,
         "new_lines": 0,
         "streak": 1,
-        "since": "2026-10-06T14:41:56Z",
+        "since": "2026-10-06T20:08:17Z",
         "read": false,
         "replies": 0
        },
@@ -1792,7 +1792,7 @@
         "job_id": "demo-briefing",
         "job_name": "Morning briefing",
         "category": "ops",
-        "run_time": "2026-10-06T07:41:56Z",
+        "run_time": "2026-10-06T13:08:17Z",
         "day": "2026-10-06",
         "status": "ok",
         "severity": "info",
@@ -1808,7 +1808,7 @@
         "unchanged": false,
         "new_lines": 7,
         "streak": 1,
-        "since": "2026-10-06T07:41:56Z",
+        "since": "2026-10-06T13:08:17Z",
         "read": false,
         "replies": 0
        }
@@ -1836,7 +1836,7 @@
         "job_id": "demo-nightly-backup",
         "job_name": "Nightly backup",
         "category": "background",
-        "run_time": "2026-10-05T12:41:56Z",
+        "run_time": "2026-10-05T18:08:17Z",
         "day": "2026-10-05",
         "status": "failed",
         "severity": "failed",
@@ -1850,7 +1850,7 @@
         "unchanged": false,
         "new_lines": 1,
         "streak": 1,
-        "since": "2026-10-05T12:41:56Z",
+        "since": "2026-10-05T18:08:17Z",
         "read": false,
         "replies": 0
        },
@@ -1859,7 +1859,7 @@
         "job_id": "demo-briefing",
         "job_name": "Morning briefing",
         "category": "ops",
-        "run_time": "2026-10-05T07:41:56Z",
+        "run_time": "2026-10-05T13:08:17Z",
         "day": "2026-10-05",
         "status": "ok",
         "severity": "info",
@@ -1875,7 +1875,7 @@
         "unchanged": false,
         "new_lines": 6,
         "streak": 1,
-        "since": "2026-10-05T07:41:56Z",
+        "since": "2026-10-05T13:08:17Z",
         "read": false,
         "replies": 0
        }
@@ -1890,7 +1890,7 @@
         "job_id": "demo-briefing",
         "job_name": "Morning briefing",
         "category": "ops",
-        "run_time": "2026-10-04T07:41:56Z",
+        "run_time": "2026-10-04T13:08:17Z",
         "day": "2026-10-04",
         "status": "ok",
         "severity": "info",
@@ -1906,7 +1906,7 @@
         "unchanged": false,
         "new_lines": 0,
         "streak": 1,
-        "since": "2026-10-04T07:41:56Z",
+        "since": "2026-10-04T13:08:17Z",
         "read": false,
         "replies": 0
        }
@@ -1936,7 +1936,7 @@
         "job_id": "demo-healthcheck",
         "job_name": "Service healthcheck",
         "category": "ops",
-        "run_time": "2026-10-06T17:26:56Z",
+        "run_time": "2026-10-06T22:53:17Z",
         "day": "2026-10-06",
         "status": "ok",
         "severity": "warn",
@@ -1952,7 +1952,7 @@
         "unchanged": false,
         "new_lines": 0,
         "streak": 1,
-        "since": "2026-10-06T17:26:56Z",
+        "since": "2026-10-06T22:53:17Z",
         "read": true,
         "replies": 0
        },
@@ -1961,7 +1961,7 @@
         "job_id": "demo-inbox-sweep",
         "job_name": "Inbox sweep",
         "category": "ops",
-        "run_time": "2026-10-06T16:41:56Z",
+        "run_time": "2026-10-06T22:08:17Z",
         "day": "2026-10-06",
         "status": "ok",
         "severity": "info",
@@ -1977,7 +1977,7 @@
         "unchanged": false,
         "new_lines": 4,
         "streak": 1,
-        "since": "2026-10-06T16:41:56Z",
+        "since": "2026-10-06T22:08:17Z",
         "read": true,
         "replies": 0
        },
@@ -1986,7 +1986,7 @@
         "job_id": "demo-inbox-sweep",
         "job_name": "Inbox sweep",
         "category": "ops",
-        "run_time": "2026-10-06T14:41:56Z",
+        "run_time": "2026-10-06T20:08:17Z",
         "day": "2026-10-06",
         "status": "ok",
         "severity": "info",
@@ -2000,7 +2000,7 @@
         "unchanged": false,
         "new_lines": 0,
         "streak": 1,
-        "since": "2026-10-06T14:41:56Z",
+        "since": "2026-10-06T20:08:17Z",
         "read": true,
         "replies": 0
        },
@@ -2009,7 +2009,7 @@
         "job_id": "demo-briefing",
         "job_name": "Morning briefing",
         "category": "ops",
-        "run_time": "2026-10-06T07:41:56Z",
+        "run_time": "2026-10-06T13:08:17Z",
         "day": "2026-10-06",
         "status": "ok",
         "severity": "info",
@@ -2025,7 +2025,7 @@
         "unchanged": false,
         "new_lines": 7,
         "streak": 1,
-        "since": "2026-10-06T07:41:56Z",
+        "since": "2026-10-06T13:08:17Z",
         "read": true,
         "replies": 0
        }
@@ -2053,7 +2053,7 @@
         "job_id": "demo-nightly-backup",
         "job_name": "Nightly backup",
         "category": "background",
-        "run_time": "2026-10-05T12:41:56Z",
+        "run_time": "2026-10-05T18:08:17Z",
         "day": "2026-10-05",
         "status": "failed",
         "severity": "failed",
@@ -2067,7 +2067,7 @@
         "unchanged": false,
         "new_lines": 1,
         "streak": 1,
-        "since": "2026-10-05T12:41:56Z",
+        "since": "2026-10-05T18:08:17Z",
         "read": true,
         "replies": 0
        },
@@ -2076,7 +2076,7 @@
         "job_id": "demo-briefing",
         "job_name": "Morning briefing",
         "category": "ops",
-        "run_time": "2026-10-05T07:41:56Z",
+        "run_time": "2026-10-05T13:08:17Z",
         "day": "2026-10-05",
         "status": "ok",
         "severity": "info",
@@ -2092,7 +2092,7 @@
         "unchanged": false,
         "new_lines": 6,
         "streak": 1,
-        "since": "2026-10-05T07:41:56Z",
+        "since": "2026-10-05T13:08:17Z",
         "read": true,
         "replies": 0
        }
@@ -2107,7 +2107,7 @@
         "job_id": "demo-briefing",
         "job_name": "Morning briefing",
         "category": "ops",
-        "run_time": "2026-10-04T07:41:56Z",
+        "run_time": "2026-10-04T13:08:17Z",
         "day": "2026-10-04",
         "status": "ok",
         "severity": "info",
@@ -2123,7 +2123,7 @@
         "unchanged": false,
         "new_lines": 0,
         "streak": 1,
-        "since": "2026-10-04T07:41:56Z",
+        "since": "2026-10-04T13:08:17Z",
         "read": true,
         "replies": 0
        }
@@ -2153,8 +2153,8 @@
       "pinned": false,
       "archived": false,
       "last_seq": 4,
-      "created_at": "2026-10-06T17:41:56Z",
-      "updated_at": "2026-10-06T17:41:56Z",
+      "created_at": "2026-10-06T23:08:17Z",
+      "updated_at": "2026-10-06T23:08:17Z",
       "last_read_seq": 0,
       "unread": 4,
       "preview": "Both fit the budget. The cabin needs booking two weeks out; the town is flexible. I left a decision card for the dates.",
@@ -2173,8 +2173,8 @@
       "pinned": false,
       "archived": false,
       "last_seq": 4,
-      "created_at": "2026-10-06T17:41:56Z",
-      "updated_at": "2026-10-06T17:41:56Z",
+      "created_at": "2026-10-06T23:08:17Z",
+      "updated_at": "2026-10-06T23:08:17Z",
       "last_read_seq": 0,
       "unread": 4,
       "preview": "Added: a staged refresh checklist as an alternative scope.",
@@ -2193,8 +2193,8 @@
       "pinned": false,
       "archived": false,
       "last_seq": 3,
-      "created_at": "2026-10-06T17:41:56Z",
-      "updated_at": "2026-10-06T17:41:56Z",
+      "created_at": "2026-10-06T23:08:17Z",
+      "updated_at": "2026-10-06T23:08:17Z",
       "last_read_seq": 0,
       "unread": 3,
       "preview": "Try the Brief tab, then Ops (cron + kanban) and the Cost page. Anything you change stays on this iPhone.",
@@ -2213,8 +2213,8 @@
       "pinned": false,
       "archived": false,
       "last_seq": 14,
-      "created_at": "2026-10-06T17:41:56Z",
-      "updated_at": "2026-10-06T17:41:56Z",
+      "created_at": "2026-10-06T23:08:17Z",
+      "updated_at": "2026-10-06T23:08:17Z",
       "last_read_seq": 0,
       "unread": 14,
       "preview": "Last three: a button row, a poll and a form. In chat these draw but return nothing when tapped — only server-rendered pages can post back, …",
@@ -2323,8 +2323,8 @@
      "pinned": false,
      "archived": false,
      "last_seq": 0,
-     "created_at": "2026-10-06T17:42:05Z",
-     "updated_at": "2026-10-06T17:42:05Z",
+     "created_at": "2026-10-06T23:08:30Z",
+     "updated_at": "2026-10-06T23:08:30Z",
      "last_read_seq": 0,
      "unread": 0,
      "preview": null,
@@ -2350,8 +2350,8 @@
      "pinned": false,
      "archived": false,
      "last_seq": 0,
-     "created_at": "2026-10-06T17:42:05Z",
-     "updated_at": "2026-10-06T17:42:05Z",
+     "created_at": "2026-10-06T23:08:30Z",
+     "updated_at": "2026-10-06T23:08:30Z",
      "last_read_seq": 0,
      "unread": 0,
      "preview": null,
@@ -2377,8 +2377,8 @@
      "pinned": false,
      "archived": false,
      "last_seq": 0,
-     "created_at": "2026-10-06T17:42:05Z",
-     "updated_at": "2026-10-06T17:42:05Z",
+     "created_at": "2026-10-06T23:08:30Z",
+     "updated_at": "2026-10-06T23:08:30Z",
      "last_read_seq": 0,
      "unread": 0,
      "preview": null,
@@ -2404,8 +2404,8 @@
      "pinned": false,
      "archived": false,
      "last_seq": 0,
-     "created_at": "2026-10-06T17:42:05Z",
-     "updated_at": "2026-10-06T17:42:05Z",
+     "created_at": "2026-10-06T23:08:30Z",
+     "updated_at": "2026-10-06T23:08:30Z",
      "last_read_seq": 0,
      "unread": 0,
      "preview": null,
@@ -2431,8 +2431,8 @@
      "pinned": false,
      "archived": false,
      "last_seq": 0,
-     "created_at": "2026-10-06T17:42:05Z",
-     "updated_at": "2026-10-06T17:42:05Z",
+     "created_at": "2026-10-06T23:08:30Z",
+     "updated_at": "2026-10-06T23:08:30Z",
      "last_read_seq": 0,
      "unread": 0,
      "preview": null,
@@ -2458,8 +2458,8 @@
      "pinned": false,
      "archived": false,
      "last_seq": 0,
-     "created_at": "2026-10-06T17:42:05Z",
-     "updated_at": "2026-10-06T17:42:05Z",
+     "created_at": "2026-10-06T23:08:30Z",
+     "updated_at": "2026-10-06T23:08:30Z",
      "last_read_seq": 0,
      "unread": 0,
      "preview": null,
@@ -2485,8 +2485,8 @@
      "pinned": false,
      "archived": false,
      "last_seq": 0,
-     "created_at": "2026-10-06T17:42:05Z",
-     "updated_at": "2026-10-06T17:42:05Z",
+     "created_at": "2026-10-06T23:08:30Z",
+     "updated_at": "2026-10-06T23:08:30Z",
      "last_read_seq": 0,
      "unread": 0,
      "preview": null,
@@ -2512,8 +2512,8 @@
      "pinned": false,
      "archived": false,
      "last_seq": 0,
-     "created_at": "2026-10-06T17:42:05Z",
-     "updated_at": "2026-10-06T17:42:05Z",
+     "created_at": "2026-10-06T23:08:30Z",
+     "updated_at": "2026-10-06T23:08:30Z",
      "last_read_seq": 0,
      "unread": 0,
      "preview": null,
@@ -2539,8 +2539,8 @@
      "pinned": false,
      "archived": false,
      "last_seq": 14,
-     "created_at": "2026-10-06T17:41:56Z",
-     "updated_at": "2026-10-06T17:41:56Z",
+     "created_at": "2026-10-06T23:08:17Z",
+     "updated_at": "2026-10-06T23:08:17Z",
      "last_read_seq": 0,
      "unread": 14,
      "preview": "Last three: a button row, a poll and a form. In chat these draw but return nothing when tapped — only server-rendered pages can post back, …",
@@ -2566,8 +2566,8 @@
       "forward_status": null,
       "forward_reason": null,
       "version": 1,
-      "created_at": "2026-10-06T17:41:56Z",
-      "updated_at": "2026-10-06T17:41:56Z",
+      "created_at": "2026-10-06T23:08:17Z",
+      "updated_at": "2026-10-06T23:08:17Z",
       "job_id": null,
       "job_run_id": null,
       "parts": [
@@ -2591,8 +2591,8 @@
       "forward_status": null,
       "forward_reason": null,
       "version": 2,
-      "created_at": "2026-10-06T17:41:56Z",
-      "updated_at": "2026-10-06T17:41:56Z",
+      "created_at": "2026-10-06T23:08:17Z",
+      "updated_at": "2026-10-06T23:08:17Z",
       "job_id": null,
       "job_run_id": null,
       "parts": [
@@ -2616,8 +2616,8 @@
       "forward_status": null,
       "forward_reason": null,
       "version": 3,
-      "created_at": "2026-10-06T17:41:56Z",
-      "updated_at": "2026-10-06T17:41:56Z",
+      "created_at": "2026-10-06T23:08:17Z",
+      "updated_at": "2026-10-06T23:08:17Z",
       "job_id": null,
       "job_run_id": null,
       "parts": [
@@ -2674,8 +2674,8 @@
       "forward_status": null,
       "forward_reason": null,
       "version": 4,
-      "created_at": "2026-10-06T17:41:56Z",
-      "updated_at": "2026-10-06T17:41:56Z",
+      "created_at": "2026-10-06T23:08:17Z",
+      "updated_at": "2026-10-06T23:08:17Z",
       "job_id": null,
       "job_run_id": null,
       "parts": [
@@ -2699,8 +2699,8 @@
       "forward_status": null,
       "forward_reason": null,
       "version": 5,
-      "created_at": "2026-10-06T17:41:56Z",
-      "updated_at": "2026-10-06T17:41:56Z",
+      "created_at": "2026-10-06T23:08:17Z",
+      "updated_at": "2026-10-06T23:08:17Z",
       "job_id": null,
       "job_run_id": null,
       "parts": [
@@ -2768,8 +2768,8 @@
       "forward_status": null,
       "forward_reason": null,
       "version": 6,
-      "created_at": "2026-10-06T17:41:56Z",
-      "updated_at": "2026-10-06T17:41:56Z",
+      "created_at": "2026-10-06T23:08:17Z",
+      "updated_at": "2026-10-06T23:08:17Z",
       "job_id": null,
       "job_run_id": null,
       "parts": [
@@ -2841,8 +2841,8 @@
       "forward_status": null,
       "forward_reason": null,
       "version": 7,
-      "created_at": "2026-10-06T17:41:56Z",
-      "updated_at": "2026-10-06T17:41:56Z",
+      "created_at": "2026-10-06T23:08:17Z",
+      "updated_at": "2026-10-06T23:08:17Z",
       "job_id": null,
       "job_run_id": null,
       "parts": [
@@ -2882,8 +2882,8 @@
       "forward_status": null,
       "forward_reason": null,
       "version": 8,
-      "created_at": "2026-10-06T17:41:56Z",
-      "updated_at": "2026-10-06T17:41:56Z",
+      "created_at": "2026-10-06T23:08:17Z",
+      "updated_at": "2026-10-06T23:08:17Z",
       "job_id": null,
       "job_run_id": null,
       "parts": [
@@ -2907,8 +2907,8 @@
       "forward_status": null,
       "forward_reason": null,
       "version": 9,
-      "created_at": "2026-10-06T17:41:56Z",
-      "updated_at": "2026-10-06T17:41:56Z",
+      "created_at": "2026-10-06T23:08:17Z",
+      "updated_at": "2026-10-06T23:08:17Z",
       "job_id": null,
       "job_run_id": null,
       "parts": [
@@ -2995,8 +2995,8 @@
       "forward_status": null,
       "forward_reason": null,
       "version": 10,
-      "created_at": "2026-10-06T17:41:56Z",
-      "updated_at": "2026-10-06T17:41:56Z",
+      "created_at": "2026-10-06T23:08:17Z",
+      "updated_at": "2026-10-06T23:08:17Z",
       "job_id": null,
       "job_run_id": null,
       "parts": [
@@ -3020,8 +3020,8 @@
       "forward_status": null,
       "forward_reason": null,
       "version": 11,
-      "created_at": "2026-10-06T17:41:56Z",
-      "updated_at": "2026-10-06T17:41:56Z",
+      "created_at": "2026-10-06T23:08:17Z",
+      "updated_at": "2026-10-06T23:08:17Z",
       "job_id": null,
       "job_run_id": null,
       "parts": [
@@ -3088,8 +3088,8 @@
       "forward_status": null,
       "forward_reason": null,
       "version": 12,
-      "created_at": "2026-10-06T17:41:56Z",
-      "updated_at": "2026-10-06T17:41:56Z",
+      "created_at": "2026-10-06T23:08:17Z",
+      "updated_at": "2026-10-06T23:08:17Z",
       "job_id": null,
       "job_run_id": null,
       "parts": [
@@ -3171,8 +3171,8 @@
       "forward_status": null,
       "forward_reason": null,
       "version": 13,
-      "created_at": "2026-10-06T17:41:56Z",
-      "updated_at": "2026-10-06T17:41:56Z",
+      "created_at": "2026-10-06T23:08:17Z",
+      "updated_at": "2026-10-06T23:08:17Z",
       "job_id": null,
       "job_run_id": null,
       "parts": [
@@ -3196,8 +3196,8 @@
       "forward_status": null,
       "forward_reason": null,
       "version": 14,
-      "created_at": "2026-10-06T17:41:56Z",
-      "updated_at": "2026-10-06T17:41:56Z",
+      "created_at": "2026-10-06T23:08:17Z",
+      "updated_at": "2026-10-06T23:08:17Z",
       "job_id": null,
       "job_run_id": null,
       "parts": [
@@ -3287,8 +3287,8 @@
      "pinned": false,
      "archived": false,
      "last_seq": 4,
-     "created_at": "2026-10-06T17:41:56Z",
-     "updated_at": "2026-10-06T17:41:56Z",
+     "created_at": "2026-10-06T23:08:17Z",
+     "updated_at": "2026-10-06T23:08:17Z",
      "last_read_seq": 0,
      "unread": 4,
      "preview": "Both fit the budget. The cabin needs booking two weeks out; the town is flexible. I left a decision card for the dates.",
@@ -3314,8 +3314,8 @@
       "forward_status": null,
       "forward_reason": null,
       "version": 1,
-      "created_at": "2026-10-06T17:41:56Z",
-      "updated_at": "2026-10-06T17:41:56Z",
+      "created_at": "2026-10-06T23:08:17Z",
+      "updated_at": "2026-10-06T23:08:17Z",
       "job_id": null,
       "job_run_id": null,
       "parts": [
@@ -3339,8 +3339,8 @@
       "forward_status": null,
       "forward_reason": null,
       "version": 2,
-      "created_at": "2026-10-06T17:41:56Z",
-      "updated_at": "2026-10-06T17:41:56Z",
+      "created_at": "2026-10-06T23:08:17Z",
+      "updated_at": "2026-10-06T23:08:17Z",
       "job_id": null,
       "job_run_id": null,
       "parts": [
@@ -3364,8 +3364,8 @@
       "forward_status": null,
       "forward_reason": null,
       "version": 3,
-      "created_at": "2026-10-06T17:41:56Z",
-      "updated_at": "2026-10-06T17:41:56Z",
+      "created_at": "2026-10-06T23:08:17Z",
+      "updated_at": "2026-10-06T23:08:17Z",
       "job_id": null,
       "job_run_id": null,
       "parts": [
@@ -3389,8 +3389,8 @@
       "forward_status": null,
       "forward_reason": null,
       "version": 4,
-      "created_at": "2026-10-06T17:41:56Z",
-      "updated_at": "2026-10-06T17:41:56Z",
+      "created_at": "2026-10-06T23:08:17Z",
+      "updated_at": "2026-10-06T23:08:17Z",
       "job_id": null,
       "job_run_id": null,
       "parts": [
@@ -3415,8 +3415,8 @@
      "pinned": false,
      "archived": false,
      "last_seq": 3,
-     "created_at": "2026-10-06T17:41:56Z",
-     "updated_at": "2026-10-06T17:41:56Z",
+     "created_at": "2026-10-06T23:08:17Z",
+     "updated_at": "2026-10-06T23:08:17Z",
      "last_read_seq": 0,
      "unread": 3,
      "preview": "Try the Brief tab, then Ops (cron + kanban) and the Cost page. Anything you change stays on this iPhone.",
@@ -3442,8 +3442,8 @@
       "forward_status": null,
       "forward_reason": null,
       "version": 1,
-      "created_at": "2026-10-06T17:41:56Z",
-      "updated_at": "2026-10-06T17:41:56Z",
+      "created_at": "2026-10-06T23:08:17Z",
+      "updated_at": "2026-10-06T23:08:17Z",
       "job_id": null,
       "job_run_id": null,
       "parts": [
@@ -3467,8 +3467,8 @@
       "forward_status": null,
       "forward_reason": null,
       "version": 2,
-      "created_at": "2026-10-06T17:41:56Z",
-      "updated_at": "2026-10-06T17:41:56Z",
+      "created_at": "2026-10-06T23:08:17Z",
+      "updated_at": "2026-10-06T23:08:17Z",
       "job_id": null,
       "job_run_id": null,
       "parts": [
@@ -3492,8 +3492,8 @@
       "forward_status": null,
       "forward_reason": null,
       "version": 3,
-      "created_at": "2026-10-06T17:41:56Z",
-      "updated_at": "2026-10-06T17:41:56Z",
+      "created_at": "2026-10-06T23:08:17Z",
+      "updated_at": "2026-10-06T23:08:17Z",
       "job_id": null,
       "job_run_id": null,
       "parts": [
@@ -3518,8 +3518,8 @@
      "pinned": false,
      "archived": false,
      "last_seq": 4,
-     "created_at": "2026-10-06T17:41:56Z",
-     "updated_at": "2026-10-06T17:41:56Z",
+     "created_at": "2026-10-06T23:08:17Z",
+     "updated_at": "2026-10-06T23:08:17Z",
      "last_read_seq": 0,
      "unread": 4,
      "preview": "Added: a staged refresh checklist as an alternative scope.",
@@ -3545,8 +3545,8 @@
       "forward_status": null,
       "forward_reason": null,
       "version": 1,
-      "created_at": "2026-10-06T17:41:56Z",
-      "updated_at": "2026-10-06T17:41:56Z",
+      "created_at": "2026-10-06T23:08:17Z",
+      "updated_at": "2026-10-06T23:08:17Z",
       "job_id": null,
       "job_run_id": null,
       "parts": [
@@ -3570,8 +3570,8 @@
       "forward_status": null,
       "forward_reason": null,
       "version": 2,
-      "created_at": "2026-10-06T17:41:56Z",
-      "updated_at": "2026-10-06T17:41:56Z",
+      "created_at": "2026-10-06T23:08:17Z",
+      "updated_at": "2026-10-06T23:08:17Z",
       "job_id": null,
       "job_run_id": null,
       "parts": [
@@ -3595,8 +3595,8 @@
       "forward_status": null,
       "forward_reason": null,
       "version": 3,
-      "created_at": "2026-10-06T17:41:56Z",
-      "updated_at": "2026-10-06T17:41:56Z",
+      "created_at": "2026-10-06T23:08:17Z",
+      "updated_at": "2026-10-06T23:08:17Z",
       "job_id": null,
       "job_run_id": null,
       "parts": [
@@ -3620,8 +3620,8 @@
       "forward_status": null,
       "forward_reason": null,
       "version": 4,
-      "created_at": "2026-10-06T17:41:56Z",
-      "updated_at": "2026-10-06T17:41:56Z",
+      "created_at": "2026-10-06T23:08:17Z",
+      "updated_at": "2026-10-06T23:08:17Z",
       "job_id": null,
       "job_run_id": null,
       "parts": [
@@ -3639,7 +3639,7 @@
    "status": 200,
    "body": {
     "source": "config.yaml",
-    "generated_at": "2026-10-06T17:42:04.135314+00:00",
+    "generated_at": "2026-10-06T23:08:27.656156+00:00",
     "section_count": 19,
     "leaf_count": 37,
     "sections": [
@@ -4165,14 +4165,14 @@
      }
     ],
     "pending_sync": false,
-    "live_snapshot_at": "2026-10-06T17:41:56+00:00"
+    "live_snapshot_at": "2026-10-06T23:08:17+00:00"
    }
   },
   "GET /connectors": {
    "status": 200,
    "body": {
     "source": "hermes auth list + mcp list",
-    "generated_at": "2026-10-06T17:42:04.188828+00:00",
+    "generated_at": "2026-10-06T23:08:27.729331+00:00",
     "connect": "terminal",
     "providers": [
      {
@@ -4287,9 +4287,9 @@
     "window": "30d",
     "range": {
      "start": "2026-09-07T00:00:00+00:00",
-     "end": "2026-10-06T17:42:04.627962+00:00"
+     "end": "2026-10-06T23:08:28.500852+00:00"
     },
-    "elapsed_days": 29.7376,
+    "elapsed_days": 29.9642,
     "items": [
      {
       "id": "demo-hosting",
@@ -4300,7 +4300,7 @@
       "amount_usd": 24.0,
       "daily_usd": 0.788501,
       "monthly_usd": 24.0,
-      "window_usd": 23.448092,
+      "window_usd": 23.626817,
       "note": null
      },
      {
@@ -4312,7 +4312,7 @@
       "amount_usd": 9.0,
       "daily_usd": 0.295688,
       "monthly_usd": 9.0,
-      "window_usd": 8.793034,
+      "window_usd": 8.860056,
       "note": null
      },
      {
@@ -4324,15 +4324,15 @@
       "amount_usd": 18.0,
       "daily_usd": 0.049281,
       "monthly_usd": 1.5,
-      "window_usd": 1.465506,
+      "window_usd": 1.476676,
       "note": null
      }
     ],
-    "total_window_usd": 33.706632,
+    "total_window_usd": 33.963549,
     "total_monthly_usd": 34.5,
     "excludes": [],
     "updated_on": "2026-10-06",
-    "updated_at": "2026-10-06T17:42:04.628091+00:00"
+    "updated_at": "2026-10-06T23:08:28.500931+00:00"
    }
   },
   "GET /cost/recurring?window=7d": {
@@ -4341,9 +4341,9 @@
     "window": "7d",
     "range": {
      "start": "2026-09-30T00:00:00+00:00",
-     "end": "2026-10-06T17:42:04.572714+00:00"
+     "end": "2026-10-06T23:08:28.451422+00:00"
     },
-    "elapsed_days": 6.7376,
+    "elapsed_days": 6.9642,
     "items": [
      {
       "id": "demo-hosting",
@@ -4354,7 +4354,7 @@
       "amount_usd": 24.0,
       "daily_usd": 0.788501,
       "monthly_usd": 24.0,
-      "window_usd": 5.312567,
+      "window_usd": 5.491293,
       "note": null
      },
      {
@@ -4366,7 +4366,7 @@
       "amount_usd": 9.0,
       "daily_usd": 0.295688,
       "monthly_usd": 9.0,
-      "window_usd": 1.992213,
+      "window_usd": 2.059235,
       "note": null
      },
      {
@@ -4378,15 +4378,15 @@
       "amount_usd": 18.0,
       "daily_usd": 0.049281,
       "monthly_usd": 1.5,
-      "window_usd": 0.332035,
+      "window_usd": 0.343206,
       "note": null
      }
     ],
-    "total_window_usd": 7.636815,
+    "total_window_usd": 7.893734,
     "total_monthly_usd": 34.5,
     "excludes": [],
     "updated_on": "2026-10-06",
-    "updated_at": "2026-10-06T17:42:04.572815+00:00"
+    "updated_at": "2026-10-06T23:08:28.451513+00:00"
    }
   },
   "GET /cost/recurring?window=mtd": {
@@ -4395,9 +4395,9 @@
     "window": "mtd",
     "range": {
      "start": "2026-10-01T00:00:00+00:00",
-     "end": "2026-10-06T17:42:04.669774+00:00"
+     "end": "2026-10-06T23:08:28.540445+00:00"
     },
-    "elapsed_days": 5.7376,
+    "elapsed_days": 5.9642,
     "items": [
      {
       "id": "demo-hosting",
@@ -4408,7 +4408,7 @@
       "amount_usd": 24.0,
       "daily_usd": 0.788501,
       "monthly_usd": 24.0,
-      "window_usd": 4.524067,
+      "window_usd": 4.702793,
       "note": null
      },
      {
@@ -4420,7 +4420,7 @@
       "amount_usd": 9.0,
       "daily_usd": 0.295688,
       "monthly_usd": 9.0,
-      "window_usd": 1.696525,
+      "window_usd": 1.763547,
       "note": null
      },
      {
@@ -4432,15 +4432,15 @@
       "amount_usd": 18.0,
       "daily_usd": 0.049281,
       "monthly_usd": 1.5,
-      "window_usd": 0.282754,
+      "window_usd": 0.293925,
       "note": null
      }
     ],
-    "total_window_usd": 6.503346,
+    "total_window_usd": 6.760265,
     "total_monthly_usd": 34.5,
     "excludes": [],
     "updated_on": "2026-10-06",
-    "updated_at": "2026-10-06T17:42:04.669859+00:00"
+    "updated_at": "2026-10-06T23:08:28.540544+00:00"
    }
   },
   "GET /cost/recurring?window=today": {
@@ -4449,9 +4449,9 @@
     "window": "today",
     "range": {
      "start": "2026-10-06T00:00:00+00:00",
-     "end": "2026-10-06T17:42:04.501689+00:00"
+     "end": "2026-10-06T23:08:28.367427+00:00"
     },
-    "elapsed_days": 0.7376,
+    "elapsed_days": 0.9642,
     "items": [
      {
       "id": "demo-hosting",
@@ -4462,7 +4462,7 @@
       "amount_usd": 24.0,
       "daily_usd": 0.788501,
       "monthly_usd": 24.0,
-      "window_usd": 0.581561,
+      "window_usd": 0.760286,
       "note": null
      },
      {
@@ -4474,7 +4474,7 @@
       "amount_usd": 9.0,
       "daily_usd": 0.295688,
       "monthly_usd": 9.0,
-      "window_usd": 0.218085,
+      "window_usd": 0.285107,
       "note": null
      },
      {
@@ -4486,22 +4486,22 @@
       "amount_usd": 18.0,
       "daily_usd": 0.049281,
       "monthly_usd": 1.5,
-      "window_usd": 0.036348,
+      "window_usd": 0.047518,
       "note": null
      }
     ],
-    "total_window_usd": 0.835994,
+    "total_window_usd": 1.092911,
     "total_monthly_usd": 34.5,
     "excludes": [],
     "updated_on": "2026-10-06",
-    "updated_at": "2026-10-06T17:42:04.501800+00:00"
+    "updated_at": "2026-10-06T23:08:28.367554+00:00"
    }
   },
   "GET /cron": {
    "status": 200,
    "body": {
     "source": "hermes cron list --all",
-    "generated_at": "2026-10-06T17:42:03.726639+00:00",
+    "generated_at": "2026-10-06T23:08:26.931656+00:00",
     "jobs": [
      {
       "id": "demo-briefing",
@@ -4517,7 +4517,7 @@
       "active": true,
       "cost": {
        "last_run": {
-        "ts": "2026-10-06T07:42:03Z",
+        "ts": "2026-10-06T13:08:26Z",
         "cost_usd": 0.412,
         "tokens": 184000,
         "status": "ok"
@@ -4581,7 +4581,7 @@
       "active": true,
       "cost": {
        "last_run": {
-        "ts": "2026-10-06T17:27:03Z",
+        "ts": "2026-10-06T22:53:26Z",
         "cost_usd": 0.0,
         "tokens": 0,
         "status": "ok"
@@ -4609,7 +4609,7 @@
       "active": false,
       "cost": {
        "last_run": {
-        "ts": "2026-10-05T12:42:03Z",
+        "ts": "2026-10-05T18:08:26Z",
         "cost_usd": null,
         "tokens": null,
         "status": "unknown"
@@ -4637,7 +4637,7 @@
       "active": true,
       "cost": {
        "last_run": {
-        "ts": "2026-10-06T16:42:03Z",
+        "ts": "2026-10-06T22:08:26Z",
         "cost_usd": 0.096,
         "tokens": 45000,
         "status": "ok"
@@ -4659,14 +4659,14 @@
    "status": 200,
    "body": {
     "source": "hermes state.db sessions (source=cron) via CLI-bridge",
-    "generated_at": "2026-10-06T17:42:03.766170+00:00",
+    "generated_at": "2026-10-06T23:08:26.985091+00:00",
     "window_days": 7,
     "jobs": [
      {
       "id": "demo-briefing",
       "name": "demo-briefing",
       "last_run": {
-       "ts": "2026-10-06T07:42:03Z",
+       "ts": "2026-10-06T13:08:26Z",
        "cost_usd": 0.412,
        "tokens": 184000,
        "status": "ok"
@@ -4719,7 +4719,7 @@
       "id": "demo-healthcheck",
       "name": "demo-healthcheck",
       "last_run": {
-       "ts": "2026-10-06T17:27:03Z",
+       "ts": "2026-10-06T22:53:26Z",
        "cost_usd": 0.0,
        "tokens": 0,
        "status": "ok"
@@ -4736,7 +4736,7 @@
       "id": "demo-inbox-sweep",
       "name": "demo-inbox-sweep",
       "last_run": {
-       "ts": "2026-10-06T16:42:03Z",
+       "ts": "2026-10-06T22:08:26Z",
        "cost_usd": 0.096,
        "tokens": 45000,
        "status": "ok"
@@ -4753,7 +4753,7 @@
       "id": "demo-nightly-backup",
       "name": "demo-nightly-backup",
       "last_run": {
-       "ts": "2026-10-05T12:42:03Z",
+       "ts": "2026-10-05T18:08:26Z",
        "cost_usd": null,
        "tokens": null,
        "status": "unknown"
@@ -4774,12 +4774,12 @@
    "status": 200,
    "body": {
     "source": "hermes cron output archive",
-    "generated_at": "2026-10-06T17:42:04.471270+00:00",
+    "generated_at": "2026-10-06T23:08:28.249324+00:00",
     "runs": [
      {
       "job_id": "demo-briefing",
       "name": "demo-briefing",
-      "run_time": "2026-10-06 07:42:04",
+      "run_time": "2026-10-06 13:08:28",
       "mode": "agent",
       "status": "success",
       "output": "Built today's briefing: 6 items (3 now, 2 today, 1 week). Sources: demo-mail, demo-calendar.",
@@ -4788,7 +4788,7 @@
      {
       "job_id": "demo-inbox-sweep",
       "name": "demo-inbox-sweep",
-      "run_time": "2026-10-06 16:42:04",
+      "run_time": "2026-10-06 22:08:28",
       "mode": "agent",
       "status": "success",
       "output": "Swept 14 messages, filed 3, flagged 1 for the approvals queue.",
@@ -4797,7 +4797,7 @@
      {
       "job_id": "demo-healthcheck",
       "name": "demo-healthcheck",
-      "run_time": "2026-10-06 17:27:04",
+      "run_time": "2026-10-06 22:53:28",
       "mode": "script",
       "status": "success",
       "output": "all demo services responding (6/6 up).",
@@ -4806,7 +4806,7 @@
      {
       "job_id": "demo-healthcheck",
       "name": "demo-healthcheck",
-      "run_time": "2026-10-06 17:12:04",
+      "run_time": "2026-10-06 22:38:28",
       "mode": "script",
       "status": "success",
       "output": "all demo services responding (6/6 up).",
@@ -4815,7 +4815,7 @@
      {
       "job_id": "demo-nightly-backup",
       "name": "demo-nightly-backup",
-      "run_time": "2026-10-05 12:42:04",
+      "run_time": "2026-10-05 18:08:28",
       "mode": "script",
       "status": "failed",
       "output": "demo-backup: target volume 'demo-archive' not mounted; skipped.",
@@ -4824,7 +4824,7 @@
      {
       "job_id": "demo-briefing",
       "name": "demo-briefing",
-      "run_time": "2026-10-05 07:42:04",
+      "run_time": "2026-10-05 13:08:28",
       "mode": "agent",
       "status": "success",
       "output": "Built yesterday's briefing: 5 items.",
@@ -4842,7 +4842,7 @@
       "id": "demo-project-scope",
       "title": "Scope the demo garage project",
       "source": "Demo Worker",
-      "created": "2026-10-05T21:41:56+00:00",
+      "created": "2026-10-06T03:08:16+00:00",
       "status": "open",
       "body": "Full rebuild or staged refresh?",
       "options": [
@@ -4860,7 +4860,7 @@
       "id": "demo-trip-dates",
       "title": "Which weekend for the demo trip?",
       "source": "Demo Agent",
-      "created": "2026-10-06T12:41:56+00:00",
+      "created": "2026-10-06T18:08:16+00:00",
       "status": "open",
       "body": "Xavier proposed two windows. Pick one and I'll book.",
       "options": [
@@ -4880,7 +4880,7 @@
       "id": "demo-backup-fix",
       "title": "Remount the demo archive volume",
       "source": "Demo Agent",
-      "created": "2026-10-04T17:41:56+00:00",
+      "created": "2026-10-04T23:08:16+00:00",
       "status": "answered",
       "body": "The backup target went missing.",
       "options": [
@@ -4896,19 +4896,19 @@
       "answer": {
        "option_key": "remount",
        "note": "remounted; next run scheduled",
-       "ts": "2026-10-05T11:41:56+00:00"
+       "ts": "2026-10-05T17:08:16+00:00"
       }
      }
     ],
     "errors": [],
-    "updated_at": "2026-10-06T17:42:04Z"
+    "updated_at": "2026-10-06T23:08:27Z"
    }
   },
   "GET /doctor": {
    "status": 200,
    "body": {
     "source": "hermes doctor",
-    "generated_at": "2026-10-06T17:42:03.992536+00:00",
+    "generated_at": "2026-10-06T23:08:27.513370+00:00",
     "sections": [
      {
       "name": "Gateway",
@@ -4978,7 +4978,7 @@
     "items": [
      {
       "id": "brief-briefing-2026-10-06",
-      "ts": 1791308516,
+      "ts": 1791328096,
       "kind": "brief",
       "title": "Briefing 2026-10-06",
       "link": "/my-pages/briefing-2026-10-06/",
@@ -4986,23 +4986,23 @@
      },
      {
       "id": "demo-report-1",
-      "ts": 1791307916,
+      "ts": 1791327496,
       "kind": "report",
       "title": "Weekly demo review ready",
       "summary": "3 projects advanced, 1 stalled, 2 waiting on you.",
       "link": "/my-pages/project-board/"
      },
      {
-      "id": "run-demo-healthcheck-2026-10-06 17:27:03",
-      "ts": 1791307623,
+      "id": "run-demo-healthcheck-2026-10-06 22:53:26",
+      "ts": 1791327206,
       "kind": "run",
       "title": "demo-healthcheck",
       "status": "success",
       "summary": "all demo services responding (6/6 up)."
      },
      {
-      "id": "run-demo-healthcheck-2026-10-06 17:12:03",
-      "ts": 1791306723,
+      "id": "run-demo-healthcheck-2026-10-06 22:38:26",
+      "ts": 1791326306,
       "kind": "run",
       "title": "demo-healthcheck",
       "status": "success",
@@ -5010,39 +5010,39 @@
      },
      {
       "id": "demo-alert-1",
-      "ts": 1791306716,
+      "ts": 1791326296,
       "kind": "alert",
       "title": "demo-backup failed",
       "summary": "The archive volume was not mounted; last night's snapshot was skipped.",
       "priority": "high"
      },
      {
-      "id": "run-demo-inbox-sweep-2026-10-06 16:42:03",
-      "ts": 1791304923,
+      "id": "run-demo-inbox-sweep-2026-10-06 22:08:26",
+      "ts": 1791324506,
       "kind": "run",
       "title": "demo-inbox-sweep",
       "status": "success",
       "summary": "Swept 14 messages, filed 3, flagged 1 for the approvals queue."
      },
      {
-      "id": "run-demo-briefing-2026-10-06 07:42:03",
-      "ts": 1791272523,
+      "id": "run-demo-briefing-2026-10-06 13:08:26",
+      "ts": 1791292106,
       "kind": "run",
       "title": "demo-briefing",
       "status": "success",
       "summary": "Built today's briefing: 6 items (3 now, 2 today, 1 week). Sources: demo-mail, demo-calendar."
      },
      {
-      "id": "run-demo-nightly-backup-2026-10-05 12:42:03",
-      "ts": 1791204123,
+      "id": "run-demo-nightly-backup-2026-10-05 18:08:26",
+      "ts": 1791223706,
       "kind": "run",
       "title": "demo-nightly-backup",
       "status": "failed",
       "summary": "demo-backup: target volume 'demo-archive' not mounted; skipped."
      },
      {
-      "id": "run-demo-briefing-2026-10-05 07:42:03",
-      "ts": 1791186123,
+      "id": "run-demo-briefing-2026-10-05 13:08:26",
+      "ts": 1791205706,
       "kind": "run",
       "title": "demo-briefing",
       "status": "success",
@@ -5050,12 +5050,12 @@
      }
     ],
     "status_line": {
-     "ts": 1791308516,
+     "ts": 1791328096,
      "ttl_s": 3600,
      "kind": "status",
      "text": "Demo sources healthy — 5 of 6 services up"
     },
-    "updated_at": "2026-10-06T17:42:03.532669+00:00"
+    "updated_at": "2026-10-06T23:08:26.671158+00:00"
    }
   },
   "GET /files/browse?root=code&path=": {
@@ -5070,7 +5070,7 @@
       "name": "notes.md",
       "kind": "file",
       "size": 74,
-      "modified": 1791308516.6338978
+      "modified": 1791328097.4130735
      }
     ],
     "truncated": false
@@ -5088,31 +5088,31 @@
       "name": "access-report.json",
       "kind": "file",
       "size": 226,
-      "modified": 1791308516.1908998
+      "modified": 1791328096.91607
      },
      {
       "name": "activity.json",
       "kind": "file",
       "size": 809,
-      "modified": 1791308516.1908998
+      "modified": 1791328096.9170702
      },
      {
       "name": "agents.json",
       "kind": "file",
       "size": 545,
-      "modified": 1791308516.1908998
+      "modified": 1791328096.9170702
      },
      {
       "name": "schedules.json",
       "kind": "file",
       "size": 680,
-      "modified": 1791308516.1908998
+      "modified": 1791328096.9170702
      },
      {
       "name": "skills.json",
       "kind": "file",
       "size": 273,
-      "modified": 1791308516.1908998
+      "modified": 1791328096.9170702
      }
     ],
     "truncated": false
@@ -5130,13 +5130,13 @@
       "name": "demo-app",
       "kind": "dir",
       "size": null,
-      "modified": 1791308516.6338978
+      "modified": 1791328097.4130735
      },
      {
       "name": "my-pages",
       "kind": "dir",
       "size": null,
-      "modified": 1791308516.1959
+      "modified": 1791328096.9400702
      }
     ],
     "truncated": false
@@ -5154,7 +5154,7 @@
       "name": "config.json",
       "kind": "file",
       "size": 59,
-      "modified": 1791308516.6338978
+      "modified": 1791328097.4130735
      }
     ],
     "truncated": false
@@ -5172,13 +5172,13 @@
       "name": "briefing-2026-10-06",
       "kind": "dir",
       "size": null,
-      "modified": 1791308516.1959
+      "modified": 1791328096.9400702
      },
      {
       "name": "project-board",
       "kind": "dir",
       "size": null,
-      "modified": 1791308516.1959
+      "modified": 1791328096.9400702
      }
     ],
     "truncated": false
@@ -5196,13 +5196,13 @@
       "name": "brief.json",
       "kind": "file",
       "size": 1435,
-      "modified": 1791308516.1959
+      "modified": 1791328096.9400702
      },
      {
       "name": "index.html",
       "kind": "file",
       "size": 1622,
-      "modified": 1791308516.1959
+      "modified": 1791328096.9400702
      }
     ],
     "truncated": false
@@ -5220,7 +5220,7 @@
       "name": "index.html",
       "kind": "file",
       "size": 185,
-      "modified": 1791308516.1959
+      "modified": 1791328096.9400702
      }
     ],
     "truncated": false
@@ -5241,7 +5241,7 @@
     "root": "hub_config",
     "path": "access-report.json",
     "size": 226,
-    "text": "{\n  \"keys_ok\": 3,\n  \"keys_total\": 3,\n  \"spend_mtd_usd\": 48.12,\n  \"spend_cap_usd\": 200.0,\n  \"drift_count\": 0,\n  \"last_audit_at\": \"2026-10-06T17:41:56+00:00\",\n  \"tool_calls_24h\": 214,\n  \"mcp_calls_24h\": 88,\n  \"flagged_24h\": 0\n}\n"
+    "text": "{\n  \"keys_ok\": 3,\n  \"keys_total\": 3,\n  \"spend_mtd_usd\": 48.12,\n  \"spend_cap_usd\": 200.0,\n  \"drift_count\": 0,\n  \"last_audit_at\": \"2026-10-06T23:08:16+00:00\",\n  \"tool_calls_24h\": 214,\n  \"mcp_calls_24h\": 88,\n  \"flagged_24h\": 0\n}\n"
    }
   },
   "GET /files/read?root=hub_config&path=activity.json": {
@@ -5250,7 +5250,7 @@
     "root": "hub_config",
     "path": "activity.json",
     "size": 809,
-    "text": "{\n  \"generated_at\": \"2026-10-06T17:41:56+00:00\",\n  \"data\": [\n    {\n      \"ts\": \"2026-10-06T17:37:56+00:00\",\n      \"kind\": \"message\",\n      \"actor\": \"Demo Agent\",\n      \"title\": \"Answered a trip-planning question\",\n      \"detail\": \"2 options compared\"\n    },\n    {\n      \"ts\": \"2026-10-06T17:15:56+00:00\",\n      \"kind\": \"tool\",\n      \"actor\": \"Demo Worker\",\n      \"title\": \"Fetched demo package status\",\n      \"detail\": \"3 shipments\"\n    },\n    {\n      \"ts\": \"2026-10-06T15:41:56+00:00\",\n      \"kind\": \"job\",\n      \"actor\": \"demo-inbox-sweep\",\n      \"title\": \"Inbox sweep complete\",\n      \"detail\": \"14 messages\"\n    },\n    {\n      \"ts\": \"2026-10-06T11:41:56+00:00\",\n      \"kind\": \"message\",\n      \"actor\": \"Demo Agent\",\n      \"title\": \"Drafted a home-project checklist\",\n      \"detail\": \"8 items\"\n    }\n  ]\n}\n"
+    "text": "{\n  \"generated_at\": \"2026-10-06T23:08:16+00:00\",\n  \"data\": [\n    {\n      \"ts\": \"2026-10-06T23:04:16+00:00\",\n      \"kind\": \"message\",\n      \"actor\": \"Demo Agent\",\n      \"title\": \"Answered a trip-planning question\",\n      \"detail\": \"2 options compared\"\n    },\n    {\n      \"ts\": \"2026-10-06T22:42:16+00:00\",\n      \"kind\": \"tool\",\n      \"actor\": \"Demo Worker\",\n      \"title\": \"Fetched demo package status\",\n      \"detail\": \"3 shipments\"\n    },\n    {\n      \"ts\": \"2026-10-06T21:08:16+00:00\",\n      \"kind\": \"job\",\n      \"actor\": \"demo-inbox-sweep\",\n      \"title\": \"Inbox sweep complete\",\n      \"detail\": \"14 messages\"\n    },\n    {\n      \"ts\": \"2026-10-06T17:08:16+00:00\",\n      \"kind\": \"message\",\n      \"actor\": \"Demo Agent\",\n      \"title\": \"Drafted a home-project checklist\",\n      \"detail\": \"8 items\"\n    }\n  ]\n}\n"
    }
   },
   "GET /files/read?root=hub_config&path=agents.json": {
@@ -5259,7 +5259,7 @@
     "root": "hub_config",
     "path": "agents.json",
     "size": 545,
-    "text": "{\n  \"generated_at\": \"2026-10-06T17:41:56+00:00\",\n  \"data\": [\n    {\n      \"id\": \"demo-agent\",\n      \"name\": \"Demo Agent\",\n      \"model\": \"claude-sonnet-5\",\n      \"status\": \"up\",\n      \"last_message_at\": \"2026-10-06T17:37:56+00:00\",\n      \"messages_today\": 37,\n      \"avatar_glyph\": \":robot:\"\n    },\n    {\n      \"id\": \"demo-worker\",\n      \"name\": \"Demo Worker\",\n      \"model\": \"openai/gpt-oss-120b\",\n      \"status\": \"up\",\n      \"last_message_at\": \"2026-10-06T17:00:56+00:00\",\n      \"messages_today\": 12,\n      \"avatar_glyph\": \":gear:\"\n    }\n  ]\n}\n"
+    "text": "{\n  \"generated_at\": \"2026-10-06T23:08:16+00:00\",\n  \"data\": [\n    {\n      \"id\": \"demo-agent\",\n      \"name\": \"Demo Agent\",\n      \"model\": \"claude-sonnet-5\",\n      \"status\": \"up\",\n      \"last_message_at\": \"2026-10-06T23:04:16+00:00\",\n      \"messages_today\": 37,\n      \"avatar_glyph\": \":robot:\"\n    },\n    {\n      \"id\": \"demo-worker\",\n      \"name\": \"Demo Worker\",\n      \"model\": \"openai/gpt-oss-120b\",\n      \"status\": \"up\",\n      \"last_message_at\": \"2026-10-06T22:27:16+00:00\",\n      \"messages_today\": 12,\n      \"avatar_glyph\": \":gear:\"\n    }\n  ]\n}\n"
    }
   },
   "GET /files/read?root=hub_config&path=schedules.json": {
@@ -5268,7 +5268,7 @@
     "root": "hub_config",
     "path": "schedules.json",
     "size": 680,
-    "text": "{\n  \"generated_at\": \"2026-10-06T17:41:56+00:00\",\n  \"data\": [\n    {\n      \"id\": \"demo-briefing\",\n      \"label\": \"Morning briefing\",\n      \"cadence\": \"daily 07:30\",\n      \"next_run_at\": \"2026-10-07T06:41:56+00:00\",\n      \"last_run\": \"2026-10-06T06:41:56+00:00\"\n    },\n    {\n      \"id\": \"demo-healthcheck\",\n      \"label\": \"Service healthcheck\",\n      \"cadence\": \"every 15m\",\n      \"next_run_at\": \"2026-10-06T17:50:56+00:00\",\n      \"last_run\": \"2026-10-06T17:35:56+00:00\"\n    },\n    {\n      \"id\": \"demo-inbox-sweep\",\n      \"label\": \"Inbox sweep\",\n      \"cadence\": \"every 2h\",\n      \"next_run_at\": \"2026-10-06T18:41:56+00:00\",\n      \"last_run\": \"2026-10-06T16:41:56+00:00\"\n    }\n  ]\n}\n"
+    "text": "{\n  \"generated_at\": \"2026-10-06T23:08:16+00:00\",\n  \"data\": [\n    {\n      \"id\": \"demo-briefing\",\n      \"label\": \"Morning briefing\",\n      \"cadence\": \"daily 07:30\",\n      \"next_run_at\": \"2026-10-07T12:08:16+00:00\",\n      \"last_run\": \"2026-10-06T12:08:16+00:00\"\n    },\n    {\n      \"id\": \"demo-healthcheck\",\n      \"label\": \"Service healthcheck\",\n      \"cadence\": \"every 15m\",\n      \"next_run_at\": \"2026-10-06T23:17:16+00:00\",\n      \"last_run\": \"2026-10-06T23:02:16+00:00\"\n    },\n    {\n      \"id\": \"demo-inbox-sweep\",\n      \"label\": \"Inbox sweep\",\n      \"cadence\": \"every 2h\",\n      \"next_run_at\": \"2026-10-07T00:08:16+00:00\",\n      \"last_run\": \"2026-10-06T22:08:16+00:00\"\n    }\n  ]\n}\n"
    }
   },
   "GET /files/read?root=hub_config&path=skills.json": {
@@ -5277,7 +5277,7 @@
     "root": "hub_config",
     "path": "skills.json",
     "size": 273,
-    "text": "{\n  \"generated_at\": \"2026-10-06T17:41:56+00:00\",\n  \"data\": [\n    {\n      \"name\": \"demo-briefing\",\n      \"category\": \"productivity\",\n      \"status\": \"enabled\"\n    },\n    {\n      \"name\": \"demo-weather\",\n      \"category\": \"data-sources\",\n      \"status\": \"enabled\"\n    }\n  ]\n}\n"
+    "text": "{\n  \"generated_at\": \"2026-10-06T23:08:16+00:00\",\n  \"data\": [\n    {\n      \"name\": \"demo-briefing\",\n      \"category\": \"productivity\",\n      \"status\": \"enabled\"\n    },\n    {\n      \"name\": \"demo-weather\",\n      \"category\": \"data-sources\",\n      \"status\": \"enabled\"\n    }\n  ]\n}\n"
    }
   },
   "GET /files/read?root=sites&path=demo-app/config.json": {
@@ -5295,7 +5295,7 @@
     "root": "sites",
     "path": "my-pages/briefing-2026-10-06/brief.json",
     "size": 1435,
-    "text": "{\n  \"date\": \"2026-10-06\",\n  \"generated_at\": \"2026-10-06T17:41:56+00:00\",\n  \"buckets\": {\n    \"now\": [\n      {\n        \"item_id\": \"d1a2b3c4d5e6\",\n        \"title\": \"Reply to Xavier about the demo trip\",\n        \"source\": \"Demo Mail\",\n        \"why\": \"waiting 6h\",\n        \"bucket\": \"now\"\n      },\n      {\n        \"item_id\": \"a1f2e3d4c5b6\",\n        \"title\": \"Approve the demo garage scope\",\n        \"source\": \"Demo Worker\",\n        \"why\": \"decision open\",\n        \"bucket\": \"now\"\n      }\n    ],\n    \"today\": [\n      {\n        \"item_id\": \"b2c3d4e5f6a1\",\n        \"title\": \"Demo standup at 11:00\",\n        \"source\": \"Demo Calendar\",\n        \"why\": \"in 2h\",\n        \"bucket\": \"today\"\n      },\n      {\n        \"item_id\": \"c3d4e5f6a1b2\",\n        \"title\": \"Package arriving today\",\n        \"source\": \"Demo Packages\",\n        \"why\": \"out for delivery\",\n        \"bucket\": \"today\"\n      }\n    ],\n    \"week\": [\n      {\n        \"item_id\": \"d4e5f6a1b2c3\",\n        \"title\": \"Renew the demo domain\",\n        \"source\": \"Demo Finance\",\n        \"why\": \"expires in 5d\",\n        \"bucket\": \"week\"\n      }\n    ],\n    \"background\": [\n      {\n        \"item_id\": \"e5f6a1b2c3d4\",\n        \"title\": \"Demo newsletter \\u2014 3 releases worth a look\",\n        \"source\": \"Demo News\",\n        \"why\": \"low priority\",\n        \"bucket\": \"background\"\n      }\n    ]\n  },\n  \"sources\": {\n    \"email\": \"ok\",\n    \"calendar\": \"ok\",\n    \"packages\": \"ok\",\n    \"imessage\": \"down\"\n  }\n}\n"
+    "text": "{\n  \"date\": \"2026-10-06\",\n  \"generated_at\": \"2026-10-06T23:08:16+00:00\",\n  \"buckets\": {\n    \"now\": [\n      {\n        \"item_id\": \"d1a2b3c4d5e6\",\n        \"title\": \"Reply to Xavier about the demo trip\",\n        \"source\": \"Demo Mail\",\n        \"why\": \"waiting 6h\",\n        \"bucket\": \"now\"\n      },\n      {\n        \"item_id\": \"a1f2e3d4c5b6\",\n        \"title\": \"Approve the demo garage scope\",\n        \"source\": \"Demo Worker\",\n        \"why\": \"decision open\",\n        \"bucket\": \"now\"\n      }\n    ],\n    \"today\": [\n      {\n        \"item_id\": \"b2c3d4e5f6a1\",\n        \"title\": \"Demo standup at 11:00\",\n        \"source\": \"Demo Calendar\",\n        \"why\": \"in 2h\",\n        \"bucket\": \"today\"\n      },\n      {\n        \"item_id\": \"c3d4e5f6a1b2\",\n        \"title\": \"Package arriving today\",\n        \"source\": \"Demo Packages\",\n        \"why\": \"out for delivery\",\n        \"bucket\": \"today\"\n      }\n    ],\n    \"week\": [\n      {\n        \"item_id\": \"d4e5f6a1b2c3\",\n        \"title\": \"Renew the demo domain\",\n        \"source\": \"Demo Finance\",\n        \"why\": \"expires in 5d\",\n        \"bucket\": \"week\"\n      }\n    ],\n    \"background\": [\n      {\n        \"item_id\": \"e5f6a1b2c3d4\",\n        \"title\": \"Demo newsletter \\u2014 3 releases worth a look\",\n        \"source\": \"Demo News\",\n        \"why\": \"low priority\",\n        \"bucket\": \"background\"\n      }\n    ]\n  },\n  \"sources\": {\n    \"email\": \"ok\",\n    \"calendar\": \"ok\",\n    \"packages\": \"ok\",\n    \"imessage\": \"down\"\n  }\n}\n"
    }
   },
   "GET /files/read?root=sites&path=my-pages/briefing-2026-10-06/index.html": {
@@ -5343,15 +5343,15 @@
    "status": 200,
    "body": {
     "schema_version": 3,
-    "asof": "2026-10-06T17:41:56+00:00",
+    "asof": "2026-10-06T23:08:16+00:00",
     "sources": {
      "copilot_mcp": {
       "status": "ok",
-      "asof": "2026-10-06T17:41:56+00:00"
+      "asof": "2026-10-06T23:08:16+00:00"
      },
      "plaid": {
       "status": "ok",
-      "asof": "2026-10-06T17:41:56+00:00"
+      "asof": "2026-10-06T23:08:16+00:00"
      }
     },
     "spend_windows": {
@@ -5448,7 +5448,7 @@
   "GET /health": {
    "status": 200,
    "body": {
-    "updated_at": "2026-10-06T17:41:56+00:00",
+    "updated_at": "2026-10-06T23:08:16+00:00",
     "overall": "amber",
     "services": [
      {
@@ -5456,8 +5456,8 @@
       "status": "degraded",
       "latency_ms": 0,
       "detail": "archive volume not mounted",
-      "ts": "2026-10-06T17:41:56+00:00",
-      "last_probe": "2026-10-06T17:41:56+00:00",
+      "ts": "2026-10-06T23:08:16+00:00",
+      "last_probe": "2026-10-06T23:08:16+00:00",
       "time_ago": "just now"
      },
      {
@@ -5465,8 +5465,8 @@
       "status": "up",
       "latency_ms": 63,
       "detail": "CalDAV reachable",
-      "ts": "2026-10-06T17:41:56+00:00",
-      "last_probe": "2026-10-06T17:41:56+00:00",
+      "ts": "2026-10-06T23:08:16+00:00",
+      "last_probe": "2026-10-06T23:08:16+00:00",
       "time_ago": "just now"
      },
      {
@@ -5474,8 +5474,8 @@
       "status": "up",
       "latency_ms": 7,
       "detail": "WAL checkpointed",
-      "ts": "2026-10-06T17:41:56+00:00",
-      "last_probe": "2026-10-06T17:41:56+00:00",
+      "ts": "2026-10-06T23:08:16+00:00",
+      "last_probe": "2026-10-06T23:08:16+00:00",
       "time_ago": "just now"
      },
      {
@@ -5483,8 +5483,8 @@
       "status": "up",
       "latency_ms": 41,
       "detail": "IMAP + API reachable",
-      "ts": "2026-10-06T17:41:56+00:00",
-      "last_probe": "2026-10-06T17:41:56+00:00",
+      "ts": "2026-10-06T23:08:16+00:00",
+      "last_probe": "2026-10-06T23:08:16+00:00",
       "time_ago": "just now"
      },
      {
@@ -5492,8 +5492,8 @@
       "status": "up",
       "latency_ms": 12,
       "detail": "0 overdue jobs",
-      "ts": "2026-10-06T17:41:56+00:00",
-      "last_probe": "2026-10-06T17:41:56+00:00",
+      "ts": "2026-10-06T23:08:16+00:00",
+      "last_probe": "2026-10-06T23:08:16+00:00",
       "time_ago": "just now"
      },
      {
@@ -5501,8 +5501,8 @@
       "status": "up",
       "latency_ms": 88,
       "detail": "index current",
-      "ts": "2026-10-06T17:41:56+00:00",
-      "last_probe": "2026-10-06T17:41:56+00:00",
+      "ts": "2026-10-06T23:08:16+00:00",
+      "last_probe": "2026-10-06T23:08:16+00:00",
       "time_ago": "just now"
      }
     ]
@@ -5512,7 +5512,7 @@
    "status": 200,
    "body": {
     "source": "hermes kanban stats/list --json",
-    "generated_at": "2026-10-06T17:42:03.837699+00:00",
+    "generated_at": "2026-10-06T23:08:27.130551+00:00",
     "columns": [
      {
       "status": "triage",
@@ -5560,7 +5560,7 @@
       "status": "ready",
       "assignee": "demo-agent",
       "priority": "high",
-      "created_at": "2026-10-05T17:41:56Z"
+      "created_at": "2026-10-05T23:08:17Z"
      },
      {
       "id": "kc_02",
@@ -5568,7 +5568,7 @@
       "status": "todo",
       "assignee": "demo-worker",
       "priority": "normal",
-      "created_at": "2026-10-04T17:41:56Z"
+      "created_at": "2026-10-04T23:08:17Z"
      },
      {
       "id": "kc_03",
@@ -5576,7 +5576,7 @@
       "status": "review",
       "assignee": "demo-agent",
       "priority": "low",
-      "created_at": "2026-10-06T11:41:56Z"
+      "created_at": "2026-10-06T17:08:17Z"
      },
      {
       "id": "kc_04",
@@ -5584,7 +5584,7 @@
       "status": "blocked",
       "assignee": "demo-worker",
       "priority": "high",
-      "created_at": "2026-10-03T17:41:56Z"
+      "created_at": "2026-10-03T23:08:17Z"
      },
      {
       "id": "kc_05",
@@ -5592,7 +5592,7 @@
       "status": "done",
       "assignee": "demo-agent",
       "priority": "normal",
-      "created_at": "2026-10-01T17:41:56Z"
+      "created_at": "2026-10-01T23:08:17Z"
      },
      {
       "id": "kc_06",
@@ -5600,7 +5600,7 @@
       "status": "triage",
       "assignee": null,
       "priority": "normal",
-      "created_at": "2026-10-06T15:41:56Z"
+      "created_at": "2026-10-06T21:08:17Z"
      },
      {
       "id": "kc_07",
@@ -5608,7 +5608,7 @@
       "status": "running",
       "assignee": "demo-agent",
       "priority": "high",
-      "created_at": "2026-10-06T16:41:56Z"
+      "created_at": "2026-10-06T22:08:17Z"
      },
      {
       "id": "kc_08",
@@ -5616,7 +5616,7 @@
       "status": "archived",
       "assignee": "demo-agent",
       "priority": "low",
-      "created_at": "2026-09-27T17:41:56Z"
+      "created_at": "2026-09-27T23:08:17Z"
      }
     ],
     "cached": false
@@ -5626,7 +5626,7 @@
    "status": 200,
    "body": {
     "source": "hermes mcp list",
-    "generated_at": "2026-10-06T17:42:03.927574+00:00",
+    "generated_at": "2026-10-06T23:08:27.378721+00:00",
     "count": 3,
     "enabled": 2,
     "servers": [
@@ -5658,7 +5658,7 @@
    "status": 200,
    "body": {
     "source": "hermes memory status",
-    "generated_at": "2026-10-06T17:42:03.954654+00:00",
+    "generated_at": "2026-10-06T23:08:27.421722+00:00",
     "built_in": "enabled",
     "provider": "demo-memory",
     "plugins": [
@@ -5676,13 +5676,13 @@
      {
       "slug": "project-board",
       "title": "Demo Project Board",
-      "mtime": 1791308516,
+      "mtime": 1791328096,
       "kind": "page"
      },
      {
       "slug": "briefing-2026-10-06",
       "title": "Briefing 2026-10-06",
-      "mtime": 1791308516,
+      "mtime": 1791328096,
       "kind": "brief"
      }
     ]
@@ -5692,7 +5692,7 @@
    "status": 200,
    "body": {
     "source": "hermes pairing list",
-    "generated_at": "2026-10-06T17:42:04.054642+00:00",
+    "generated_at": "2026-10-06T23:08:27.545868+00:00",
     "pending": [
      {
       "platform": "discord",
@@ -5727,7 +5727,7 @@
    "status": 200,
    "body": {
     "source": "hermes plugins list --json",
-    "generated_at": "2026-10-06T17:42:03.915663+00:00",
+    "generated_at": "2026-10-06T23:08:27.300301+00:00",
     "total": 3,
     "enabled": 2,
     "plugins": [
@@ -5771,8 +5771,8 @@
       "tool_call_count": 3,
       "total_tokens": 53000,
       "estimated_cost_usd": 0.31,
-      "started_at": 1791303123,
-      "last_active": 1791307923,
+      "started_at": 1791322706,
+      "last_active": 1791327506,
       "preview": "Comparing two weekend options for the demo trip."
      },
      {
@@ -5784,8 +5784,8 @@
       "tool_call_count": 5,
       "total_tokens": 78000,
       "estimated_cost_usd": 0.19,
-      "started_at": 1791222123,
-      "last_active": 1791304923,
+      "started_at": 1791241706,
+      "last_active": 1791324506,
       "preview": "Drafting a checklist for the demo garage project."
      },
      {
@@ -5797,8 +5797,8 @@
       "tool_call_count": 6,
       "total_tokens": 26000,
       "estimated_cost_usd": 0.12,
-      "started_at": 1791272523,
-      "last_active": 1791272523,
+      "started_at": 1791292106,
+      "last_active": 1791292106,
       "preview": "Assembling today's briefing from demo sources."
      }
     ]
@@ -5816,8 +5816,8 @@
      "tool_call_count": 3,
      "total_tokens": 53000,
      "estimated_cost_usd": 0.31,
-     "started_at": 1791303124,
-     "last_active": 1791307924,
+     "started_at": 1791322708,
+     "last_active": 1791327508,
      "preview": "Comparing two weekend options for the demo trip."
     }
    }
@@ -5833,7 +5833,7 @@
       "content": "What should we do this weekend?",
       "tool_name": null,
       "tool_calls": [],
-      "timestamp": "2026-10-06T16:42:04+00:00",
+      "timestamp": "2026-10-06T22:08:28+00:00",
       "finish_reason": null,
       "reasoning": null
      },
@@ -5843,7 +5843,7 @@
       "content": "Two demo options: a coastal town or a mountain cabin.",
       "tool_name": null,
       "tool_calls": [],
-      "timestamp": "2026-10-06T16:44:04+00:00",
+      "timestamp": "2026-10-06T22:10:28+00:00",
       "finish_reason": "stop",
       "reasoning": null
      },
@@ -5858,7 +5858,7 @@
         "arguments": "{\"place\":\"coastal town\"}"
        }
       ],
-      "timestamp": "2026-10-06T16:45:04+00:00",
+      "timestamp": "2026-10-06T22:11:28+00:00",
       "finish_reason": "tool_calls",
       "reasoning": null
      }
@@ -5878,8 +5878,8 @@
      "tool_call_count": 5,
      "total_tokens": 78000,
      "estimated_cost_usd": 0.19,
-     "started_at": 1791222124,
-     "last_active": 1791304924,
+     "started_at": 1791241708,
+     "last_active": 1791324508,
      "preview": "Drafting a checklist for the demo garage project."
     }
    }
@@ -5895,7 +5895,7 @@
       "content": "What should we do this weekend?",
       "tool_name": null,
       "tool_calls": [],
-      "timestamp": "2026-10-06T16:42:04+00:00",
+      "timestamp": "2026-10-06T22:08:28+00:00",
       "finish_reason": null,
       "reasoning": null
      },
@@ -5905,7 +5905,7 @@
       "content": "Two demo options: a coastal town or a mountain cabin.",
       "tool_name": null,
       "tool_calls": [],
-      "timestamp": "2026-10-06T16:44:04+00:00",
+      "timestamp": "2026-10-06T22:10:28+00:00",
       "finish_reason": "stop",
       "reasoning": null
      },
@@ -5920,7 +5920,7 @@
         "arguments": "{\"place\":\"coastal town\"}"
        }
       ],
-      "timestamp": "2026-10-06T16:45:04+00:00",
+      "timestamp": "2026-10-06T22:11:28+00:00",
       "finish_reason": "tool_calls",
       "reasoning": null
      }
@@ -5940,8 +5940,8 @@
      "tool_call_count": 6,
      "total_tokens": 26000,
      "estimated_cost_usd": 0.12,
-     "started_at": 1791272524,
-     "last_active": 1791272524,
+     "started_at": 1791292108,
+     "last_active": 1791292108,
      "preview": "Assembling today's briefing from demo sources."
     }
    }
@@ -5957,7 +5957,7 @@
       "content": "What should we do this weekend?",
       "tool_name": null,
       "tool_calls": [],
-      "timestamp": "2026-10-06T16:42:04+00:00",
+      "timestamp": "2026-10-06T22:08:28+00:00",
       "finish_reason": null,
       "reasoning": null
      },
@@ -5967,7 +5967,7 @@
       "content": "Two demo options: a coastal town or a mountain cabin.",
       "tool_name": null,
       "tool_calls": [],
-      "timestamp": "2026-10-06T16:44:04+00:00",
+      "timestamp": "2026-10-06T22:10:28+00:00",
       "finish_reason": "stop",
       "reasoning": null
      },
@@ -5982,7 +5982,7 @@
         "arguments": "{\"place\":\"coastal town\"}"
        }
       ],
-      "timestamp": "2026-10-06T16:45:04+00:00",
+      "timestamp": "2026-10-06T22:11:28+00:00",
       "finish_reason": "tool_calls",
       "reasoning": null
      }
@@ -5994,7 +5994,7 @@
    "status": 200,
    "body": {
     "source": "hermes skills list",
-    "generated_at": "2026-10-06T17:42:03.878637+00:00",
+    "generated_at": "2026-10-06T23:08:27.198671+00:00",
     "total": 9,
     "enabled": 8,
     "disabled": 1,
@@ -6094,39 +6094,39 @@
   "GET /spend/summary?window=30d": {
    "status": 200,
    "body": {
-    "total_usd": 297.386321,
+    "total_usd": 300.118926,
     "window": "30d",
     "range": {
      "start": "2026-09-07T00:00:00+00:00",
-     "end": "2026-10-06T17:42:04.605590+00:00"
+     "end": "2026-10-06T23:08:28.471702+00:00"
     },
     "prev_range": {
      "start": "2026-08-08T00:00:00+00:00",
      "end": "2026-09-07T00:00:00+00:00"
     },
-    "delta_pct": 16.279069794721167,
-    "prev_total_usd": 255.752236,
+    "delta_pct": 16.27906992962742,
+    "prev_total_usd": 258.102276,
     "models": [
      {
       "model": "claude-sonnet-5",
       "provider": "anthropic",
-      "total_spend": 136.670458,
-      "input": 4707523,
-      "output": 987048,
-      "cache_read": 1898188,
-      "cache_write": 113876,
+      "total_spend": 137.783326,
+      "input": 4745855,
+      "output": 995085,
+      "cache_read": 1913644,
+      "cache_write": 114803,
       "sessions": 30,
-      "share_pct": 46.0,
+      "share_pct": 45.9,
       "aliases": []
      },
      {
       "model": "openai/gpt-oss-120b",
       "provider": "openrouter",
-      "total_spend": 65.202781,
-      "input": 73501304,
-      "output": 15411549,
-      "cache_read": 29637612,
-      "cache_write": 1778241,
+      "total_spend": 65.851856,
+      "input": 74232988,
+      "output": 15564967,
+      "cache_read": 29932646,
+      "cache_write": 1795943,
       "sessions": 30,
       "share_pct": 21.9,
       "aliases": [
@@ -6136,11 +6136,11 @@
      {
       "model": "claude-haiku-4.5",
       "provider": "anthropic",
-      "total_spend": 41.777819,
-      "input": 8094441,
-      "output": 1697210,
-      "cache_read": 3263877,
-      "cache_write": 195817,
+      "total_spend": 42.153692,
+      "input": 8167266,
+      "output": 1712479,
+      "cache_read": 3293242,
+      "cache_write": 197579,
       "sessions": 30,
       "share_pct": 14.0,
       "aliases": []
@@ -6148,11 +6148,11 @@
      {
       "model": "deepseek/deepseek-v4.1-flash",
       "provider": "openrouter",
-      "total_spend": 35.776845,
-      "input": 79220141,
-      "output": 16610664,
-      "cache_read": 31943597,
-      "cache_write": 1916604,
+      "total_spend": 36.16275,
+      "input": 80074644,
+      "output": 16789834,
+      "cache_read": 32288154,
+      "cache_write": 1937277,
       "sessions": 30,
       "share_pct": 12.0,
       "aliases": []
@@ -6160,261 +6160,34 @@
      {
       "model": "x-ai/grok-4-fast",
       "provider": "openrouter",
-      "total_spend": 17.958416,
-      "input": 12371340,
-      "output": 2593978,
-      "cache_read": 4988433,
-      "cache_write": 299290,
+      "total_spend": 18.1673,
+      "input": 12515238,
+      "output": 2624150,
+      "cache_read": 5046457,
+      "cache_write": 302771,
       "sessions": 30,
-      "share_pct": 6.0,
-      "aliases": []
-     }
-    ],
-    "by_provider": {
-     "anthropic": 178.448279,
-     "openrouter": 118.938042
-    },
-    "tokens": {
-     "input": 177894749,
-     "output": 37300449,
-     "cache_read": 71731707,
-     "cache_write": 4303828,
-     "total": 286926905
-    },
-    "sessions": {
-     "count": 331,
-     "avg_turns": 6.4
-    },
-    "cache": {
-     "read_tokens": 71731707,
-     "write_tokens": 4303828,
-     "saved_usd": 193.6756,
-     "saved_pct": 39.4,
-     "would_have_cost_usd": 215.1951
-    },
-    "unpriced": [
-     {
-      "model": "demo-vision-preview",
-      "input": 118400,
-      "output": 9300,
-      "cache_read": 240000
-     }
-    ],
-    "updated_at": "2026-10-06T17:42:04.605507+00:00"
-   }
-  },
-  "GET /spend/summary?window=7d": {
-   "status": 200,
-   "body": {
-    "total_usd": 66.077622,
-    "window": "7d",
-    "range": {
-     "start": "2026-09-30T00:00:00+00:00",
-     "end": "2026-10-06T17:42:04.525983+00:00"
-    },
-    "prev_range": {
-     "start": "2026-09-23T00:00:00+00:00",
-     "end": "2026-09-30T00:00:00+00:00"
-    },
-    "delta_pct": 16.27906960374564,
-    "prev_total_usd": 56.826755,
-    "models": [
-     {
-      "model": "claude-sonnet-5",
-      "provider": "anthropic",
-      "total_spend": 30.601745,
-      "input": 1054058,
-      "output": 221010,
-      "cache_read": 425022,
-      "cache_write": 25498,
-      "sessions": 7,
-      "share_pct": 46.3,
-      "aliases": []
-     },
-     {
-      "model": "openai/gpt-oss-120b",
-      "provider": "openrouter",
-      "total_spend": 15.015762,
-      "input": 16926856,
-      "output": 3549175,
-      "cache_read": 6825342,
-      "cache_write": 409516,
-      "sessions": 7,
-      "share_pct": 22.7,
-      "aliases": [
-       "openai/gpt-oss-120b:free"
-      ]
-     },
-     {
-      "model": "claude-haiku-4.5",
-      "provider": "anthropic",
-      "total_spend": 8.987485,
-      "input": 1741322,
-      "output": 365112,
-      "cache_read": 702145,
-      "cache_write": 42125,
-      "sessions": 7,
-      "share_pct": 13.6,
-      "aliases": []
-     },
-     {
-      "model": "deepseek/deepseek-v4.1-flash",
-      "provider": "openrouter",
-      "total_spend": 7.647743,
-      "input": 16934284,
-      "output": 3550733,
-      "cache_read": 6828338,
-      "cache_write": 409697,
-      "sessions": 7,
-      "share_pct": 11.6,
-      "aliases": []
-     },
-     {
-      "model": "x-ai/grok-4-fast",
-      "provider": "openrouter",
-      "total_spend": 3.824885,
-      "input": 2634917,
-      "output": 552481,
-      "cache_read": 1062465,
-      "cache_write": 63744,
-      "sessions": 7,
-      "share_pct": 5.8,
-      "aliases": []
-     }
-    ],
-    "by_provider": {
-     "anthropic": 39.589231,
-     "openrouter": 26.488391
-    },
-    "tokens": {
-     "input": 39291437,
-     "output": 8238511,
-     "cache_read": 15843312,
-     "cache_write": 950580,
-     "total": 63373260
-    },
-    "sessions": {
-     "count": 81,
-     "avg_turns": 6.4
-    },
-    "cache": {
-     "read_tokens": 15843312,
-     "write_tokens": 950580,
-     "saved_usd": 42.7769,
-     "saved_pct": 39.3,
-     "would_have_cost_usd": 47.5299
-    },
-    "unpriced": [
-     {
-      "model": "demo-vision-preview",
-      "input": 118400,
-      "output": 9300,
-      "cache_read": 240000
-     }
-    ],
-    "updated_at": "2026-10-06T17:42:04.525909+00:00"
-   }
-  },
-  "GET /spend/summary?window=mtd": {
-   "status": 200,
-   "body": {
-    "total_usd": 53.88762,
-    "window": "mtd",
-    "range": {
-     "start": "2026-10-01T00:00:00+00:00",
-     "end": "2026-10-06T17:42:04.641319+00:00"
-    },
-    "prev_range": {
-     "start": "2026-09-01T00:00:00+00:00",
-     "end": "2026-10-01T00:00:00+00:00"
-    },
-    "delta_pct": 16.279070269257378,
-    "prev_total_usd": 46.343353,
-    "models": [
-     {
-      "model": "claude-sonnet-5",
-      "provider": "anthropic",
-      "total_spend": 24.805385,
-      "input": 854405,
-      "output": 179147,
-      "cache_read": 344516,
-      "cache_write": 20667,
-      "sessions": 6,
-      "share_pct": 46.0,
-      "aliases": []
-     },
-     {
-      "model": "openai/gpt-oss-120b",
-      "provider": "openrouter",
-      "total_spend": 12.148131,
-      "input": 13694255,
-      "output": 2871374,
-      "cache_read": 5521874,
-      "cache_write": 331310,
-      "sessions": 6,
-      "share_pct": 22.5,
-      "aliases": [
-       "openai/gpt-oss-120b:free"
-      ]
-     },
-     {
-      "model": "claude-haiku-4.5",
-      "provider": "anthropic",
-      "total_spend": 7.448829,
-      "input": 1443207,
-      "output": 302606,
-      "cache_read": 581936,
-      "cache_write": 34913,
-      "sessions": 6,
-      "share_pct": 13.8,
-      "aliases": []
-     },
-     {
-      "model": "deepseek/deepseek-v4.1-flash",
-      "provider": "openrouter",
-      "total_spend": 6.204777,
-      "input": 13739147,
-      "output": 2880785,
-      "cache_read": 5539976,
-      "cache_write": 332395,
-      "sessions": 6,
-      "share_pct": 11.5,
-      "aliases": []
-     },
-     {
-      "model": "x-ai/grok-4-fast",
-      "provider": "openrouter",
-      "total_spend": 3.280496,
-      "input": 2259895,
-      "output": 473846,
-      "cache_read": 911245,
-      "cache_write": 54672,
-      "sessions": 6,
       "share_pct": 6.1,
       "aliases": []
      }
     ],
     "by_provider": {
-     "anthropic": 32.254216,
-     "openrouter": 21.633404
+     "anthropic": 179.937021,
+     "openrouter": 120.181905
     },
     "tokens": {
-     "input": 31990909,
-     "output": 6707758,
-     "cache_read": 12899547,
-     "cache_write": 773957,
-     "total": 51598214
+     "input": 179735991,
+     "output": 37686515,
+     "cache_read": 72474143,
+     "cache_write": 4348373,
+     "total": 289896649
     },
-    "sessions": {
-     "count": 67,
-     "avg_turns": 6.4
-    },
+    "sessions": 331,
     "cache": {
-     "read_tokens": 12899547,
-     "write_tokens": 773957,
-     "saved_usd": 34.8288,
-     "saved_pct": 39.3,
-     "would_have_cost_usd": 38.6986
+     "read_tokens": 72474143,
+     "write_tokens": 4348373,
+     "saved_usd": 195.6802,
+     "saved_pct": 39.5,
+     "would_have_cost_usd": 217.4224
     },
     "unpriced": [
      {
@@ -6424,46 +6197,46 @@
       "cache_read": 240000
      }
     ],
-    "updated_at": "2026-10-06T17:42:03.635638+00:00"
+    "updated_at": "2026-10-06T23:08:28.471635+00:00"
    }
   },
-  "GET /spend/summary?window=today": {
+  "GET /spend/summary?window=7d": {
    "status": 200,
    "body": {
-    "total_usd": 8.607502,
-    "window": "today",
+    "total_usd": 68.810225,
+    "window": "7d",
     "range": {
-     "start": "2026-10-06T00:00:00+00:00",
-     "end": "2026-10-06T17:42:04.481453+00:00"
+     "start": "2026-09-30T00:00:00+00:00",
+     "end": "2026-10-06T23:08:28.391900+00:00"
     },
     "prev_range": {
-     "start": "2026-10-05T00:00:00+00:00",
-     "end": "2026-10-06T00:00:00+00:00"
+     "start": "2026-09-23T00:00:00+00:00",
+     "end": "2026-09-30T00:00:00+00:00"
     },
-    "delta_pct": 16.279065369150654,
-    "prev_total_usd": 7.402452,
+    "delta_pct": 16.27906878497,
+    "prev_total_usd": 59.176794,
     "models": [
      {
       "model": "claude-sonnet-5",
       "provider": "anthropic",
-      "total_spend": 3.910942,
-      "input": 134703,
-      "output": 28235,
-      "cache_read": 54309,
-      "cache_write": 3249,
-      "sessions": 18,
-      "share_pct": 45.4,
+      "total_spend": 32.023579,
+      "input": 1103032,
+      "output": 231279,
+      "cache_read": 444770,
+      "cache_write": 26683,
+      "sessions": 7,
+      "share_pct": 46.5,
       "aliases": []
      },
      {
       "model": "openai/gpt-oss-120b",
       "provider": "openrouter",
-      "total_spend": 1.943773,
-      "input": 2191153,
-      "output": 459429,
-      "cache_read": 883526,
-      "cache_write": 53001,
-      "sessions": 18,
+      "total_spend": 15.540175,
+      "input": 17518012,
+      "output": 3673128,
+      "cache_read": 7063712,
+      "cache_write": 423818,
+      "sessions": 7,
       "share_pct": 22.6,
       "aliases": [
        "openai/gpt-oss-120b:free"
@@ -6472,61 +6245,58 @@
      {
       "model": "claude-haiku-4.5",
       "provider": "anthropic",
-      "total_spend": 1.184451,
-      "input": 229479,
-      "output": 48110,
-      "cache_read": 92526,
-      "cache_write": 5540,
-      "sessions": 18,
-      "share_pct": 13.8,
+      "total_spend": 9.288197,
+      "input": 1799585,
+      "output": 377328,
+      "cache_read": 725639,
+      "cache_write": 43535,
+      "sessions": 7,
+      "share_pct": 13.5,
       "aliases": []
      },
      {
       "model": "deepseek/deepseek-v4.1-flash",
       "provider": "openrouter",
-      "total_spend": 1.053514,
-      "input": 2332769,
-      "output": 489124,
-      "cache_read": 940630,
-      "cache_write": 56428,
-      "sessions": 18,
-      "share_pct": 12.2,
+      "total_spend": 7.962076,
+      "input": 17630308,
+      "output": 3696674,
+      "cache_read": 7108992,
+      "cache_write": 426537,
+      "sessions": 7,
+      "share_pct": 11.6,
       "aliases": []
      },
      {
       "model": "x-ai/grok-4-fast",
       "provider": "openrouter",
-      "total_spend": 0.514819,
-      "input": 354644,
-      "output": 74353,
-      "cache_read": 142998,
-      "cache_write": 8572,
-      "sessions": 18,
-      "share_pct": 6.0,
+      "total_spend": 3.996197,
+      "input": 2752932,
+      "output": 577226,
+      "cache_read": 1110051,
+      "cache_write": 66599,
+      "sessions": 7,
+      "share_pct": 5.8,
       "aliases": []
      }
     ],
     "by_provider": {
-     "anthropic": 5.095392,
-     "openrouter": 3.51211
+     "anthropic": 41.311777,
+     "openrouter": 27.498448
     },
     "tokens": {
-     "input": 5242748,
-     "output": 1099251,
-     "cache_read": 2113989,
-     "cache_write": 126790,
-     "total": 8455988
+     "input": 40803869,
+     "output": 8555635,
+     "cache_read": 16453164,
+     "cache_write": 987172,
+     "total": 65812668
     },
-    "sessions": {
-     "count": 26,
-     "avg_turns": 6.4
-    },
+    "sessions": 81,
     "cache": {
-     "read_tokens": 2113989,
-     "write_tokens": 126790,
-     "saved_usd": 5.7078,
-     "saved_pct": 39.9,
-     "would_have_cost_usd": 6.342
+     "read_tokens": 16453164,
+     "write_tokens": 987172,
+     "saved_usd": 44.4235,
+     "saved_pct": 39.2,
+     "would_have_cost_usd": 49.3595
     },
     "unpriced": [
      {
@@ -6536,7 +6306,225 @@
       "cache_read": 240000
      }
     ],
-    "updated_at": "2026-10-06T17:42:03.627551+00:00"
+    "updated_at": "2026-10-06T23:08:28.391825+00:00"
+   }
+  },
+  "GET /spend/summary?window=mtd": {
+   "status": 200,
+   "body": {
+    "total_usd": 56.620222,
+    "window": "mtd",
+    "range": {
+     "start": "2026-10-01T00:00:00+00:00",
+     "end": "2026-10-06T23:08:28.507593+00:00"
+    },
+    "prev_range": {
+     "start": "2026-09-01T00:00:00+00:00",
+     "end": "2026-10-01T00:00:00+00:00"
+    },
+    "delta_pct": 16.279069576403092,
+    "prev_total_usd": 48.693391,
+    "models": [
+     {
+      "model": "claude-sonnet-5",
+      "provider": "anthropic",
+      "total_spend": 26.031486,
+      "input": 896638,
+      "output": 188002,
+      "cache_read": 361545,
+      "cache_write": 21689,
+      "sessions": 6,
+      "share_pct": 46.0,
+      "aliases": []
+     },
+     {
+      "model": "openai/gpt-oss-120b",
+      "provider": "openrouter",
+      "total_spend": 12.840078,
+      "input": 14474268,
+      "output": 3034925,
+      "cache_read": 5836395,
+      "cache_write": 350181,
+      "sessions": 6,
+      "share_pct": 22.7,
+      "aliases": [
+       "openai/gpt-oss-120b:free"
+      ]
+     },
+     {
+      "model": "claude-haiku-4.5",
+      "provider": "anthropic",
+      "total_spend": 7.855575,
+      "input": 1522014,
+      "output": 319130,
+      "cache_read": 613713,
+      "cache_write": 36819,
+      "sessions": 6,
+      "share_pct": 13.9,
+      "aliases": []
+     },
+     {
+      "model": "deepseek/deepseek-v4.1-flash",
+      "provider": "openrouter",
+      "total_spend": 6.467056,
+      "input": 14319908,
+      "output": 3002558,
+      "cache_read": 5774154,
+      "cache_write": 346446,
+      "sessions": 6,
+      "share_pct": 11.4,
+      "aliases": []
+     },
+     {
+      "model": "x-ai/grok-4-fast",
+      "provider": "openrouter",
+      "total_spend": 3.426029,
+      "input": 2360151,
+      "output": 494868,
+      "cache_read": 951671,
+      "cache_write": 57098,
+      "sessions": 6,
+      "share_pct": 6.1,
+      "aliases": []
+     }
+    ],
+    "by_provider": {
+     "anthropic": 33.887061,
+     "openrouter": 22.733161
+    },
+    "tokens": {
+     "input": 33572979,
+     "output": 7039483,
+     "cache_read": 13537478,
+     "cache_write": 812233,
+     "total": 54149940
+    },
+    "sessions": 67,
+    "cache": {
+     "read_tokens": 13537478,
+     "write_tokens": 812233,
+     "saved_usd": 36.5512,
+     "saved_pct": 39.2,
+     "would_have_cost_usd": 40.6124
+    },
+    "unpriced": [
+     {
+      "model": "demo-vision-preview",
+      "input": 118400,
+      "output": 9300,
+      "cache_read": 240000
+     }
+    ],
+    "updated_at": "2026-10-06T23:08:26.736454+00:00"
+   }
+  },
+  "GET /spend/summary?window=today": {
+   "status": 200,
+   "body": {
+    "total_usd": 11.275004,
+    "window": "today",
+    "range": {
+     "start": "2026-10-06T00:00:00+00:00",
+     "end": "2026-10-06T23:08:28.315157+00:00"
+    },
+    "prev_range": {
+     "start": "2026-10-05T00:00:00+00:00",
+     "end": "2026-10-06T00:00:00+00:00"
+    },
+    "delta_pct": 16.279075043858587,
+    "prev_total_usd": 9.696503,
+    "models": [
+     {
+      "model": "claude-sonnet-5",
+      "provider": "anthropic",
+      "total_spend": 5.160043,
+      "input": 177725,
+      "output": 37252,
+      "cache_read": 71655,
+      "cache_write": 4286,
+      "sessions": 24,
+      "share_pct": 45.8,
+      "aliases": []
+     },
+     {
+      "model": "openai/gpt-oss-120b",
+      "provider": "openrouter",
+      "total_spend": 2.500086,
+      "input": 2818265,
+      "output": 590918,
+      "cache_read": 1136393,
+      "cache_write": 68170,
+      "sessions": 24,
+      "share_pct": 22.2,
+      "aliases": [
+       "openai/gpt-oss-120b:free"
+      ]
+     },
+     {
+      "model": "claude-haiku-4.5",
+      "provider": "anthropic",
+      "total_spend": 1.574865,
+      "input": 305119,
+      "output": 63968,
+      "cache_read": 123024,
+      "cache_write": 7367,
+      "sessions": 24,
+      "share_pct": 14.0,
+      "aliases": []
+     },
+     {
+      "model": "deepseek/deepseek-v4.1-flash",
+      "provider": "openrouter",
+      "total_spend": 1.365395,
+      "input": 3023360,
+      "output": 633923,
+      "cache_read": 1219093,
+      "cache_write": 73133,
+      "sessions": 24,
+      "share_pct": 12.1,
+      "aliases": []
+     },
+     {
+      "model": "x-ai/grok-4-fast",
+      "provider": "openrouter",
+      "total_spend": 0.67461,
+      "input": 464719,
+      "output": 97430,
+      "cache_read": 187381,
+      "cache_write": 11232,
+      "sessions": 24,
+      "share_pct": 6.0,
+      "aliases": []
+     }
+    ],
+    "by_provider": {
+     "anthropic": 6.734908,
+     "openrouter": 4.540096
+    },
+    "tokens": {
+     "input": 6789188,
+     "output": 1423491,
+     "cache_read": 2737546,
+     "cache_write": 164188,
+     "total": 10950225
+    },
+    "sessions": 33,
+    "cache": {
+     "read_tokens": 2737546,
+     "write_tokens": 164188,
+     "saved_usd": 7.3914,
+     "saved_pct": 39.6,
+     "would_have_cost_usd": 8.2126
+    },
+    "unpriced": [
+     {
+      "model": "demo-vision-preview",
+      "input": 118400,
+      "output": 9300,
+      "cache_read": 240000
+     }
+    ],
+    "updated_at": "2026-10-06T23:08:26.730878+00:00"
    }
   },
   "GET /spend/timeseries?window=30d": {
@@ -7156,22 +7144,22 @@
      },
      {
       "date": "2026-10-06",
-      "spend_usd": 8.90192,
+      "spend_usd": 11.634525,
       "per_model": {
-       "claude-sonnet-5": 3.625355,
-       "claude-haiku-4.5": 1.224471,
-       "openai/gpt-oss-120b": 2.11447,
-       "deepseek/deepseek-v4.1-flash": 1.257149,
-       "x-ai/grok-4-fast": 0.680475
+       "claude-sonnet-5": 4.738224,
+       "claude-haiku-4.5": 1.600344,
+       "openai/gpt-oss-120b": 2.763545,
+       "deepseek/deepseek-v4.1-flash": 1.643053,
+       "x-ai/grok-4-fast": 0.889359
       },
       "per_provider": {
-       "anthropic": 4.849826,
-       "openrouter": 4.052094
+       "anthropic": 6.338568,
+       "openrouter": 5.295957
       },
       "tokens": {
-       "input": 5998155,
-       "output": 1257676,
-       "cache_read": 2418609
+       "input": 7839397,
+       "output": 1643742,
+       "cache_read": 3161045
       },
       "sessions": 6
      }
@@ -7312,22 +7300,22 @@
      },
      {
       "date": "2026-10-06",
-      "spend_usd": 8.901921,
+      "spend_usd": 11.634524,
       "per_model": {
-       "claude-sonnet-5": 4.631866,
-       "claude-haiku-4.5": 0.979621,
-       "openai/gpt-oss-120b": 1.708363,
-       "deepseek/deepseek-v4.1-flash": 1.023994,
-       "x-ai/grok-4-fast": 0.558077
+       "claude-sonnet-5": 6.0537,
+       "claude-haiku-4.5": 1.280333,
+       "openai/gpt-oss-120b": 2.232776,
+       "deepseek/deepseek-v4.1-flash": 1.338327,
+       "x-ai/grok-4-fast": 0.729388
       },
       "per_provider": {
-       "anthropic": 5.611487,
-       "openrouter": 3.290434
+       "anthropic": 7.334033,
+       "openrouter": 4.300491
       },
       "tokens": {
-       "input": 4927000,
-       "output": 1033079,
-       "cache_read": 1986692
+       "input": 6439432,
+       "output": 1350203,
+       "cache_read": 2596544
       },
       "sessions": 6
      }
@@ -7447,22 +7435,22 @@
      },
      {
       "date": "2026-10-06",
-      "spend_usd": 8.901921,
+      "spend_usd": 11.634523,
       "per_model": {
-       "claude-sonnet-5": 3.994229,
-       "claude-haiku-4.5": 1.325042,
-       "openai/gpt-oss-120b": 2.254134,
-       "deepseek/deepseek-v4.1-flash": 0.854418,
-       "x-ai/grok-4-fast": 0.474098
+       "claude-sonnet-5": 5.220329,
+       "claude-haiku-4.5": 1.731787,
+       "openai/gpt-oss-120b": 2.946081,
+       "deepseek/deepseek-v4.1-flash": 1.116696,
+       "x-ai/grok-4-fast": 0.61963
       },
       "per_provider": {
-       "anthropic": 5.319271,
-       "openrouter": 3.58265
+       "anthropic": 6.952116,
+       "openrouter": 4.682407
       },
       "tokens": {
-       "input": 5153852,
-       "output": 1080644,
-       "cache_read": 2078164
+       "input": 6735922,
+       "output": 1412369,
+       "cache_read": 2716095
       },
       "sessions": 6
      }
@@ -7852,6 +7840,132 @@
        "cache_read": 199544
       },
       "sessions": 2
+     },
+     {
+      "date": "2026-10-06T18:00",
+      "spend_usd": 0.742501,
+      "per_model": {
+       "claude-sonnet-5": 0.366355,
+       "claude-haiku-4.5": 0.120706,
+       "openai/gpt-oss-120b": 0.131812,
+       "deepseek/deepseek-v4.1-flash": 0.079788,
+       "x-ai/grok-4-fast": 0.04384
+      },
+      "per_provider": {
+       "anthropic": 0.487061,
+       "openrouter": 0.25544
+      },
+      "tokens": {
+       "input": 391465,
+       "output": 82079,
+       "cache_read": 157848
+      },
+      "sessions": 2
+     },
+     {
+      "date": "2026-10-06T19:00",
+      "spend_usd": 0.385,
+      "per_model": {
+       "claude-sonnet-5": 0.156793,
+       "claude-haiku-4.5": 0.052957,
+       "openai/gpt-oss-120b": 0.091449,
+       "deepseek/deepseek-v4.1-flash": 0.054371,
+       "x-ai/grok-4-fast": 0.02943
+      },
+      "per_provider": {
+       "anthropic": 0.20975,
+       "openrouter": 0.17525
+      },
+      "tokens": {
+       "input": 259411,
+       "output": 54391,
+       "cache_read": 104600
+      },
+      "sessions": 1
+     },
+     {
+      "date": "2026-10-06T20:00",
+      "spend_usd": 0.385,
+      "per_model": {
+       "claude-sonnet-5": 0.172747,
+       "claude-haiku-4.5": 0.057307,
+       "openai/gpt-oss-120b": 0.097489,
+       "deepseek/deepseek-v4.1-flash": 0.036953,
+       "x-ai/grok-4-fast": 0.020504
+      },
+      "per_provider": {
+       "anthropic": 0.230054,
+       "openrouter": 0.154946
+      },
+      "tokens": {
+       "input": 222898,
+       "output": 46734,
+       "cache_read": 89877
+      },
+      "sessions": 1
+     },
+     {
+      "date": "2026-10-06T21:00",
+      "spend_usd": 0.385,
+      "per_model": {
+       "claude-sonnet-5": 0.200324,
+       "claude-haiku-4.5": 0.042368,
+       "openai/gpt-oss-120b": 0.073885,
+       "deepseek/deepseek-v4.1-flash": 0.044287,
+       "x-ai/grok-4-fast": 0.024136
+      },
+      "per_provider": {
+       "anthropic": 0.242692,
+       "openrouter": 0.142308
+      },
+      "tokens": {
+       "input": 213086,
+       "output": 44677,
+       "cache_read": 85920
+      },
+      "sessions": 1
+     },
+     {
+      "date": "2026-10-06T22:00",
+      "spend_usd": 0.385,
+      "per_model": {
+       "claude-sonnet-5": 0.162921,
+       "claude-haiku-4.5": 0.054488,
+       "openai/gpt-oss-120b": 0.093331,
+       "deepseek/deepseek-v4.1-flash": 0.055111,
+       "x-ai/grok-4-fast": 0.019149
+      },
+      "per_provider": {
+       "anthropic": 0.217409,
+       "openrouter": 0.167591
+      },
+      "tokens": {
+       "input": 256599,
+       "output": 53801,
+       "cache_read": 103466
+      },
+      "sessions": 1
+     },
+     {
+      "date": "2026-10-06T23:00",
+      "spend_usd": 0.385001,
+      "per_model": {
+       "claude-sonnet-5": 0.189962,
+       "claude-haiku-4.5": 0.062588,
+       "openai/gpt-oss-120b": 0.068347,
+       "deepseek/deepseek-v4.1-flash": 0.041372,
+       "x-ai/grok-4-fast": 0.022732
+      },
+      "per_provider": {
+       "anthropic": 0.25255,
+       "openrouter": 0.132451
+      },
+      "tokens": {
+       "input": 202981,
+       "output": 42558,
+       "cache_read": 81846
+      },
+      "sessions": 1
      }
     ]
    }
@@ -7873,7 +7987,7 @@
       "id": "gateway",
       "label": "Gateway",
       "status": "up",
-      "latency_ms": 6
+      "latency_ms": 9
      },
      {
       "id": "hub-api",
@@ -7889,15 +8003,15 @@
      "mcp_calls": null
     },
     "spend": {
-     "today_usd": 8.607502,
-     "mtd_usd": 53.88762,
+     "today_usd": 11.275004,
+     "mtd_usd": 56.620222,
      "cap_usd": null
     },
     "cron": {
      "total": 4,
      "next_label": "Sun 18:15 demo-healthcheck"
     },
-    "updated_at": "2026-10-06T17:42:03.641526+00:00"
+    "updated_at": "2026-10-06T23:08:26.749072+00:00"
    }
   },
   "POST /chat/automations/jobs/demo-briefing/read": {
@@ -7911,7 +8025,7 @@
      "deliver": "discord:brief",
      "state": "active",
      "mode": "agent",
-     "next_run_at": "2026-10-07T07:41:56+00:00",
+     "next_run_at": "2026-10-07T13:08:17+00:00",
      "last_status": "ok",
      "last_error": null,
      "notify": "push",
@@ -7923,7 +8037,7 @@
       "job_id": "demo-briefing",
       "job_name": "Morning briefing",
       "category": "ops",
-      "run_time": "2026-10-06T07:41:56Z",
+      "run_time": "2026-10-06T13:08:17Z",
       "day": "2026-10-06",
       "status": "ok",
       "severity": "info",
@@ -7939,12 +8053,12 @@
       "unchanged": false,
       "new_lines": 7,
       "streak": 1,
-      "since": "2026-10-06T07:41:56Z",
+      "since": "2026-10-06T13:08:17Z",
       "read": true,
       "replies": 0
      },
      "last_run": {
-      "run_time": "2026-10-06T07:41:56Z",
+      "run_time": "2026-10-06T13:08:17Z",
       "status": "ok"
      },
      "unread": 0,
@@ -7971,7 +8085,7 @@
      "deliver": "discord:ops",
      "state": "active",
      "mode": "script",
-     "next_run_at": "2026-10-06T17:50:56+00:00",
+     "next_run_at": "2026-10-06T23:17:17+00:00",
      "last_status": "ok",
      "last_error": null,
      "notify": "push",
@@ -7983,7 +8097,7 @@
       "job_id": "demo-healthcheck",
       "job_name": "Service healthcheck",
       "category": "ops",
-      "run_time": "2026-10-06T17:26:56Z",
+      "run_time": "2026-10-06T22:53:17Z",
       "day": "2026-10-06",
       "status": "ok",
       "severity": "warn",
@@ -7999,12 +8113,12 @@
       "unchanged": false,
       "new_lines": 0,
       "streak": 1,
-      "since": "2026-10-06T17:26:56Z",
+      "since": "2026-10-06T22:53:17Z",
       "read": true,
       "replies": 0
      },
      "last_run": {
-      "run_time": "2026-10-06T17:26:56Z",
+      "run_time": "2026-10-06T22:53:17Z",
       "status": "ok"
      },
      "unread": 0,
@@ -8031,7 +8145,7 @@
      "deliver": "discord:ops",
      "state": "active",
      "mode": "agent",
-     "next_run_at": "2026-10-06T18:41:56+00:00",
+     "next_run_at": "2026-10-07T00:08:17+00:00",
      "last_status": "ok",
      "last_error": null,
      "notify": "push",
@@ -8043,7 +8157,7 @@
       "job_id": "demo-inbox-sweep",
       "job_name": "Inbox sweep",
       "category": "ops",
-      "run_time": "2026-10-06T16:41:56Z",
+      "run_time": "2026-10-06T22:08:17Z",
       "day": "2026-10-06",
       "status": "ok",
       "severity": "info",
@@ -8059,12 +8173,12 @@
       "unchanged": false,
       "new_lines": 4,
       "streak": 1,
-      "since": "2026-10-06T16:41:56Z",
+      "since": "2026-10-06T22:08:17Z",
       "read": true,
       "replies": 0
      },
      "last_run": {
-      "run_time": "2026-10-06T16:41:56Z",
+      "run_time": "2026-10-06T22:08:17Z",
       "status": "ok"
      },
      "unread": 0,
@@ -8103,7 +8217,7 @@
       "job_id": "demo-nightly-backup",
       "job_name": "Nightly backup",
       "category": "background",
-      "run_time": "2026-10-05T12:41:56Z",
+      "run_time": "2026-10-05T18:08:17Z",
       "day": "2026-10-05",
       "status": "failed",
       "severity": "failed",
@@ -8117,12 +8231,12 @@
       "unchanged": false,
       "new_lines": 1,
       "streak": 1,
-      "since": "2026-10-05T12:41:56Z",
+      "since": "2026-10-05T18:08:17Z",
       "read": true,
       "replies": 0
      },
      "last_run": {
-      "run_time": "2026-10-05T12:41:56Z",
+      "run_time": "2026-10-05T18:08:17Z",
       "status": "failed"
      },
      "unread": 0,
@@ -8146,7 +8260,7 @@
      "job_id": "demo-briefing",
      "job_name": "Morning briefing",
      "category": "ops",
-     "run_time": "2026-10-06T07:41:56Z",
+     "run_time": "2026-10-06T13:08:17Z",
      "day": "2026-10-06",
      "status": "ok",
      "severity": "info",
@@ -8162,7 +8276,7 @@
      "unchanged": false,
      "new_lines": 7,
      "streak": 1,
-     "since": "2026-10-06T07:41:56Z",
+     "since": "2026-10-06T13:08:17Z",
      "read": true,
      "replies": 0,
      "output": "Built today's briefing: 6 items.\n- Reply to Xavier about the demo trip\n- Approve the demo garage scope\n- Demo standup at 11:00\n- Package arriving today\n- Renew the demo domain\n- Demo newsletter, 3 releases worth a look",
@@ -8182,7 +8296,7 @@
      "deliver": "discord:brief",
      "state": "active",
      "mode": "agent",
-     "next_run_at": "2026-10-07T07:41:56+00:00",
+     "next_run_at": "2026-10-07T13:08:17+00:00",
      "last_status": "ok",
      "last_error": null,
      "notify": "push",
@@ -8194,7 +8308,7 @@
       "job_id": "demo-briefing",
       "job_name": "Morning briefing",
       "category": "ops",
-      "run_time": "2026-10-06T07:41:56Z",
+      "run_time": "2026-10-06T13:08:17Z",
       "day": "2026-10-06",
       "status": "ok",
       "severity": "info",
@@ -8210,12 +8324,12 @@
       "unchanged": false,
       "new_lines": 7,
       "streak": 1,
-      "since": "2026-10-06T07:41:56Z",
+      "since": "2026-10-06T13:08:17Z",
       "read": true,
       "replies": 0
      },
      "last_run": {
-      "run_time": "2026-10-06T07:41:56Z",
+      "run_time": "2026-10-06T13:08:17Z",
       "status": "ok"
      },
      "unread": 0,
@@ -8237,8 +8351,8 @@
      "pinned": false,
      "archived": false,
      "last_seq": 0,
-     "created_at": "2026-10-06T17:42:05Z",
-     "updated_at": "2026-10-06T17:42:05Z",
+     "created_at": "2026-10-06T23:08:30Z",
+     "updated_at": "2026-10-06T23:08:30Z",
      "last_read_seq": 0,
      "unread": 0,
      "preview": null,
@@ -8259,7 +8373,7 @@
      "job_id": "demo-briefing",
      "job_name": "Morning briefing",
      "category": "ops",
-     "run_time": "2026-10-05T07:41:56Z",
+     "run_time": "2026-10-05T13:08:17Z",
      "day": "2026-10-05",
      "status": "ok",
      "severity": "info",
@@ -8275,7 +8389,7 @@
      "unchanged": false,
      "new_lines": 6,
      "streak": 1,
-     "since": "2026-10-05T07:41:56Z",
+     "since": "2026-10-05T13:08:17Z",
      "read": true,
      "replies": 0,
      "output": "Built the briefing: 5 items.\n- Demo review moved to Thursday\n- Two parcels out for delivery\n- Demo newsletter, 2 releases\n- Garage quote arrived\n- Trip dates still open",
@@ -8295,7 +8409,7 @@
      "deliver": "discord:brief",
      "state": "active",
      "mode": "agent",
-     "next_run_at": "2026-10-07T07:41:56+00:00",
+     "next_run_at": "2026-10-07T13:08:17+00:00",
      "last_status": "ok",
      "last_error": null,
      "notify": "push",
@@ -8307,7 +8421,7 @@
       "job_id": "demo-briefing",
       "job_name": "Morning briefing",
       "category": "ops",
-      "run_time": "2026-10-06T07:41:56Z",
+      "run_time": "2026-10-06T13:08:17Z",
       "day": "2026-10-06",
       "status": "ok",
       "severity": "info",
@@ -8323,12 +8437,12 @@
       "unchanged": false,
       "new_lines": 7,
       "streak": 1,
-      "since": "2026-10-06T07:41:56Z",
+      "since": "2026-10-06T13:08:17Z",
       "read": true,
       "replies": 0
      },
      "last_run": {
-      "run_time": "2026-10-06T07:41:56Z",
+      "run_time": "2026-10-06T13:08:17Z",
       "status": "ok"
      },
      "unread": 0,
@@ -8350,8 +8464,8 @@
      "pinned": false,
      "archived": false,
      "last_seq": 0,
-     "created_at": "2026-10-06T17:42:05Z",
-     "updated_at": "2026-10-06T17:42:05Z",
+     "created_at": "2026-10-06T23:08:30Z",
+     "updated_at": "2026-10-06T23:08:30Z",
      "last_read_seq": 0,
      "unread": 0,
      "preview": null,
@@ -8372,7 +8486,7 @@
      "job_id": "demo-briefing",
      "job_name": "Morning briefing",
      "category": "ops",
-     "run_time": "2026-10-04T07:41:56Z",
+     "run_time": "2026-10-04T13:08:17Z",
      "day": "2026-10-04",
      "status": "ok",
      "severity": "info",
@@ -8388,7 +8502,7 @@
      "unchanged": false,
      "new_lines": 0,
      "streak": 1,
-     "since": "2026-10-04T07:41:56Z",
+     "since": "2026-10-04T13:08:17Z",
      "read": true,
      "replies": 0,
      "output": "Built the briefing: 4 items.\n- Demo standup at 09:30\n- Renewal reminder for the demo domain\n- One parcel delivered\n- Nothing waiting on you",
@@ -8408,7 +8522,7 @@
      "deliver": "discord:brief",
      "state": "active",
      "mode": "agent",
-     "next_run_at": "2026-10-07T07:41:56+00:00",
+     "next_run_at": "2026-10-07T13:08:17+00:00",
      "last_status": "ok",
      "last_error": null,
      "notify": "push",
@@ -8420,7 +8534,7 @@
       "job_id": "demo-briefing",
       "job_name": "Morning briefing",
       "category": "ops",
-      "run_time": "2026-10-06T07:41:56Z",
+      "run_time": "2026-10-06T13:08:17Z",
       "day": "2026-10-06",
       "status": "ok",
       "severity": "info",
@@ -8436,12 +8550,12 @@
       "unchanged": false,
       "new_lines": 7,
       "streak": 1,
-      "since": "2026-10-06T07:41:56Z",
+      "since": "2026-10-06T13:08:17Z",
       "read": true,
       "replies": 0
      },
      "last_run": {
-      "run_time": "2026-10-06T07:41:56Z",
+      "run_time": "2026-10-06T13:08:17Z",
       "status": "ok"
      },
      "unread": 0,
@@ -8463,8 +8577,8 @@
      "pinned": false,
      "archived": false,
      "last_seq": 0,
-     "created_at": "2026-10-06T17:42:05Z",
-     "updated_at": "2026-10-06T17:42:05Z",
+     "created_at": "2026-10-06T23:08:30Z",
+     "updated_at": "2026-10-06T23:08:30Z",
      "last_read_seq": 0,
      "unread": 0,
      "preview": null,
@@ -8485,7 +8599,7 @@
      "job_id": "demo-healthcheck",
      "job_name": "Service healthcheck",
      "category": "ops",
-     "run_time": "2026-10-06T17:26:56Z",
+     "run_time": "2026-10-06T22:53:17Z",
      "day": "2026-10-06",
      "status": "ok",
      "severity": "warn",
@@ -8501,7 +8615,7 @@
      "unchanged": false,
      "new_lines": 0,
      "streak": 1,
-     "since": "2026-10-06T17:26:56Z",
+     "since": "2026-10-06T22:53:17Z",
      "read": true,
      "replies": 0,
      "output": "⚠️ demo-backup degraded: the archive volume is not mounted.\n- 5 of 6 demo services up\n- last good snapshot 2 days ago",
@@ -8521,7 +8635,7 @@
      "deliver": "discord:ops",
      "state": "active",
      "mode": "script",
-     "next_run_at": "2026-10-06T17:50:56+00:00",
+     "next_run_at": "2026-10-06T23:17:17+00:00",
      "last_status": "ok",
      "last_error": null,
      "notify": "push",
@@ -8533,7 +8647,7 @@
       "job_id": "demo-healthcheck",
       "job_name": "Service healthcheck",
       "category": "ops",
-      "run_time": "2026-10-06T17:26:56Z",
+      "run_time": "2026-10-06T22:53:17Z",
       "day": "2026-10-06",
       "status": "ok",
       "severity": "warn",
@@ -8549,12 +8663,12 @@
       "unchanged": false,
       "new_lines": 0,
       "streak": 1,
-      "since": "2026-10-06T17:26:56Z",
+      "since": "2026-10-06T22:53:17Z",
       "read": true,
       "replies": 0
      },
      "last_run": {
-      "run_time": "2026-10-06T17:26:56Z",
+      "run_time": "2026-10-06T22:53:17Z",
       "status": "ok"
      },
      "unread": 0,
@@ -8576,8 +8690,8 @@
      "pinned": false,
      "archived": false,
      "last_seq": 0,
-     "created_at": "2026-10-06T17:42:05Z",
-     "updated_at": "2026-10-06T17:42:05Z",
+     "created_at": "2026-10-06T23:08:30Z",
+     "updated_at": "2026-10-06T23:08:30Z",
      "last_read_seq": 0,
      "unread": 0,
      "preview": null,
@@ -8598,7 +8712,7 @@
      "job_id": "demo-inbox-sweep",
      "job_name": "Inbox sweep",
      "category": "ops",
-     "run_time": "2026-10-06T14:41:56Z",
+     "run_time": "2026-10-06T20:08:17Z",
      "day": "2026-10-06",
      "status": "ok",
      "severity": "info",
@@ -8612,7 +8726,7 @@
      "unchanged": false,
      "new_lines": 0,
      "streak": 1,
-     "since": "2026-10-06T14:41:56Z",
+     "since": "2026-10-06T20:08:17Z",
      "read": true,
      "replies": 0,
      "output": "Swept 9 messages, nothing flagged.",
@@ -8632,7 +8746,7 @@
      "deliver": "discord:ops",
      "state": "active",
      "mode": "agent",
-     "next_run_at": "2026-10-06T18:41:56+00:00",
+     "next_run_at": "2026-10-07T00:08:17+00:00",
      "last_status": "ok",
      "last_error": null,
      "notify": "push",
@@ -8644,7 +8758,7 @@
       "job_id": "demo-inbox-sweep",
       "job_name": "Inbox sweep",
       "category": "ops",
-      "run_time": "2026-10-06T16:41:56Z",
+      "run_time": "2026-10-06T22:08:17Z",
       "day": "2026-10-06",
       "status": "ok",
       "severity": "info",
@@ -8660,12 +8774,12 @@
       "unchanged": false,
       "new_lines": 4,
       "streak": 1,
-      "since": "2026-10-06T16:41:56Z",
+      "since": "2026-10-06T22:08:17Z",
       "read": true,
       "replies": 0
      },
      "last_run": {
-      "run_time": "2026-10-06T16:41:56Z",
+      "run_time": "2026-10-06T22:08:17Z",
       "status": "ok"
      },
      "unread": 0,
@@ -8687,8 +8801,8 @@
      "pinned": false,
      "archived": false,
      "last_seq": 0,
-     "created_at": "2026-10-06T17:42:05Z",
-     "updated_at": "2026-10-06T17:42:05Z",
+     "created_at": "2026-10-06T23:08:30Z",
+     "updated_at": "2026-10-06T23:08:30Z",
      "last_read_seq": 0,
      "unread": 0,
      "preview": null,
@@ -8709,7 +8823,7 @@
      "job_id": "demo-inbox-sweep",
      "job_name": "Inbox sweep",
      "category": "ops",
-     "run_time": "2026-10-06T16:41:56Z",
+     "run_time": "2026-10-06T22:08:17Z",
      "day": "2026-10-06",
      "status": "ok",
      "severity": "info",
@@ -8725,7 +8839,7 @@
      "unchanged": false,
      "new_lines": 4,
      "streak": 1,
-     "since": "2026-10-06T16:41:56Z",
+     "since": "2026-10-06T22:08:17Z",
      "read": true,
      "replies": 0,
      "output": "Swept 14 messages: filed 3, flagged 1 for the approvals queue.\n- Demo Market: order confirmation\n- Demo Post: delivery window\n- Demo Bank: statement ready",
@@ -8745,7 +8859,7 @@
      "deliver": "discord:ops",
      "state": "active",
      "mode": "agent",
-     "next_run_at": "2026-10-06T18:41:56+00:00",
+     "next_run_at": "2026-10-07T00:08:17+00:00",
      "last_status": "ok",
      "last_error": null,
      "notify": "push",
@@ -8757,7 +8871,7 @@
       "job_id": "demo-inbox-sweep",
       "job_name": "Inbox sweep",
       "category": "ops",
-      "run_time": "2026-10-06T16:41:56Z",
+      "run_time": "2026-10-06T22:08:17Z",
       "day": "2026-10-06",
       "status": "ok",
       "severity": "info",
@@ -8773,12 +8887,12 @@
       "unchanged": false,
       "new_lines": 4,
       "streak": 1,
-      "since": "2026-10-06T16:41:56Z",
+      "since": "2026-10-06T22:08:17Z",
       "read": true,
       "replies": 0
      },
      "last_run": {
-      "run_time": "2026-10-06T16:41:56Z",
+      "run_time": "2026-10-06T22:08:17Z",
       "status": "ok"
      },
      "unread": 0,
@@ -8800,8 +8914,8 @@
      "pinned": false,
      "archived": false,
      "last_seq": 0,
-     "created_at": "2026-10-06T17:42:05Z",
-     "updated_at": "2026-10-06T17:42:05Z",
+     "created_at": "2026-10-06T23:08:30Z",
+     "updated_at": "2026-10-06T23:08:30Z",
      "last_read_seq": 0,
      "unread": 0,
      "preview": null,
@@ -8822,7 +8936,7 @@
      "job_id": "demo-nightly-backup",
      "job_name": "Nightly backup",
      "category": "background",
-     "run_time": "2026-10-04T12:41:56Z",
+     "run_time": "2026-10-04T18:08:17Z",
      "day": "2026-10-04",
      "status": "ok",
      "severity": "info",
@@ -8836,7 +8950,7 @@
      "unchanged": false,
      "new_lines": 0,
      "streak": 1,
-     "since": "2026-10-04T12:41:56Z",
+     "since": "2026-10-04T18:08:17Z",
      "read": true,
      "replies": 0,
      "output": "Snapshot demo-snap-0002 saved: 1.2 GiB, 18301 files.",
@@ -8868,7 +8982,7 @@
       "job_id": "demo-nightly-backup",
       "job_name": "Nightly backup",
       "category": "background",
-      "run_time": "2026-10-05T12:41:56Z",
+      "run_time": "2026-10-05T18:08:17Z",
       "day": "2026-10-05",
       "status": "failed",
       "severity": "failed",
@@ -8882,12 +8996,12 @@
       "unchanged": false,
       "new_lines": 1,
       "streak": 1,
-      "since": "2026-10-05T12:41:56Z",
+      "since": "2026-10-05T18:08:17Z",
       "read": true,
       "replies": 0
      },
      "last_run": {
-      "run_time": "2026-10-05T12:41:56Z",
+      "run_time": "2026-10-05T18:08:17Z",
       "status": "failed"
      },
      "unread": 0,
@@ -8909,8 +9023,8 @@
      "pinned": false,
      "archived": false,
      "last_seq": 0,
-     "created_at": "2026-10-06T17:42:05Z",
-     "updated_at": "2026-10-06T17:42:05Z",
+     "created_at": "2026-10-06T23:08:30Z",
+     "updated_at": "2026-10-06T23:08:30Z",
      "last_read_seq": 0,
      "unread": 0,
      "preview": null,
@@ -8931,7 +9045,7 @@
      "job_id": "demo-nightly-backup",
      "job_name": "Nightly backup",
      "category": "background",
-     "run_time": "2026-10-05T12:41:56Z",
+     "run_time": "2026-10-05T18:08:17Z",
      "day": "2026-10-05",
      "status": "failed",
      "severity": "failed",
@@ -8945,7 +9059,7 @@
      "unchanged": false,
      "new_lines": 1,
      "streak": 1,
-     "since": "2026-10-05T12:41:56Z",
+     "since": "2026-10-05T18:08:17Z",
      "read": true,
      "replies": 0,
      "output": "demo-backup: target volume 'demo-archive' not mounted; skipped.",
@@ -8977,7 +9091,7 @@
       "job_id": "demo-nightly-backup",
       "job_name": "Nightly backup",
       "category": "background",
-      "run_time": "2026-10-05T12:41:56Z",
+      "run_time": "2026-10-05T18:08:17Z",
       "day": "2026-10-05",
       "status": "failed",
       "severity": "failed",
@@ -8991,12 +9105,12 @@
       "unchanged": false,
       "new_lines": 1,
       "streak": 1,
-      "since": "2026-10-05T12:41:56Z",
+      "since": "2026-10-05T18:08:17Z",
       "read": true,
       "replies": 0
      },
      "last_run": {
-      "run_time": "2026-10-05T12:41:56Z",
+      "run_time": "2026-10-05T18:08:17Z",
       "status": "failed"
      },
      "unread": 0,
@@ -9018,8 +9132,8 @@
      "pinned": false,
      "archived": false,
      "last_seq": 0,
-     "created_at": "2026-10-06T17:42:05Z",
-     "updated_at": "2026-10-06T17:42:05Z",
+     "created_at": "2026-10-06T23:08:30Z",
+     "updated_at": "2026-10-06T23:08:30Z",
      "last_read_seq": 0,
      "unread": 0,
      "preview": null,
