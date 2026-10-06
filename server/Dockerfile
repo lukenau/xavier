@@ -6,7 +6,8 @@ FROM python:3.12-slim
 COPY requirements.txt /opt/hub-api/requirements.txt
 RUN pip install --no-cache-dir -r /opt/hub-api/requirements.txt
 
-COPY app.py ha_actions.py files.py hub_calendar.py hub_tz.py webauthn_gate.py devicekeys.py pair_local.py pair_cli.py /opt/hub-api/
+COPY app.py ha_actions.py files.py hub_calendar.py hub_tz.py webauthn_gate.py devicekeys.py pair_local.py pair_cli.py \
+     live_session.py live_reply.py live_deepgram.py /opt/hub-api/
 COPY chat/ /opt/hub-api/chat/
 
 # Non-root. The uid must own the host data dir mounted at /data (install.sh keeps

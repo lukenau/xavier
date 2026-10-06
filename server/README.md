@@ -71,6 +71,10 @@ Every other setting is in [../docs/SERVICES.md](../docs/SERVICES.md).
 | `ha_actions.py` | Home Assistant challenge and dry-run apply; a live apply returns 501 (not built yet) |
 | `files.py` | read-only multi-root file browser |
 | `hub_calendar.py` | calendar read surface and sync request |
+| `live_session.py` | the Live voice socket (`/api/live`): turn-taking, the reply spoken as it streams, barge-in |
+| `live_deepgram.py` | the Deepgram Flux streams Live uses: speech-to-text and text-to-speech |
+| `live_reply.py` | which parts of a reply Live reads aloud |
+| `scripts/live_probe.py`, `scripts/live_e2e.py` | manual checks of a `DEEPGRAM_API_KEY` against the real service; not part of the test suite |
 | `Dockerfile` | container image for this service |
 | `requirements.txt` / `requirements-dev.txt` | runtime and test dependencies |
 | `run_tests.sh` | runs the suite the way it is designed to run (one process per test file) |
@@ -87,8 +91,10 @@ who can reach the port can read them. The complete list, with what each one
 reveals, is in [../SECURITY.md](../SECURITY.md).
 
 **Reads behind a Face ID session cookie.** Everything under `/api/chat/`
-(threads, messages, media, automations, the socket) needs `hub_chat_session`;
-the `/terminal` proxy and `/api/tmux/*` need `hub_term_session`.
+(threads, messages, media, automations, the socket) and the Live voice socket
+(`/api/live`) need `hub_chat_session`; the `/terminal` proxy and `/api/tmux/*`
+need `hub_term_session`. Both websockets that can act as you, `/api/live` and the
+terminal's, also refuse a browser `Origin` that is not this hub.
 
 **Writes behind a fresh signature** (a WebAuthn assertion or device-key proof
 bound to the exact payload):

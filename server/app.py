@@ -63,8 +63,11 @@ from chat import imessage_draft as chat_imessage_draft
 from chat.platform import _platform_key_dep, get_store, platform_key_valid, router as chat_platform_router
 from chat.store import ATTENTION_KIND_IMESSAGE_DRAFT
 from chat.routes import router as chat_routes_router
+from chat.routes import forward_gateway_event as chat_forward_gateway_event
+from chat.routes import send_user_text as chat_send_user_text
 from chat.session import router as chat_session_router, chat_session_valid, locked_gate_detail
 from chat.ws import router as chat_ws_router
+import live_session  # the wiring below sets its send_message, stop_run and origin_ok
 
 logger = logging.getLogger("hub.api")
 
@@ -149,6 +152,28 @@ app.include_router(chat_approval_router)
 app.include_router(chat_automations_platform_router)
 app.include_router(chat_automations_router)
 app.include_router(chat_automations_badge_router)
+app.include_router(live_session.router)
+
+
+# Live voice (live_session.py): a finished spoken turn goes through the SAME send
+# machinery as POST /api/chat/threads/<id>/send, so it is recorded durably and
+# forwarded like a typed message; the tap that stops a reply is the thread's Stop.
+# The sqlite and gateway calls run off the event loop. The socket's Origin check is
+# wired beside the terminal's, further down.
+async def _live_send_message(
+    thread_id: str, text: str, notes: list[str], read_aloud: bool,
+) -> dict[str, Any] | None:
+    return await asyncio.to_thread(
+        chat_send_user_text, thread_id, text, live_voice=True, read_aloud=read_aloud, notes=notes,
+    )
+
+
+async def _live_stop_run(thread_id: str) -> None:
+    await asyncio.to_thread(chat_forward_gateway_event, {"kind": "stop", "thread_id": thread_id})
+
+
+live_session.send_message = _live_send_message
+live_session.stop_run = _live_stop_run
 
 
 # ---------------------------------------------------------------------------
@@ -6093,16 +6118,18 @@ def _origin_key(url: str) -> tuple[str, int | None] | None:
     return host.lower(), (None if port in (None, 80, 443) else port)
 
 
-def _terminal_ws_origin_ok(headers) -> bool:
-    """Cross-site WebSocket hijacking guard. The same-origin policy does not cover
-    WebSockets, and SameSite=Strict on hub_term_session only stops cross-SITE pages:
-    every port of this host, and every machine in the same tailnet (ts.net is a public
-    suffix, so <tailnet>.ts.net is one site), is same-site. A page served from any of
-    them could otherwise open this socket with the user's cookie. Browsers always send
-    Origin on a WebSocket handshake; it must name this hub, as the Host the request
-    came in on or an entry of HUB_ORIGIN. The app's React Native socket sends the
-    origin of the URL it dials, which passes; a client that sends no Origin is not a
-    browser, so a hijacking page cannot be one."""
+def _ws_origin_ok(headers) -> bool:
+    """Cross-site WebSocket hijacking guard, for every cookie-authenticated socket that
+    can act as the user: the terminal (`/terminal/ws`) and Live voice (`/api/live`,
+    live_session.py). The same-origin policy does not cover WebSockets, and
+    SameSite=Strict on the session cookies only stops cross-SITE pages: every port of
+    this host, and every machine in the same tailnet (ts.net is a public suffix, so
+    <tailnet>.ts.net is one site), is same-site. A page served from any of them could
+    otherwise open these sockets with the user's cookie. Browsers always send Origin on
+    a WebSocket handshake; it must name this hub, as the Host the request came in on or
+    an entry of HUB_ORIGIN. The app's React Native socket sends the origin of the URL
+    it dials, which passes; a client that sends no Origin is not a browser, so a
+    hijacking page cannot be one."""
     origin = headers.get("origin")
     if origin is None:
         return True
@@ -6114,13 +6141,16 @@ def _terminal_ws_origin_ok(headers) -> bool:
     return key is not None and key in allowed
 
 
+live_session.origin_ok = _ws_origin_ok
+
+
 @app.websocket("/terminal/ws")
 async def terminal_ws(ws: WebSocket) -> None:
     """Bridge the browser <-> ttyd websocket (subprotocol 'tty') over the unix socket.
     Rejects the upgrade unless the hub_term_session cookie is valid and the Origin, when
     there is one, is this hub's."""
     token = ws.cookies.get("hub_term_session")
-    if not HUB_TTYD_SOCK or not _term_session_valid(token) or not _terminal_ws_origin_ok(ws.headers):
+    if not HUB_TTYD_SOCK or not _term_session_valid(token) or not _ws_origin_ok(ws.headers):
         await ws.close(code=1008)  # policy violation
         return
     # Preserve ttyd's 'tty' subprotocol through the negotiation.

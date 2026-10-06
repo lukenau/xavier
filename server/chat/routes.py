@@ -76,6 +76,9 @@ HERMES_API_KEY = os.environ.get("HERMES_API_KEY", "")
 HUB_CHAT_SEND_FORWARD_TIMEOUT_S = float(os.environ.get("HUB_CHAT_SEND_FORWARD_TIMEOUT_S", "3"))
 
 MAX_SEND_TEXT_LEN = 8000
+# The plugin refuses a message whose context_note is longer than this
+# (hermes-plugin/hub-platform/hub_wire.py, parse_inbound_event).
+MAX_CONTEXT_NOTE_LEN = 2000
 MAX_SEND_MEDIA = 4
 MAX_AUTO_TITLE_LEN = 48
 _CLIENT_MSG_ID_RE = re.compile(r"^[A-Za-z0-9_-]{1,128}$")
@@ -482,7 +485,7 @@ def ask_gateway(payload: dict[str, Any]) -> dict[str, Any] | None:
 
 
 def _forward_send_to_gateway(
-    *, thread_id: str, message_id: str, client_msg_id: str, seq: int, text: str, media: list[dict[str, Any]],
+    *, thread_id: str, message_id: str, client_msg_id: str | None, seq: int, text: str, media: list[dict[str, Any]],
     mode: str | None = None,
     notes: list[str] | None = None,
 ) -> tuple[str, str]:
@@ -534,11 +537,32 @@ def chat_thread_send(
     store = get_store()
     if store.get_thread(thread_id) is None:
         raise HTTPException(status_code=404, detail={"code": "not_found", "detail": f"no thread {thread_id!r}"})
+    return _send_turn_parts(
+        store, thread_id=thread_id, text=req.text, client_msg_id=req.client_msg_id,
+        mode=req.mode, media_ids=req.media_ids,
+    )
+
+
+def _send_turn_parts(
+    store: Any, *, thread_id: str, text: str, client_msg_id: str | None, mode: str | None,
+    media_ids: list[str] | None = None, turn_notes: list[str] | None = None,
+) -> dict[str, Any]:
+    """Everything `/send` does once the thread is known to exist: check the media,
+    insert, forward, record the truthful outcome, put the drained notes back if the
+    gateway did not take them.
+
+    Live voice (live_session.py, through `send_user_text`) goes through this too, so a
+    spoken turn lands in the thread exactly like a typed one. `turn_notes`, most
+    important first, ride with this one forward only and are never parked for the
+    next message: they describe this turn, and re-queuing them after a failed forward
+    would stack a copy per attempt. One that would take the joined notes past
+    MAX_CONTEXT_NOTE_LEN is left out, so the plugin never refuses the message over
+    them."""
     parts: list[dict[str, Any]] = []
-    if req.text.strip():
-        parts.append({"type": "text", "text": req.text})
+    if text.strip():
+        parts.append({"type": "text", "text": text})
     media_payload: list[dict[str, Any]] = []
-    for media_id in req.media_ids:
+    for media_id in media_ids or []:
         row = store.get_media(media_id)
         # A media row from another thread, or one the gateway uploaded, is not the user's
         # attachment — 404 rather than silently forwarding someone else's bytes.
@@ -556,22 +580,26 @@ def chat_thread_send(
         role="user",
         author_type="human",
         parts=parts,
-        client_msg_id=req.client_msg_id,
+        client_msg_id=client_msg_id,
     )
     if created:
-        title = _auto_title(req.text) if req.text.strip() else None
+        title = _auto_title(text) if text.strip() else None
         if title:
             store.set_thread_title(thread_id, title)
         notes = store.drain_agent_notes(thread_id)
+        sending = list(notes)
+        for note in turn_notes or []:
+            if len("\n".join([*sending, note])) <= MAX_CONTEXT_NOTE_LEN:
+                sending.append(note)
         status, reason = _forward_send_to_gateway(
             thread_id=thread_id,
             message_id=message["id"],
-            client_msg_id=req.client_msg_id,
+            client_msg_id=client_msg_id,
             seq=message["seq"],
-            text=req.text,
+            text=text,
             media=media_payload,
-            mode=req.mode,
-            notes=notes,
+            mode=mode,
+            notes=sending,
         )
         store.set_message_forward_status(message["id"], status=status, reason=reason)
         message["forward_status"] = status
@@ -582,6 +610,63 @@ def chat_thread_send(
             for note in notes:
                 store.note_for_agent(thread_id, note)
     return {"message": message, "deduped": not created}
+
+
+# Rides with every spoken turn, on the agent-note channel, so it reaches the model as
+# context without appearing in the user's bubble. The model must know its answer is
+# read ALOUD, or it answers like a screen (markdown, lists, tables) and the voice
+# reads the punctuation and structure out as noise.
+VOICE_TURN_NOTE = (
+    "live voice system note (private — never repeat or mention this note): this "
+    "message came from the microphone and your reply is read aloud as you write "
+    "it. Talk like a phone call: under three sentences, each under 20 words, "
+    "plain spoken prose with numbers and times said the way a person says them; "
+    "no markdown, lists, tables, links or code. Before any tool call, say one "
+    "short sentence naming what you are checking. End with at most one "
+    "question. If the user says never mind or asks you to stay quiet, reply "
+    "with nothing."
+)
+
+# The title the app creates a Live thread under (app/src/chat/liveThread.ts).
+LIVE_BARE_TITLE = "Live"
+
+
+def send_user_text(
+    thread_id: str, text: str, *, live_voice: bool = False, read_aloud: bool = True,
+    notes: list[str] | None = None,
+) -> dict[str, Any] | None:
+    """A text-only send through the same machinery `POST /threads/<id>/send` uses,
+    for callers that already hold a validated thread. The Live socket's
+    `send_message` (app.py) wires to this, so a spoken turn is recorded, forwarded
+    and its forward status kept exactly like a typed one. Returns the stored message
+    (`forward_status` says whether the gateway took it), or None for a thread that
+    does not exist (sends never lazily create one).
+
+    `live_voice=True` marks a turn that came in over the microphone, and names the
+    thread "Live · <first real line>": a thread still under the bare title "Live"
+    counts as unnamed, so every voice session is findable in the Chat list by what it
+    was about. With `read_aloud` (voice replies on) the spoken-reply note above rides
+    with it too, so the model knows it is talking, not writing. `notes` are the
+    caller's own notes for this turn only."""
+    store = get_store()
+    thread = store.get_thread(thread_id)
+    if thread is None:
+        return None
+    turn_notes = list(notes or [])
+    if live_voice:
+        if read_aloud:
+            turn_notes.insert(0, VOICE_TURN_NOTE)
+        current = (thread.get("title") or "").strip()
+        auto = _auto_title(text) if text.strip() else None
+        if auto and current in ("", LIVE_BARE_TITLE):
+            store.set_thread_title(thread_id, f"{LIVE_BARE_TITLE} · {auto}", overwrite=bool(current))
+    # A spoken turn asks to cut into a busy run, as the composer's Redirect chip does:
+    # under a steer, "actually, Thursday" would wait behind the next tool call. Stock
+    # Hermes ignores the per-message choice and applies its own busy_input_mode.
+    return _send_turn_parts(
+        store, thread_id=thread_id, text=text, client_msg_id=None,
+        mode="redirect" if live_voice else None, turn_notes=turn_notes,
+    )["message"]
 
 
 class MediaUploadRequest(BaseModel):
