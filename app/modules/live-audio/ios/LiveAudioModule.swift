@@ -44,6 +44,11 @@ public class LiveAudioModule: Module {
   private let pendingLock = NSLock()
   private var observers: [NSObjectProtocol] = []
   private var restarts: [Date] = []
+  // Where each reply starts on the speech player's own sample clock, so JS
+  // can ask how much of it has actually been heard (captions follow this).
+  private let clockLock = NSLock()
+  private var queuedEnd: Int64 = 0
+  private var tagStart: [Int: Int64] = [:]
 
   public func definition() -> ModuleDefinition {
     Name("LiveAudio")
@@ -78,8 +83,15 @@ public class LiveAudioModule: Module {
       DispatchQueue.main.async { self.schedule(pcmBase64, on: self.tones, tag: -1) }
     }
 
+    // ms of reply `tag` that has come out of the speaker (render position plus
+    // output latency), or -1 before it starts.
+    Function("playedMs") { (tag: Int) -> Double in
+      self.playedMs(tag)
+    }
+
     Function("clear") {
       DispatchQueue.main.async {
+        self.resetClock()
         self.speech.stop()
         if self.active && self.engine.isRunning {
           self.speech.play()
@@ -225,6 +237,7 @@ public class LiveAudioModule: Module {
   /// Apple's configuration-change handling: the same engine, started again.
   private func restartIfStopped() {
     guard active, !engine.isRunning else { return }
+    resetClock()
     // Never more than a handful in a burst: a restart loop freezes the app,
     // and a dead mic with a notice beats a frozen app.
     let now = Date()
@@ -337,11 +350,43 @@ public class LiveAudioModule: Module {
       }
     }
     let ms = Double(frames) / LiveAudioModule.sampleRate * 1000
+    if player === speech && tag >= 0 {
+      let now = renderedSample() ?? 0
+      clockLock.lock()
+      let start = max(now, queuedEnd)
+      if tagStart[tag] == nil { tagStart[tag] = start }
+      queuedEnd = start + Int64(frames)
+      clockLock.unlock()
+    }
     player.scheduleBuffer(buffer, at: nil, options: [], completionCallbackType: .dataPlayedBack) { [weak self] _ in
       if tag >= 0 {
         self?.sendEvent("onPlayed", ["tag": tag, "ms": ms])
       }
     }
+  }
+
+  private func renderedSample() -> Int64? {
+    guard let nodeTime = speech.lastRenderTime,
+          let playerTime = speech.playerTime(forNodeTime: nodeTime) else { return nil }
+    return playerTime.sampleTime
+  }
+
+  private func resetClock() {
+    clockLock.lock()
+    queuedEnd = 0
+    tagStart.removeAll()
+    clockLock.unlock()
+  }
+
+  private func playedMs(_ tag: Int) -> Double {
+    clockLock.lock()
+    let start = tagStart[tag]
+    clockLock.unlock()
+    guard let start = start, let now = renderedSample() else { return -1 }
+    let session = AVAudioSession.sharedInstance()
+    let latency = (session.outputLatency + session.ioBufferDuration) * LiveAudioModule.sampleRate
+    let heard = Double(now - start) - latency
+    return max(0, heard / LiveAudioModule.sampleRate * 1000)
   }
 
   private static func micModeName() -> String {

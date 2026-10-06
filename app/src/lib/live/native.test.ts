@@ -207,3 +207,35 @@ describe('native player', () => {
     expect(f.raw.setDucked).toHaveBeenCalledWith(true);
   });
 });
+
+describe('native playback clock', () => {
+  it('captions follow the speaker clock, not the enqueue time', () => {
+    const f = fakeModule();
+    let clock = -1;
+    const playedMs = jest.fn(() => clock);
+    (f.raw as unknown as { playedMs: (tag: number) => number }).playedMs = playedMs;
+    let t = 0;
+    const p = createNativeLiveAudio(f.mod, () => t).createPlayer({ onProgress: () => {}, onDrained: () => {} });
+    p.start(1);
+    p.push(ms(300));
+    t = 200;
+    // Queued but not yet out of the speaker: the estimate would say 200 ms.
+    expect(p.playedMsNow()).toBe(0);
+    clock = 120;
+    expect(p.playedMsNow()).toBe(120);
+    // Never past what was queued.
+    clock = 900;
+    expect(p.playedMsNow()).toBe(300);
+    expect(playedMs).toHaveBeenCalledWith(1);
+  });
+
+  it('a module without the clock keeps the estimate', () => {
+    const f = fakeModule();
+    let t = 0;
+    const p = createNativeLiveAudio(f.mod, () => t).createPlayer({ onProgress: () => {}, onDrained: () => {} });
+    p.start(1);
+    p.push(ms(300));
+    t = 200;
+    expect(p.playedMsNow()).toBe(200);
+  });
+});

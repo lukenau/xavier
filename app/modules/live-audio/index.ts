@@ -33,6 +33,9 @@ export interface LiveAudioNative {
   /** A/B switch: true stops voice processing shaping the audio (and cancelling
    * echo). Absent from a build whose module predates it. */
   setVoiceProcessingBypassed?: (bypassed: boolean) => void;
+  /** ms of reply `tag` heard from the speaker (its render clock), -1 before it
+   * starts. Absent from a build whose module predates it. */
+  playedMs?: (tag: number) => number;
 }
 
 /** null on a build without the module (and on web, and under jest). */

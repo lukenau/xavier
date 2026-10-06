@@ -216,6 +216,10 @@ export function createNativeLiveAudio(mod: LiveAudioNative, now: () => number = 
         },
         playedMsNow() {
           if (!started) return 0;
+          // The speaker's own clock when the module has it: an estimate
+          // anchored at enqueue runs ahead of the voice by the output
+          // pipeline's buffering, and the caption highlight led the audio.
+          if (mod.playedMs) return Math.min(queuedMs, Math.max(0, mod.playedMs(tag)));
           return Math.min(queuedMs, playedMs + Math.max(0, now() - playedAt));
         },
         receivedMs() {
