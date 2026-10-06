@@ -87,6 +87,19 @@ public class LiveAudioModule: Module {
       }
     }
 
+    // iOS's Mic Mode picker (Standard / Voice Isolation / Wide Spectrum).
+    // Apps cannot choose the mode; they can only open the system's picker,
+    // and only while the voice-processing mic is running.
+    Function("showMicModes") {
+      DispatchQueue.main.async {
+        AVCaptureDevice.showSystemUserInterface(.microphoneModes)
+      }
+    }
+
+    Function("micMode") { () -> String in
+      LiveAudioModule.micModeName()
+    }
+
     Function("setDucked") { (ducked: Bool) in
       self.speech.volume = ducked ? 0.2 : 1.0
     }
@@ -134,6 +147,7 @@ public class LiveAudioModule: Module {
       "inputFormat": "\(input.outputFormat(forBus: 0))",
       "route": route,
       "sampleRate": LiveAudioModule.sampleRate,
+      "micMode": LiveAudioModule.micModeName(),
     ]
     diag("started voiceProcessing=\(input.isVoiceProcessingEnabled) route=\(route) input=\(input.outputFormat(forBus: 0))")
     return info
@@ -318,6 +332,15 @@ public class LiveAudioModule: Module {
       if tag >= 0 {
         self?.sendEvent("onPlayed", ["tag": tag, "ms": ms])
       }
+    }
+  }
+
+  private static func micModeName() -> String {
+    switch AVCaptureDevice.activeMicrophoneMode {
+    case .voiceIsolation: return "voiceIsolation"
+    case .wideSpectrum: return "wideSpectrum"
+    case .standard: return "standard"
+    @unknown default: return "unknown"
     }
   }
 

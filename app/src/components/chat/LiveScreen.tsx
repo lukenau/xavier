@@ -152,6 +152,18 @@ export function LiveSurface({ threadId, onNewSession }: { threadId: string; onNe
             </Text>
           ) : null}
         </View>
+        {live.showMicModes && phase !== 'off' ? (
+          <Pressable
+            accessibilityLabel="Mic mode"
+            accessibilityHint="Voice Isolation keeps other people's voices out"
+            accessibilityRole="button"
+            onPress={live.showMicModes}
+            style={({ pressed }) => [styles.headerButton, pressed && { opacity: PRESSED_OPACITY }]}
+            testID="live-mic-mode"
+          >
+            <SymbolView name="person.wave.2" size={19} tintColor={t('fg-3')} />
+          </Pressable>
+        ) : null}
         {onNewSession ? (
           <Pressable
             accessibilityLabel="New live session"

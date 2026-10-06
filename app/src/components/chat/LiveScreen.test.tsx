@@ -100,7 +100,7 @@ jest.mock('./MessageBubble', () => {
 jest.mock('../../lib/live/earcons', () => ({ ...jest.requireActual('../../lib/live/earcons'), playEarcon: jest.fn() }));
 // The native voice-processing engine: null = the react-native-audio-api path.
 const mockNative = {
-  mod: null as null | ReturnType<typeof fakeNative>,
+  mod: null as null | (ReturnType<typeof fakeNative> & { showMicModes?: jest.Mock }),
 };
 function fakeNative() {
   const listeners = new Map<string, Set<(e: never) => void>>();
@@ -771,5 +771,43 @@ describe('notices, refusals and holds', () => {
     });
     expect(mockActivity).toHaveBeenCalledWith(false);
     expect(mockConnectOpts).toBeNull();
+  });
+});
+
+describe('mic mode', () => {
+  test('a native module with the picker shows it while Live runs, and opens it', async () => {
+    mockNative.mod = { ...fakeNative(), showMicModes: jest.fn() };
+    await mount();
+    expect(renderer.root.findAll((n) => n.props.testID === 'live-mic-mode').length).toBe(0);
+    await tapStage();
+    await press('live-mic-mode');
+    expect(mockNative.mod.showMicModes).toHaveBeenCalled();
+  });
+
+  test('a native module without the picker shows no button', async () => {
+    mockNative.mod = fakeNative();
+    await mount();
+    await tapStage();
+    expect(renderer.root.findAll((n) => n.props.testID === 'live-mic-mode').length).toBe(0);
+  });
+
+  test('the library engine shows no button', async () => {
+    await mount();
+    await tapStage();
+    expect(renderer.root.findAll((n) => n.props.testID === 'live-mic-mode').length).toBe(0);
+  });
+
+  test('the start line in the server log names the active mic mode', async () => {
+    mockNative.mod = fakeNative();
+    mockNative.mod.start.mockResolvedValueOnce({
+      voiceProcessing: true,
+      inputFormat: 'mono 24k',
+      route: 'MicrophoneBuiltIn',
+      sampleRate: 24000,
+      micMode: 'voiceIsolation',
+    } as never);
+    await mount();
+    await tapStage();
+    expect(mockClient.diag).toHaveBeenCalledWith(expect.stringMatching(/^native audio: .* micMode=voiceIsolation$/));
   });
 });

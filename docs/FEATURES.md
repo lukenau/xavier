@@ -79,13 +79,15 @@ voice is not set up and nothing is sent to Deepgram.
   (`app/modules/live-audio`), Apple's voice processing cancels the speaker's
   echo, so speech that starts during a reply turns it down, a couple of real
   words cut it off, and the rest of that reply stays unsaid; a lone "mm-hm" is
-  not taken as a turn. A tap on the dots stops the speech and, while Xavier is
-  still working on the reply, the turn too (`/stop`, as in chat). On the
-  fallback engine (`react-native-audio-api`, chosen in `app/src/lib/live/aec.ts`)
-  there is no echo cancellation, so speech that starts while Xavier talks is
-  ignored as his own voice. Talking over a turn that is still running asks
-  Hermes to redirect it; stock Hermes applies its own `busy_input_mode` instead,
-  as with the composer's choice above.
+  not taken as a turn. On that engine a button on the page also opens iOS's Mic
+  Mode picker, where Voice Isolation keeps other people's voices out. A tap on
+  the dots stops the speech and, while Xavier is still working on the reply, the
+  turn too (`/stop`, as in chat). On the fallback engine
+  (`react-native-audio-api`, chosen in `app/src/lib/live/aec.ts`) there is no
+  echo cancellation, so speech that starts while Xavier talks is ignored as his
+  own voice. Talking over a turn that is still running asks Hermes to redirect
+  it; stock Hermes applies its own `busy_input_mode` instead, as with the
+  composer's choice above.
 - **One running conversation.** Voice turns land in a pinned "Live" thread that
   is named after the first real thing you say ("Live · …"), so the transcript is
   on the page and in the Chat list (`app/src/chat/liveThread.ts`). "New session"

@@ -14,6 +14,8 @@ export interface LiveAudioStart {
   inputFormat: string;
   route: string;
   sampleRate: number;
+  /** iOS's active Mic Mode; absent from a build whose module predates it. */
+  micMode?: string;
 }
 
 export interface LiveAudioNative {
@@ -25,6 +27,9 @@ export interface LiveAudioNative {
   playTone(pcmBase64: string): void;
   clear(): void;
   setDucked(ducked: boolean): void;
+  /** Opens iOS's Mic Mode picker (Voice Isolation); absent from a build whose
+   * module predates it. */
+  showMicModes?: () => void;
 }
 
 /** null on a build without the module (and on web, and under jest). */

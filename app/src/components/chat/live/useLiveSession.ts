@@ -425,7 +425,7 @@ export function useLiveSession(threadId: string, tts: LiveTts, deps: LiveDeps = 
           return;
         }
         client.current?.diag(
-          `native audio: voiceProcessing=${info.voiceProcessing} route=${info.route} input=${info.inputFormat}`,
+          `native audio: voiceProcessing=${info.voiceProcessing} route=${info.route} input=${info.inputFormat} micMode=${info.micMode ?? '?'}`,
         );
         tone('start');
         haptic('tap');
@@ -536,7 +536,12 @@ export function useLiveSession(threadId: string, tts: LiveTts, deps: LiveDeps = 
     [release, teardown],
   );
 
+  // Only a native module that has the picker gets the button.
+  const micModes = deps.nativeAudio();
+  const showMicModes = micModes?.showMicModes ? () => micModes.showMicModes?.() : null;
+
   return {
+    showMicModes,
     phase,
     muted,
     held,
