@@ -978,20 +978,24 @@ def test_a_backchannel_over_the_reply_is_not_a_turn(env):
     assert env.sent_messages == [("thr_1", "calendar")]
     assert "cancel" not in env.types()
     assert not any(c[0] == "interrupt" for c in env.speak.calls)
-    assert [f for f in env.frames() if f["type"] == "heard"][-1] == {"type": "heard", "text": "", "final": True}
+    # A candidate that never qualifies is never shown as the user's words.
+    assert not any("Mhm" in f["text"] for f in env.frames() if f["type"] == "heard")
 
 
-def test_one_real_word_over_the_reply_is_a_turn_and_cuts_it(env):
+def test_one_ordinary_word_over_the_reply_is_not_an_interruption(env):
+    """Mid-reply it takes two real words or a stop word; one leaked word of a
+    loud speaker must not cut Xavier off."""
     async def go():
         s = await speaking_reply(env, aec=True)
         env.listen.push("StartOfTurn", "no", 1)
         env.listen.push("EndOfTurn", "No.", 1)
-        assert await wait_for(lambda: len(env.sent_messages) == 2)
+        assert await wait_for(lambda: "unduck" in env.types())
+        await settle(50)
         await s.close()
 
     run(go())
-    assert env.sent_messages[-1] == ("thr_1", "No.")
-    assert "cancel" in env.types()
+    assert env.sent_messages == [("thr_1", "calendar")]
+    assert "cancel" not in env.types()
 
 
 def test_after_a_cut_the_rest_of_that_reply_stays_unsaid(env):
@@ -1050,13 +1054,14 @@ def test_text_still_streaming_from_before_a_new_question_does_not_answer_it(env)
     assert ("speak", "You have standup.") not in env.speak.calls
 
 
-def test_a_turn_that_cuts_a_reply_carries_how_much_of_it_was_heard(env):
+def test_a_turn_that_cuts_a_reply_carries_how_much_of_it_was_heard(env, monkeypatch):
     env.speak.cut_delay = 0.1  # Deepgram answers the Interrupt a round trip later
+    monkeypatch.setattr(ls, "HOLD_S", 0.3)
 
     async def go():
         s = await speaking_reply(env, aec=True)
-        env.listen.push("StartOfTurn", "no", 1)
-        env.listen.push("EndOfTurn", "No.", 1)
+        env.listen.push("StartOfTurn", "stop", 1)
+        env.listen.push("EndOfTurn", "Stop.", 1)
         assert await wait_for(lambda: len(env.sent_messages) == 2, n=1000)
         await s.close()
 
@@ -1227,7 +1232,8 @@ def test_a_backchannel_inside_the_hold_does_not_lose_the_turn_being_held(env, mo
         await s.close()
 
     run(go())
-    assert env.sent_messages[-1] == ("thr_1", "Wait.")
+    # The held turn is sent; the short sound after the cut joins it.
+    assert env.sent_messages[-1][1].startswith("Wait.")
 
 
 # ── echo measurement ───────────────────────────────────────────────────────
@@ -1302,3 +1308,116 @@ def test_the_echo_score_ignores_the_acknowledgement_of_the_turn_itself(env, monk
         ls.log.removeHandler(grab)
     assert [line for line in lines if "turn committed" in line][0].endswith("echo_score=0.00")
     assert env.spoken() == ["Okay."]
+
+
+
+# ── echo filter: candidates must qualify ───────────────────────────────────
+
+async def reply_being_spoken(env, text):
+    env.listen.push("StartOfTurn", "q")
+    env.listen.push("EndOfTurn", "say that again")
+    assert await wait_for(lambda: len(env.sent_messages) == 1)
+    env.store.add("run.status", {"status": "running"})
+    env.store.add("message.upsert", {"message_id": "a", "role": "assistant", "author_type": "agent",
+                                     "parts": [{"type": "text", "text": text}]})
+    assert await wait_for(lambda: env.states()[-1] == "speaking")
+
+
+def test_his_own_words_leaking_back_never_become_a_turn(env):
+    """Echo cancellation lets some of a loud speaker through: his "Sure." coming
+    back through the mic must not be sent as the user's turn (it would be
+    acknowledged, and the acknowledgement would come back too)."""
+    async def go():
+        s = await started(env, aec=True)
+        await reply_being_spoken(env, "Sure.")
+        env.listen.push("StartOfTurn", "sure", turn_index=1)
+        env.listen.push("EndOfTurn", "Sure.", turn_index=1)
+        await asyncio.sleep(0.1)
+        await s.close()
+
+    run(go())
+    assert [t for _, t in env.sent_messages] == ["say that again"]
+    assert not any(c[0] == "interrupt" for c in env.speak.calls)
+
+
+def test_an_echo_just_after_playback_is_dropped_but_a_quick_answer_is_not(env):
+    async def go():
+        s = await started(env, aec=True)
+        await reply_being_spoken(env, "Nothing new. Want me to keep watching?")
+        env.store.add("run.status", {"status": "idle"})
+        assert await wait_for(lambda: "speak_end" in env.types())
+        await s.on_text({"type": "drained", "turn_id": s._turn_id})
+        env.listen.push("StartOfTurn", "want", turn_index=1)
+        env.listen.push("EndOfTurn", "keep watching", turn_index=1)
+        await asyncio.sleep(0.05)
+        env.listen.push("StartOfTurn", "no", turn_index=2)
+        env.listen.push("EndOfTurn", "No.", turn_index=2)
+        assert await wait_for(lambda: len(env.sent_messages) == 2)
+        await s.close()
+
+    run(go())
+    assert [t for _, t in env.sent_messages] == ["say that again", "No."]
+
+
+def test_a_one_word_stop_interrupts(env):
+    async def go():
+        s = await started(env, aec=True)
+        await reply_being_spoken(env, "Tomorrow you have five meetings starting at nine.")
+        env.listen.push("StartOfTurn", "stop", turn_index=1)
+        env.listen.push("Update", "Stop.", turn_index=1)
+        assert await wait_for(lambda: any(c[0] == "interrupt" for c in env.speak.calls))
+        env.listen.push("EndOfTurn", "Stop.", turn_index=1)
+        assert await wait_for(lambda: len(env.sent_messages) == 2)
+        await s.close()
+
+    run(go())
+    assert env.sent_messages[-1] == ("thr_1", "Stop.")
+
+
+def test_real_speech_that_shares_words_with_the_reply_still_commits(env):
+    """Sharing a word or two with what Xavier said is not an echo: a turn is
+    dropped only when most of it repeats his recent speech."""
+    async def go():
+        s = await started(env, aec=True)
+        await reply_being_spoken(env, "Tomorrow you have five meetings starting at nine.")
+        # Mid-reply: two real words, mostly not his.
+        env.listen.push("StartOfTurn", "move", turn_index=1)
+        env.listen.push("Update", "move the nine o'clock", turn_index=1)
+        assert await wait_for(lambda: any(c[0] == "interrupt" for c in env.speak.calls))
+        env.listen.push("EndOfTurn", "move the nine o'clock meeting to ten", turn_index=1)
+        assert await wait_for(lambda: len(env.sent_messages) == 2)
+        # Just after playback ends: the same rule, without the two-word bar.
+        await s.on_text({"type": "drained", "turn_id": s._turn_id})
+        env.listen.push("StartOfTurn", "five", turn_index=2)
+        env.listen.push("EndOfTurn", "Five is fine", turn_index=2)
+        assert await wait_for(lambda: len(env.sent_messages) == 3)
+        await s.close()
+
+    run(go())
+    assert [t for _, t in env.sent_messages][1:] == ["move the nine o'clock meeting to ten", "Five is fine"]
+    assert ls._echo_score("Tomorrow you have five meetings starting at nine.",
+                          "move the nine o'clock meeting to ten") < ls.ECHO_MATCH
+
+
+def test_a_dropped_candidate_leaves_no_words_in_the_log(env):
+    lines: list[str] = []
+
+    class Grab(logging.Handler):
+        def emit(self, record):
+            lines.append(record.getMessage())
+
+    grab = Grab()
+    ls.log.addHandler(grab)
+    try:
+        async def go():
+            s = await started(env, aec=True)
+            await reply_being_spoken(env, "Sure thing, checking now.")
+            env.listen.push("StartOfTurn", "sure", turn_index=1)
+            env.listen.push("EndOfTurn", "Sure thing, checking now.", turn_index=1)
+            assert await wait_for(lambda: any("not an interruption" in line for line in lines))
+            await s.close()
+
+        run(go())
+    finally:
+        ls.log.removeHandler(grab)
+    assert not any("checking" in line.lower() or "sure" in line.lower() for line in lines)

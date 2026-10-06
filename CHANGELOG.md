@@ -28,7 +28,11 @@ All notable changes to Xavier are documented here. The format follows
   bypasses voice processing to hear whether it changes how Xavier sounds. It
   ships off.
 - Each committed Live turn's log line carries an echo score: how much of it
-  matched what Live said in the last 10 seconds. Measurement only.
+  matched what Live said in the last 10 seconds.
+- Live no longer takes Xavier's own voice for a turn when some of a loud
+  speaker leaks past echo cancellation: speech that starts during a reply, or
+  just after it, is dropped if it mostly repeats what he just said, and
+  mid-reply an interruption takes two real words or a stop word.
 
 ### Changed
 

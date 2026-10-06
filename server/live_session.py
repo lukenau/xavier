@@ -11,10 +11,13 @@ Server -> phone: `ready`, `state`, `heard{text,final}`, `turn{message_id,seq}`,
 Turns come from Deepgram Flux end-of-turn detection, never from silence
 heuristics. Without echo cancellation on the phone (`aec: false`) a Flux turn
 that STARTED while the phone was playing, or within ECHO_TAIL_S of it
-draining, is the speaker heard by the mic and is dropped. With AEC a turn that
-starts during playback ducks it, two real (non-backchannel) words cut it, and
-one that ends as nothing but a backchannel ("mm-hm") is not a turn at all. Once
-a reply is cut, the rest of it stays unsaid even as its run keeps streaming.
+draining, is the speaker heard by the mic and is dropped. With AEC, echo
+cancellation still lets some of a loud speaker through, so a turn that starts
+during playback (or just after) is only a candidate: it ducks the reply, and it
+becomes a turn only if it is not a repeat of what Xavier just said and, mid-
+reply, is two real (non-backchannel) words or a stop word; then it cuts the
+reply. Once a reply is cut, the rest of it stays unsaid even as its run keeps
+streaming.
 
 Deepgram is the one service Live adds: it gets the mic audio for transcription
 and the reply text for the voice. The audio goes nowhere else and is never
@@ -136,10 +139,17 @@ def _tts_config(raw: Any) -> dict[str, Any]:
     }
 
 
-# Measurement only: how much of each committed turn matches what Xavier said in
-# the last few seconds. A high score is his own voice leaking past echo
-# cancellation into the mic; the log line carries the score, never the words.
+# How much of a turn matches what Xavier said in the last few seconds. Logged
+# for every committed turn (the score, never the words), and used to filter:
+# voice processing never removes all of a loud speakerphone, so some of his own
+# voice reaches the mic and Flux transcribes it. Speech that starts while he
+# talks, or within ECHO_TAIL_S after, is only an interruption candidate (see
+# _qualifies): it must not repeat what he just said, and mid-reply it must be a
+# real interruption, two real words or a stop word, the minimum-interruption
+# rule common in voice-agent frameworks.
 ECHO_MEMORY_S = 10.0
+ECHO_MATCH = 0.5
+STOP_WORDS = frozenset({"stop", "wait", "hold", "pause", "cancel", "enough", "quiet", "shush"})
 
 
 def _words(text: str) -> list[str]:
@@ -210,8 +220,10 @@ class LiveSession:
         self._suspect: set[int] = set()
         # What Live said lately, (when, text), for the echo score.
         self._said: list[tuple[float, str]] = []
-        # Turns that started while the phone was speaking (with AEC).
-        self._over_speech: set[int] = set()
+        # With AEC: turn index -> it started while the phone was speaking (else
+        # just after); candidates until they qualify as the user's own turn.
+        self._candidates: dict[int, bool] = {}
+        self._qualified: set[int] = set()
         self._ducked: int | None = None
         self._duck_at = 0.0
         # Set by a cut: the rest of that reply stays unsaid until the user's
@@ -390,7 +402,8 @@ class LiveSession:
         await self._close_streams()
         # New streams start their own turn indexes and audio clock.
         self._suspect.clear()
-        self._over_speech.clear()
+        self._candidates.clear()
+        self._qualified.clear()
         self._turn_audio_ms.clear()
         self._audio_at.clear()
         for delay in BACKOFF_S:
@@ -495,35 +508,45 @@ class LiveSession:
                 self._suspect.add(idx)
                 log.info("[live %s] echo-suspect turn %s", self._sid, idx)
                 return
+            if self.aec and (self._speaking or now - self._last_drained < ECHO_TAIL_S):
+                self._candidates[idx] = self._speaking
+                if self._speaking:
+                    self._ducked, self._duck_at = idx, now
+                    await self._emit({"type": "duck"})
+                return
             if self._hold is not None:
                 self._hold.cancel()
                 self._hold = None
                 log.info("[live %s] continuation of a held turn", self._sid)
             await self._emit({"type": "heard", "text": text, "final": False})
-            if self.aec and self._speaking:
-                self._over_speech.add(idx)
-                self._ducked, self._duck_at = idx, now
-                await self._emit({"type": "duck"})
             return
+        if idx in self._candidates:
+            mid_speech = self._candidates[idx]
+            if idx not in self._qualified:
+                if not self._qualifies(text, mid_speech):
+                    if kind == "EndOfTurn":
+                        del self._candidates[idx]
+                        log.info("[live %s] turn %s not an interruption, dropped", self._sid, idx)
+                        if self._ducked == idx:
+                            await self._release_duck()
+                    return
+                self._qualified.add(idx)
+                if self._hold is not None:
+                    self._hold.cancel()
+                    self._hold = None
+                if self._ducked == idx:
+                    await self._cut_speech()
+            if kind != "EndOfTurn":
+                await self._emit({"type": "heard", "text": text, "final": False})
+                return
+            del self._candidates[idx]
+            self._qualified.discard(idx)
         if idx in self._suspect:
             if kind == "EndOfTurn":
                 self._suspect.discard(idx)
                 log.info("[live %s] echo turn %s dropped", self._sid, idx)
             return
         if kind == "EndOfTurn":
-            over_speech = idx in self._over_speech
-            self._over_speech.discard(idx)
-            if over_speech and _real_words(text) == 0:
-                # "mm-hm", "yeah" over the reply: listening, not a turn.
-                if self._ducked == idx:
-                    await self._release_duck()
-                log.info("[live %s] backchannel over the reply, not a turn", self._sid)
-                if self._pending and self._hold is None:
-                    # It interrupted the hold on a turn still to be sent; send that.
-                    self._hold = asyncio.create_task(self._hold_then_commit())
-                else:
-                    await self._emit({"type": "heard", "text": "", "final": True})
-                return
             if text:
                 self._pending.append(text)
             if self._pending:
@@ -534,8 +557,19 @@ class LiveSession:
             return
         if text:
             await self._emit({"type": "heard", "text": text, "final": False})
-        if self._ducked == idx and _real_words(text) >= 2:
-            await self._cut_speech()
+
+    def _qualifies(self, text: str, mid_speech: bool) -> bool:
+        """Whether a candidate turn is the user rather than Xavier's own voice
+        coming back: not a repeat of what he just said, and mid-reply a real
+        interruption."""
+        words = _words(text)
+        if not words:
+            return False
+        now = self._now()
+        recent = " ".join(x for t, x in self._said if now - t < ECHO_MEMORY_S)
+        if _echo_score(recent, text) >= ECHO_MATCH:
+            return False
+        return not mid_speech or _real_words(text) >= 2 or any(w in STOP_WORDS for w in words)
 
     async def _hold_then_commit(self) -> None:
         await asyncio.sleep(HOLD_S)
