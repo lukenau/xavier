@@ -73,8 +73,8 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "Hub attaches photos you pick to a message for Xavier.",
-          "cameraPermission": "Hub can attach a photo you take to a message for Xavier."
+          "photosPermission": "Xavier attaches photos you pick to a message.",
+          "cameraPermission": "Xavier can attach a photo you take to a message."
         }
       ],
       "expo-audio",
