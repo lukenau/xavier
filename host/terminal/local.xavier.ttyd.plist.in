@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  macOS LaunchAgent for the hub terminal (host/README.md, "macOS"). Fill @HOME@, @REPO@
+  and @BREW@ with sed. ttyd listens on a unix socket in ~/.xavier/run (mode 0700, socket
+  born 0700 by the Umask below), so only this user, and so only a hub running natively
+  as this user, can open it. The socket name must end in .sock: ttyd 1.7 listens on TCP
+  for anything else.
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>local.xavier.ttyd</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>@BREW@/bin/ttyd</string>
+    <string>--interface</string>
+    <string>@HOME@/.xavier/run/ttyd.sock</string>
+    <string>--base-path</string>
+    <string>/terminal</string>
+    <string>--writable</string>
+    <string>--terminal-type</string>
+    <string>xterm-256color</string>
+    <string>--client-option</string>
+    <string>disableLeaveAlert=true</string>
+    <string>@REPO@/host/terminal/xavier-term</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>@BREW@/bin:/usr/bin:/bin</string>
+    <key>XAVIER_TMUX_BIN</key>
+    <string>@BREW@/bin/tmux</string>
+  </dict>
+  <key>WorkingDirectory</key>
+  <string>@HOME@</string>
+  <key>Umask</key>
+  <string>0077</string>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <key>StandardErrorPath</key>
+  <string>@HOME@/.xavier/ttyd.log</string>
+</dict>
+</plist>

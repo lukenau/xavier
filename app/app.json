@@ -1,0 +1,89 @@
+{
+  "expo": {
+    "name": "Xavier",
+    "slug": "xavier",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "hub",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "bundleIdentifier": "me.example.xavier",
+      "supportsTablet": false,
+      "config": {
+        "usesNonExemptEncryption": false
+      },
+      "infoPlist": {
+        "NSFaceIDUsageDescription": "Hub uses Face ID to authorise writes and unlock the terminal.",
+        "NSMicrophoneUsageDescription": "Hub uses the microphone for live voice conversations with Xavier."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-status-bar",
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/HubOnest-400.ttf",
+            "./assets/fonts/HubOnest-500.ttf",
+            "./assets/fonts/HubOnest-520.ttf",
+            "./assets/fonts/HubOnest-540.ttf",
+            "./assets/fonts/HubOnest-550.ttf",
+            "./assets/fonts/HubOnest-560.ttf",
+            "./assets/fonts/HubOnest-580.ttf",
+            "./assets/fonts/HubOnest-600.ttf",
+            "./assets/fonts/HubOnest-620.ttf",
+            "./assets/fonts/HubOnest-640.ttf",
+            "./assets/fonts/HubOnest-650.ttf",
+            "./assets/fonts/HubOnest-700.ttf",
+            "./assets/fonts/HubOnest-800.ttf",
+            "./assets/fonts/HubMono-400.ttf",
+            "./assets/fonts/HubMono-500.ttf",
+            "./assets/fonts/HubMono-520.ttf",
+            "./assets/fonts/HubMono-550.ttf",
+            "./assets/fonts/HubMono-600.ttf",
+            "./assets/fonts/HubMono-620.ttf",
+            "./assets/fonts/HubMono-650.ttf",
+            "./assets/fonts/HubMono-700.ttf",
+            "./assets/fonts/HubMono-800.ttf"
+          ]
+        }
+      ],
+      "expo-web-browser",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#000d0e"
+        }
+      ],
+      "expo-notifications",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Hub attaches photos you pick to a message for Xavier.",
+          "cameraPermission": "Hub can attach a photo you take to a message for Xavier."
+        }
+      ]
+    ],
+    "runtimeVersion": {
+      "policy": "fingerprint"
+    },
+    "extra": {
+      "router": {},
+      "eas": {}
+    }
+  }
+}

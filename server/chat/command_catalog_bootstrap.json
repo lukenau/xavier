@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "commands": [
+    {
+      "name": "/new",
+      "aliases": [],
+      "category": "builtin",
+      "description": "Start a new conversation",
+      "arg_hint": null,
+      "busy_policy": "interrupt_then_dispatch"
+    },
+    {
+      "name": "/clear",
+      "aliases": [],
+      "category": "builtin",
+      "description": "Clear this conversation's context",
+      "arg_hint": null,
+      "busy_policy": "reject"
+    },
+    {
+      "name": "/help",
+      "aliases": ["/commands"],
+      "category": "builtin",
+      "description": "List the commands available here",
+      "arg_hint": null,
+      "busy_policy": "reject"
+    },
+    {
+      "name": "/notes",
+      "aliases": [],
+      "category": "skill",
+      "description": "Example skill command — replace with your own",
+      "arg_hint": "<topic>",
+      "busy_policy": "dispatch"
+    },
+    {
+      "name": "/weather",
+      "aliases": [],
+      "category": "plugin",
+      "description": "Example plugin command",
+      "arg_hint": "[location]",
+      "busy_policy": "dispatch"
+    },
+    {
+      "name": "/todo",
+      "aliases": ["/t"],
+      "category": "alias",
+      "description": "Example alias command",
+      "arg_hint": null,
+      "busy_policy": "dispatch"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "configured": true,
+  "url": "https://home.<tailnet>.example.com",
+  "status": "up",
+  "summary": ["72°F", "3 lights on", "alarm disarmed"],
+  "entity_count": 23,
+  "last_change_label": "Porch light · 2m ago",
+  "scenes": [
+    { "id": "morning", "label": "Good morning", "icon": "sunrise" },
+    { "id": "away",    "label": "Away",         "icon": "key" },
+    { "id": "movie",   "label": "Movie",        "icon": "film" },
+    { "id": "night",   "label": "Good night",   "icon": "moon" }
+  ],
+  "_comment_phase_2": "Phase 2 adds a 'token' field with a long-lived HA access token. It's read server-side by ha_actions._live_apply; never returned from GET /api/home-assistant."
+}

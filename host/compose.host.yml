@@ -1,0 +1,21 @@
+# Compose override that connects the hub container to the host kit's sockets
+# (host/README.md). Enable it from the hub's .env, next to docker-compose.yml:
+#
+#   COMPOSE_FILE=docker-compose.yml:host/compose.host.yml
+#   XAVIER_HUB_GID=<the gid host/install.sh printed>
+#
+# then recreate the container: ./install.sh --restart
+#
+# The container joins the socket group by number (no matching group needs to exist
+# inside the image) and sees ONLY the socket directory, read-only. A read-only bind
+# still lets it connect to the sockets; it cannot create, swap or delete them.
+# Never mount this directory into any other container, an agent's above all.
+services:
+  hub-api:
+    group_add:
+      - "${XAVIER_HUB_GID:?set XAVIER_HUB_GID in .env to the gid host/install.sh printed}"
+    volumes:
+      - "${XAVIER_RUN_DIR:-/run/xavier}:/run/xavier:ro"
+    environment:
+      HUB_TTYD_SOCK: "/run/xavier/${XAVIER_TTYD_SOCKET_NAME:-ttyd.sock}"
+      HUB_TMUXD_SOCK: "/run/xavier/${XAVIER_TMUXD_SOCKET_NAME:-tmuxd.sock}"

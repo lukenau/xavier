@@ -1,0 +1,11 @@
+#!/bin/sh
+# ttyd runs this once per connection (it is ttyd's command; ttyd's --url-arg stays off,
+# so a client cannot add arguments). It attaches to the hub's terminal session on the
+# kit's own tmux server, creating the session if it is missing.
+#
+# ttyd's unit sets UMask=0117 so that ttyd.sock is born 0660. A shell must not inherit
+# that umask (directories would lose their x bit), and if this client ever has to start
+# the tmux server itself, every session would inherit it, so reset it first.
+umask 022
+exec "${XAVIER_TMUX_BIN:-tmux}" -L "${XAVIER_TMUX_SOCKET_NAME:-xavier}" \
+  new-session -A -s "${XAVIER_TERM_SESSION:-hub-term}"

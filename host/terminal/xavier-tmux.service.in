@@ -1,0 +1,43 @@
+# Rendered by host/install.sh. The tmux server that every terminal shell and every
+# Claude Code session runs in. ttyd and hub-tmuxd are only clients of it, so restarting
+# either of them never kills a shell; stopping THIS unit does, by design.
+#
+# Its environment is the environment of every shell and Claude Code session: systemd's
+# minimal one plus the lines below. Nothing from hub-tmuxd or ttyd reaches it.
+[Unit]
+Description=Xavier tmux server (shells for the hub terminal and Claude Code sessions)
+After=network.target
+
+[Service]
+Type=simple
+User=@USER@
+Group=@USER_GROUP@
+WorkingDirectory=~
+Environment=PATH=@SHELL_PATH@
+Environment=LANG=C.UTF-8
+Environment=TMUX_TMPDIR=/run/@TMUX_RUN_NAME@
+# -D: stay in the foreground, keep running with no sessions.
+ExecStart=@TMUX_BIN@ -L @TMUX_SOCKET_NAME@ -D
+Restart=always
+RestartSec=2
+# Mode 0700, and tmux adds its own 0700 tmux-<uid>/ inside: no other user and no
+# container can reach the server socket. Removed when the server stops, so a client in
+# another unit cannot start a stray server of its own.
+RuntimeDirectory=@TMUX_RUN_NAME@
+RuntimeDirectoryMode=0700
+
+# Hardening that a working shell can live with. What it does NOT stop: anything this
+# user can already do. If the user can sudo, NoNewPrivileges blocks it here; if the
+# user is in the docker group, this shell is root-equivalent regardless.
+NoNewPrivileges=yes
+ProtectSystem=strict
+ReadWritePaths=@RW_PATHS@
+PrivateTmp=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+
+[Install]
+WantedBy=multi-user.target

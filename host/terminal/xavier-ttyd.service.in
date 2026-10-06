@@ -1,0 +1,52 @@
+# Rendered by host/install.sh. ttyd behind the hub's /terminal proxy.
+#
+# ttyd serves a WRITABLE shell to anyone who can open its socket, with no login of its
+# own. The hub opens it only after a Face ID unlock; the socket's directory and mode
+# decide who else can. Nothing here listens on TCP:
+#   - the --interface path ends in .sock (ttyd 1.7 treats any other value as a network
+#     interface name and listens on TCP port 7681 instead);
+#   - there is no --port;
+#   - RestrictAddressFamilies leaves no IP socket to listen on, and IPAddressDeny drops
+#     any IP traffic for the unit in case that ever changes.
+[Unit]
+Description=Xavier terminal (ttyd on a unix socket, opened by the hub after Face ID)
+Requires=xavier-tmux.service
+After=xavier-tmux.service
+
+[Service]
+Type=simple
+User=@USER@
+Group=@SOCKET_GROUP@
+WorkingDirectory=~
+Environment=TMUX_TMPDIR=/run/@TMUX_RUN_NAME@
+Environment=XAVIER_TMUX_BIN=@TMUX_BIN@
+Environment=XAVIER_TMUX_SOCKET_NAME=@TMUX_SOCKET_NAME@
+Environment=XAVIER_TERM_SESSION=@TERM_SESSION@
+# /run/@RUN_NAME@ (0750, @USER@:@SOCKET_GROUP@) is shared with hub-tmuxd and bind-mounted
+# into the hub container. Preserved across restarts: a container's bind mount pins the
+# directory, and a recreated one would be invisible to it.
+RuntimeDirectory=@RUN_NAME@
+RuntimeDirectoryMode=0750
+RuntimeDirectoryPreserve=yes
+# The socket is created 0660 (owner and the hub's group). xavier-term resets the umask
+# for the shell.
+UMask=0117
+ExecStartPre=-/bin/rm -f /run/@RUN_NAME@/@TTYD_SOCK_NAME@
+ExecStart=@TTYD_BIN@ --interface /run/@RUN_NAME@/@TTYD_SOCK_NAME@ --base-path /terminal --writable --terminal-type xterm-256color --client-option disableLeaveAlert=true @LIBEXEC@/xavier-term
+Restart=on-failure
+RestartSec=2
+
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=read-only
+PrivateTmp=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+RestrictAddressFamilies=AF_UNIX AF_NETLINK
+IPAddressDeny=any
+
+[Install]
+WantedBy=multi-user.target

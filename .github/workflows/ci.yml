@@ -1,0 +1,160 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  server:
+    name: server (python)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: server
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt -r requirements-dev.txt
+      - name: Syntax check
+        run: python -m compileall -q .
+      - name: Tests (one process per file — see requirements-dev.txt)
+        run: bash run_tests.sh
+
+  plugin:
+    name: hermes plugin (python)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r server/requirements.txt -r server/requirements-dev.txt
+      - name: Tests (includes the hub contract tests)
+        run: python -m unittest discover -s hermes-plugin/hub-platform -p 'test_*.py'
+
+  app:
+    name: app (node)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+      - run: npm ci
+      - name: Typecheck
+        run: npm run typecheck
+      # The repo checks that a public clone can actually run (the raw-colour
+      # guard). The PWA-parity checks — theme light-block parity, token
+      # freshness, the vendored xterm bundle and shared-copy parity — compare
+      # the app against apps/hub, which is NOT in this repo, so they cannot run
+      # here. `npm run check` says so explicitly rather than reporting them as
+      # passing; run `npm run check:pwa` in a checkout that has the PWA.
+      - name: Repo checks
+        run: npm run check
+      # The web export is a shipped capability (docs/CONNECT-APP.md): the same
+      # app exported for the browser. Build it and scan the artifact here so the
+      # ability cannot quietly rot — check:web fails on any leaked identifier,
+      # hostname, path or secret in the bundle the browser would receive.
+      - name: Web export + bundle scan
+        run: npm run build:web && npm run check:web
+      # This step is the point of the job: the full jest suite. It is
+      # serialised (--maxWorkers=1, via `test:ci`) on purpose. The suite has a
+      # documented cross-file mock leak under parallel workers
+      # (jest.config.js:18, jest.setup.js:45-85) that surfaces as
+      # nondeterministic failures on a loaded box; until the isolation fix lands
+      # (see the hermeticity card) CI runs one worker so the gate is
+      # deterministic. A flaky gate is worse than a slow one.
+      - name: Tests (jest, serialised)
+        run: npm run test:ci
+
+  bridge:
+    name: hub-bridge (python)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: hub-bridge
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Syntax check
+        run: python -m compileall -q bridge.py test_bridge.py
+      - name: Tests (stdlib unittest — no network, no real exec)
+        run: python -m unittest -v
+
+  host:
+    name: host kit (hub-tmuxd, units)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"   # the oldest Python hub-tmuxd supports (macOS's /usr/bin/python3)
+      # tmux for the live tests (a private server in a temp dir); ttyd only so that
+      # systemd-analyze can resolve the rendered ExecStart. Neither is started as a service.
+      - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends tmux ttyd
+      - name: Shell syntax
+        run: bash -n host/install.sh && sh -n host/terminal/xavier-term
+      - name: hub-tmuxd tests (stdlib unittest)
+        run: python -m unittest discover -s host/hub-tmuxd -p 'test_*.py' -v
+      - name: Installer, unit and template tests
+        run: python -m unittest discover -s host -p 'test_*.py' -v
+      - name: Rendered units pass systemd-analyze
+        run: |
+          XAVIER_USER="$(id -un)" host/install.sh --render "$RUNNER_TEMP/units"
+          systemd-analyze verify --man=no "$RUNNER_TEMP"/units/*.service
+
+  compose:
+    name: compose config
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate docker-compose.yml (default + bridge profile + host kit)
+        run: |
+          cp .env.example .env
+          docker compose config -q && echo "default compose OK"
+          docker compose --profile bridge config -q && echo "bridge-profile compose OK"
+          XAVIER_HUB_GID=999 docker compose -f docker-compose.yml -f host/compose.host.yml config -q \
+            && echo "host-kit override OK"
+
+  hygiene:
+    name: publish gate (no secrets or personal data)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # Generic checks only: token and key shapes, private keys, credential files,
+      # committed .env files, tailnet addresses, contact details. Owner-specific
+      # markers live in a local file named by GATE_PRIVATE_PATTERNS, never here.
+      - name: Run the publish gate
+        run: bash scripts/publish-gate.sh .
+      # A rule that never fires is dead weight: plant one probe per rule and
+      # assert the gate blocks on every one (and passes on a clean tree).
+      - name: Gate self-test (every rule still fires)
+        run: bash scripts/publish-gate.sh --self-test
+
+  dco:
+    name: DCO sign-off
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # needed to diff against the PR base commit
+      - name: Check Developer Certificate of Origin sign-offs
+        env:
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: bash scripts/check-dco.sh

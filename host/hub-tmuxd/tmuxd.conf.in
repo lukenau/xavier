@@ -1,0 +1,39 @@
+# hub-tmuxd settings, read by xavier-tmuxd.service (EnvironmentFile=). After an edit:
+#   sudo systemctl restart xavier-tmuxd
+# Socket paths, the service user and the tmux server name are fixed at install time;
+# re-run host/install.sh to change those. Never put a secret here.
+
+# The Claude Code binary a spawn runs, and nothing else.
+XAVIER_CLAUDE_BIN=@CLAUDE_BIN@
+
+# Directories a session may start in (colon-separated). A requested directory is
+# resolved (symlinks, ..) first and must then sit inside one of these. A resumed
+# session starts in the directory its transcript was recorded in, which must pass the
+# same check. World-writable directories are refused.
+XAVIER_CWD_ROOTS=@CWD_ROOTS@
+
+# Add --remote-control to every spawned session, so it also appears in the Claude
+# mobile app and can be driven from your Claude account. Off by default.
+XAVIER_CLAUDE_REMOTE_CONTROL=0
+
+# Start every spawned session with --dangerously-skip-permissions: Claude Code then
+# runs every tool call without asking, and anything that can reach the hub-tmuxd
+# socket can start such a session. Leave this at 0 unless you mean exactly that.
+XAVIER_CLAUDE_DANGEROUSLY_SKIP_PERMISSIONS=0
+
+# Sessions this daemon may start and stop are named <prefix><slug>. The hub's own
+# validator only accepts claude-*, so keep the default unless you change both.
+XAVIER_TMUX_PREFIX=claude-
+# Comma list of <prefix>* sessions the hub may never stop.
+XAVIER_TMUX_PROTECTED=
+# At most this many <prefix>* sessions at once.
+XAVIER_TMUXD_MAX_SESSIONS=8
+
+# The resume list shows at most this many past sessions: titles, ids and times.
+XAVIER_TMUXD_HISTORY_LIMIT=30
+# 1 also returns each session's working directory (an absolute path, so your user and
+# project names) to the hub and the app. Off by default; resuming works without it.
+XAVIER_TMUXD_HISTORY_SHOW_CWD=0
+
+# How the app labels this machine when it lists more than one host.
+#XAVIER_HOST_LABEL=This machine

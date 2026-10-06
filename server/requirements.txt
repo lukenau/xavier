@@ -1,0 +1,8 @@
+fastapi>=0.115.0,<1.0
+uvicorn[standard]>=0.30.0,<1.0
+webauthn>=2.5.0,<3.0
+# transitively pulled by webauthn; pinned explicitly since devicekeys.py imports it
+# directly. Upper bound is a real bound, not a placeholder: the device-key verifier
+# depends on load_der_public_key / ECDSA behaviour, so a major bump gets tested first.
+cryptography>=42.0,<51
+tzdata>=2024.1  # python:slim has no system zoneinfo; HUB_TZ needs the pip fallback

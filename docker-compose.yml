@@ -1,0 +1,101 @@
+# Xavier — server (the "hub"). Brings up hub-api only.
+#
+# The container binds 0.0.0.0 INSIDE the container (port 8090, fixed in the
+# Dockerfile); exposure is controlled by the host publish below (127.0.0.1 by
+# default = loopback only). Put TLS or a private mesh (Tailscale) in front — see
+# docs/MESH.md — and name its hostname in HUB_ORIGIN or HUB_ALLOWED_HOSTS.
+#
+# Single worker is load-bearing: the WebAuthn challenge cache is in-process.
+
+name: xavier
+
+services:
+  hub-api:
+    build:
+      context: ./server
+      args:
+        HUB_UID: "${HUB_UID:-1000}"
+    image: xavier/hub-api:local
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      # Left address: 0.0.0.0 only if you are deliberately putting a proxy/mesh
+      # in front. Default keeps it reachable from this machine only.
+      # Left port: host side; set HUB_PORT (in .env or the shell) to move it.
+      # Right port: always 8090 inside the container.
+      - "${HUB_BIND:-127.0.0.1}:${HUB_PORT:-8090}:8090"
+    volumes:
+      - "${HUB_DATA_DIR:-./data}:/data"
+    networks:
+      - bridge
+    # Lets the server reach services on this machine, such as a Hermes gateway run
+    # outside Docker, at host.docker.internal (see HERMES_API_BASE in .env.example).
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8090/api/healthz', timeout=3).status==200 else 1)"
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # hub-bridge — OPT-IN privileged sidecar (config/cron/skills/plugins/mcp/memory/
+  # doctor/spend panels). It is behind the "bridge" profile, so the DEFAULT install
+  # never starts it and never mounts a docker socket. Enable it with:
+  #     docker compose --profile bridge up -d
+  # and set HUB_BRIDGE_URL=http://hub-bridge:8091 (+ HERMES_CONTAINER) in .env.
+  #
+  # NOTE: mounting /var/run/docker.sock is ROOT-EQUIVALENT on the host — that is why
+  # it is opt-in, runs here as root, publishes NO host port, and sits on a private
+  # network. If Hermes is installed directly on a machine, run bridge.py there with
+  # BRIDGE_EXEC=local instead (no socket) — see hub-bridge/README.md.
+  hub-bridge:
+    profiles: ["bridge"]
+    build:
+      context: ./hub-bridge
+    image: xavier/hub-bridge:local
+    restart: unless-stopped
+    user: "0:0"            # the docker socket needs root
+    environment:
+      HERMES_CONTAINER: "${HERMES_CONTAINER:-hermes}"
+      HUB_BRIDGE_KEY_FILE: /keys/HUB_BRIDGE_KEY
+      HERMES_DATA_DIR: "${HERMES_DATA_DIR:-/opt/data}"
+      BRIDGE_TZ: "${HUB_TZ:-UTC}"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "${HUB_DATA_DIR:-./data}/hub-bridge:/keys:ro"
+    networks:
+      - bridge
+    # No `ports:` — never publish this to the host. Reachable only on the private
+    # network below, as http://hub-bridge:8091.
+    healthcheck:
+      test:
+        - CMD
+        - python3
+        - -c
+        - "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8091/healthz', timeout=3).status==200 else 1)"
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  # Private network the hub and the bridge share. The bridge joins it only under
+  # the "bridge" profile; hub-api is always on it so it can resolve hub-bridge.
+  bridge:
+    driver: bridge

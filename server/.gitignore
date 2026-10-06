@@ -1,0 +1,4 @@
+# The test venv (see requirements-dev.txt) lives here; never commit it.
+.venv/
+__pycache__/
+*.pyc

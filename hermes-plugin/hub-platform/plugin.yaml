@@ -1,0 +1,24 @@
+# SPDX-License-Identifier: MIT
+# Hub platform plugin manifest. adapter.py is the `hub` platform (send paths,
+# approval and clarify cards, inbound HTTP-event dispatch, catalog push, cron
+# delivery and the Automations feed); hooks.py forwards tool, subagent and
+# stream records for Hub sessions; widget_tool.py is the `hub_widget` tool.
+# __init__.py wires all three. See README.md.
+name: hub-platform
+kind: platform
+version: 0.4.0
+description: >
+  Hub platform adapter for Hermes Agent. Registers the `hub` platform: outbound
+  text/images/files/approval cards/clarify prompts POSTed to the hub server under
+  one shared HUB_PLATFORM_KEY; inbound events from the hub (messages with
+  optional attachments, approval decisions, clarify answers, stop, subagent
+  transcripts, catalog requests) verified with the same key and dispatched
+  through handle_message / resolve_gateway_approval / resolve_gateway_clarify;
+  mid-sentence /skill tokens expanded before dispatch; the live command catalog
+  pushed to the hub on connect; scheduled jobs and their runs fed to the hub's
+  Automations view. Registers the post_tool_call, on_stream_delta,
+  on_stream_end, subagent_start, subagent_stop and post_approval_response hooks
+  (a local JSONL observer for every platform, a bounded, redacted forwarder for
+  Hub sessions only) and the `hub_widget` tool. Cron-eligible via
+  HUB_HOME_CHANNEL.
+author: lukenau

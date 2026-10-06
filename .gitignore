@@ -1,0 +1,50 @@
+# secrets / local config (data/ also covers the demo's demo/data)
+.env
+.env.*
+data/
+*.pem
+*.key
+*.p8
+*.p12
+*.pfx
+*.mobileprovision
+*.jks
+*.keystore
+credentials.json
+home-assistant.json
+!**/*.example
+
+# app builds, local databases, coverage
+*.ipa
+*.apk
+*.aab
+*.db
+*.sqlite
+*.sqlite3
+coverage/
+
+# python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# node / expo
+node_modules/
+.expo/
+dist/
+build/
+*.tsbuildinfo
+
+# os / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# test caches
+.pytest_cache/
+
+# runtime logs
+uvicorn.log
+*.log
