@@ -96,6 +96,15 @@ public class LiveAudioModule: Module {
       }
     }
 
+    // A/B switch for the sound of Xavier's voice: bypassed, voice processing
+    // stops shaping the audio (and stops cancelling echo).
+    Function("setVoiceProcessingBypassed") { (bypassed: Bool) in
+      DispatchQueue.main.async {
+        self.engine.inputNode.isVoiceProcessingBypassed = bypassed
+        self.diag("voiceProcessing bypassed=\(bypassed)")
+      }
+    }
+
     Function("micMode") { () -> String in
       LiveAudioModule.micModeName()
     }

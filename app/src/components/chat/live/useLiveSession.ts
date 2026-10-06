@@ -15,7 +15,7 @@ import type { LiveServerFrame, LiveTts } from '../../../lib/live/protocol';
 import { createPcmPlayer, TTS_RATE, type AudioContextLike, type PcmPlayer } from '../../../lib/live/player';
 import { configureLiveAudio, startMic, type Mic } from '../../../lib/live/mic';
 import { playEarcon, type Earcon, type ToneContextLike } from '../../../lib/live/earcons';
-import { nativeLiveAudio } from '../../../lib/live/aec';
+import { LIVE_VP_BYPASS, nativeLiveAudio } from '../../../lib/live/aec';
 import { createNativeLiveAudio, NATIVE_RATE, type NativeLiveAudio } from '../../../lib/live/native';
 import type { LiveAudioNative } from '../../../../modules/live-audio';
 import { APERTURE_MODE, splitHeard, type ApertureMode } from './aperture';
@@ -394,9 +394,12 @@ export function useLiveSession(threadId: string, tts: LiveTts, deps: LiveDeps = 
         // natively (same engine, never rebuilt); JS only hears about them.
         const nat = native.current ?? createNativeLiveAudio(mod);
         native.current = nat;
+        // With voice processing bypassed (aec.ts) there is no echo cancellation,
+        // and the server must treat speech during a reply as possible echo.
+        const bypass = LIVE_VP_BYPASS && !!mod.setVoiceProcessingBypassed;
         client.current = deps.connect({
           threadId,
-          aec: true,
+          aec: !bypass,
           micRate: NATIVE_RATE,
           tts,
           onFrame: apply,
@@ -424,6 +427,7 @@ export function useLiveSession(threadId: string, tts: LiveTts, deps: LiveDeps = 
           if (!sessionActive.current) void nat.stop().catch(() => {});
           return;
         }
+        if (bypass) mod.setVoiceProcessingBypassed?.(true);
         client.current?.diag(
           `native audio: voiceProcessing=${info.voiceProcessing} route=${info.route} input=${info.inputFormat} micMode=${info.micMode ?? '?'}`,
         );

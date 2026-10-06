@@ -14,6 +14,13 @@ import { LiveAudio, type LiveAudioNative } from '../../../modules/live-audio';
 
 export const LIVE_AUDIO_ENGINE: 'native' | 'library' = 'native';
 
+// An A/B test, also flipped over the air: does voice processing make Xavier's
+// voice sound processed? true bypasses Apple's voice processing on the native
+// engine (setVoiceProcessingBypassed). Echo cancellation goes with it, so the
+// session then tells the server it has none, as the library engine does. A
+// build whose native module predates the switch ignores it.
+export const LIVE_VP_BYPASS: boolean = false;
+
 /** The native engine when it is chosen and this build has it, else null. */
 export function nativeLiveAudio(): LiveAudioNative | null {
   return LIVE_AUDIO_ENGINE === 'native' ? LiveAudio : null;

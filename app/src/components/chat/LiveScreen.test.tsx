@@ -100,7 +100,10 @@ jest.mock('./MessageBubble', () => {
 jest.mock('../../lib/live/earcons', () => ({ ...jest.requireActual('../../lib/live/earcons'), playEarcon: jest.fn() }));
 // The native voice-processing engine: null = the react-native-audio-api path.
 const mockNative = {
-  mod: null as null | (ReturnType<typeof fakeNative> & { showMicModes?: jest.Mock }),
+  mod: null as
+    | null
+    | (ReturnType<typeof fakeNative> & { showMicModes?: jest.Mock; setVoiceProcessingBypassed?: jest.Mock }),
+  bypass: false,
 };
 function fakeNative() {
   const listeners = new Map<string, Set<(e: never) => void>>();
@@ -129,7 +132,12 @@ function fakeNative() {
   };
 }
 jest.mock('../../../modules/live-audio', () => ({ LiveAudio: null }));
-jest.mock('../../lib/live/aec', () => ({ nativeLiveAudio: () => mockNative.mod }));
+jest.mock('../../lib/live/aec', () => ({
+  nativeLiveAudio: () => mockNative.mod,
+  get LIVE_VP_BYPASS() {
+    return mockNative.bypass;
+  },
+}));
 jest.mock('../../whimsy', () => ({ ...jest.requireActual('../../whimsy'), haptic: jest.fn() }));
 
 const mockSystem: Record<string, (e: { type?: string; reason?: string }) => void> = {};
@@ -209,6 +217,7 @@ beforeEach(() => {
   jest.clearAllMocks();
   mockConnectOpts = null;
   mockNative.mod = null;
+  mockNative.bypass = false;
   mockMicLive = 0;
   mockMicMax = 0;
   mockMicGate = null;
@@ -809,5 +818,35 @@ describe('mic mode', () => {
     await mount();
     await tapStage();
     expect(mockClient.diag).toHaveBeenCalledWith(expect.stringMatching(/^native audio: .* micMode=voiceIsolation$/));
+  });
+});
+
+describe('the voice-processing bypass switch (aec.ts LIVE_VP_BYPASS)', () => {
+  test('on: voice processing is bypassed once the engine runs, and the server is told there is no echo cancellation', async () => {
+    mockNative.bypass = true;
+    mockNative.mod = { ...fakeNative(), setVoiceProcessingBypassed: jest.fn() };
+    await mount();
+    await tapStage();
+    expect(mockNative.mod.setVoiceProcessingBypassed).toHaveBeenCalledWith(true);
+    expect(mockNative.mod.start.mock.invocationCallOrder[0]).toBeLessThan(
+      mockNative.mod.setVoiceProcessingBypassed.mock.invocationCallOrder[0],
+    );
+    expect(mockConnectOpts?.aec).toBe(false);
+  });
+
+  test('on, but the module predates it: nothing changes', async () => {
+    mockNative.bypass = true;
+    mockNative.mod = fakeNative();
+    await mount();
+    await tapStage();
+    expect(mockConnectOpts?.aec).toBe(true);
+  });
+
+  test('off (the default): voice processing stays on', async () => {
+    mockNative.mod = { ...fakeNative(), setVoiceProcessingBypassed: jest.fn() };
+    await mount();
+    await tapStage();
+    expect(mockNative.mod.setVoiceProcessingBypassed).not.toHaveBeenCalled();
+    expect(mockConnectOpts?.aec).toBe(true);
   });
 });

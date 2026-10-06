@@ -30,6 +30,9 @@ export interface LiveAudioNative {
   /** Opens iOS's Mic Mode picker (Voice Isolation); absent from a build whose
    * module predates it. */
   showMicModes?: () => void;
+  /** A/B switch: true stops voice processing shaping the audio (and cancelling
+   * echo). Absent from a build whose module predates it. */
+  setVoiceProcessingBypassed?: (bypassed: boolean) => void;
 }
 
 /** null on a build without the module (and on web, and under jest). */
