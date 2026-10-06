@@ -3,7 +3,7 @@
 // that comes back into the demo, and Exit demo from Config and the server
 // screen — which must leave nothing of the demo behind.
 import React from 'react';
-import { TextInput } from 'react-native';
+import { Text, TextInput } from 'react-native';
 import TestRenderer, { act } from 'react-test-renderer';
 import { SafeAreaProvider, type Metrics } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -16,6 +16,7 @@ import { DemoConfigRow } from './ConfigRow';
 import { DemoBadge } from './DemoBadge';
 import { enterDemo, exitDemo } from './session';
 import { resetDemoWorld } from './server';
+import { inDemo, LiveDemo } from './ServerOnly';
 
 jest.mock('expo-router', () => {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -24,6 +25,8 @@ jest.mock('expo-router', () => {
     router: { push: jest.fn(), dismissTo: jest.fn(), navigate: jest.fn() },
     useFocusEffect: (effect: () => void) => useEffect(effect, [effect]),
     usePathname: () => '/',
+    useIsFocused: () => true,
+    useScrollToTop: () => {},
   };
 });
 
@@ -153,6 +156,20 @@ test('the badge is shown only in the demo', async () => {
   });
   const inside = await render(<DemoBadge />);
   expect(inside.root.findAllByProps({ testID: 'demo-badge' }).length).toBeGreaterThan(0);
+});
+
+test('a server-only route says where it runs in the demo, and is itself outside it', async () => {
+  const LiveRoute = inDemo(() => <Text>the real Live page</Text>, LiveDemo);
+  const outside = await render(<LiveRoute />);
+  expect(JSON.stringify(outside.toJSON())).toContain('the real Live page');
+
+  await act(async () => {
+    await setDemoFlag(true);
+  });
+  const inside = await render(<LiveRoute />);
+  const shown = JSON.stringify(inside.toJSON());
+  expect(shown).toContain('Runs on your own server');
+  expect(shown).not.toContain('the real Live page');
 });
 
 test('Exit demo in Config leaves the demo, clears its state and returns to the address screen', async () => {

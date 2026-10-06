@@ -18,6 +18,7 @@ import { ChatLockGate } from '../../src/components/chat/ChatLockGate';
 import { LiveSurface } from '../../src/components/chat/LiveScreen';
 import { PRESSED_OPACITY, StatePanel } from '../../src/components/shell';
 import { createLiveThread, resolveLiveThreadId } from '../../src/chat/liveThread';
+import { inDemo, LiveDemo } from '../../src/demo/ServerOnly';
 import { fonts } from '../../src/theme/fonts';
 import { useTheme } from '../../src/theme/useTheme';
 
@@ -99,7 +100,7 @@ function LivePage({ fresh, freshUsed }: { fresh: boolean; freshUsed: RefObject<b
   return <LiveSurface key={sessionKey} threadId={threadId} onNewSession={newSession} />;
 }
 
-export default function LiveRoute() {
+function LiveRoute() {
   // `?fresh=1` is Home's "start a new session" door (LiveEntryCard): open the
   // page ON A NEW THREAD instead of resuming the remembered one. Whether that
   // thread exists yet is kept here, above the gate, because the page itself is
@@ -117,6 +118,10 @@ export default function LiveRoute() {
     </ChatLockGate>
   );
 }
+
+// Live needs a server to hear and answer; the demo says so instead, and never
+// asks for the microphone.
+export default inDemo(LiveRoute, LiveDemo);
 
 const styles = StyleSheet.create({
   fill: { flex: 1, justifyContent: 'center' },

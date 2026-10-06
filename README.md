@@ -67,8 +67,8 @@ credit balance and spend.
 > screen, or type `demo` as the server address. Every tab then runs on
 > fictional data bundled with the app: chat answers with a canned reply,
 > changes still ask for Face ID or your passcode and stay on the phone, and the
-> parts that need a real machine (the terminal, Claude Code shells, pairing)
-> say so. **Config → Exit demo** leaves it.
+> parts that need a real machine (Live voice, the terminal, Claude Code
+> shells, pairing) say so. **Config → Exit demo** leaves it.
 
 ## Quick start
 

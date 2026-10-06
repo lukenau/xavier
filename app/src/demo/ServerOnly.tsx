@@ -1,6 +1,7 @@
 // What the demo shows in place of a feature that needs a real machine behind
-// it — the terminal, the Claude Code shells, pairing, a page the demo has no
-// copy of. Not an error: a neutral panel that says where the feature lives.
+// it — the terminal, the Claude Code shells, pairing, Live voice, a page the
+// demo has no copy of. Not an error: a neutral panel that says where the
+// feature lives.
 import type { ComponentType } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
@@ -58,6 +59,25 @@ export function TerminalDemo() {
       <ServerOnlyPanel
         title="Runs on your own server"
         detail="The terminal is a shell on the machine you run Xavier on, unlocked with Face ID or your passcode. The demo has no machine behind it."
+      />
+    </Screen>
+  );
+}
+
+export function LiveDemo() {
+  useHideTabBar();
+  return (
+    <Screen
+      header={
+        <>
+          <BackTo label="Home" href="/" />
+          <PageTitle>Live</PageTitle>
+        </>
+      }
+    >
+      <ServerOnlyPanel
+        title="Runs on your own server"
+        detail="Live streams your voice to the server you run, which hears you and speaks Xavier's answer back. The demo has no server, so it never turns the microphone on."
       />
     </Screen>
   );
