@@ -25,6 +25,16 @@ export default function HomeStackLayout() {
       <Stack.Screen name="config/connector" options={sheetScreenOptions()} />
       <Stack.Screen name="config/device-code" options={sheetScreenOptions()} />
       <Stack.Screen name="config/pair" options={sheetScreenOptions()} />
+      {/* Live is a page on THIS stack, not a push on Chat: its card is on
+          Home (LiveEntryCard), and a route under app/chat/ would push into the
+          Chat tab's stack from a Home screen. Its settings sheet is declared
+          beside it with two detents: open tall so the voice list is visible,
+          drag down to 0.5. */}
+      <Stack.Screen name="live" />
+      <Stack.Screen
+        name="live-settings"
+        options={sheetScreenOptions({ detents: [0.5, 0.85], initialDetentIndex: 1 })}
+      />
     </Stack>
   );
 }

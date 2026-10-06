@@ -141,6 +141,16 @@ export const INTERNAL_ONLY_ROUTES: readonly string[] = [
   // which never passes through this whitelist.
   '/automations/job',
   '/automations/run',
+  // Live voice and its settings sheet. Both are reached by a deliberate tap
+  // inside the app (the Home card, then the settings button) and neither is a
+  // PWA route with a link to keep working. `/live` stays off KNOWN_ROUTES even
+  // though it takes no untrusted param: it is a live-mic page (it does not
+  // start on its own; the tap on the dots does), and nothing outside the app
+  // has any business opening it. `/live-settings` is a native form-sheet
+  // route standing in for an in-page sheet, the same class as `/sheet` and the
+  // config sheets above.
+  '/live',
+  '/live-settings',
 ];
 
 /** Where an unroutable link lands — the PWA's catch-all route (App.tsx:99-101). */

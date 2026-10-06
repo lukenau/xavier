@@ -14,8 +14,8 @@
         "usesNonExemptEncryption": false
       },
       "infoPlist": {
-        "NSFaceIDUsageDescription": "Hub uses Face ID to authorise writes and unlock the terminal.",
-        "NSMicrophoneUsageDescription": "Hub uses the microphone for live voice conversations with Xavier."
+        "NSFaceIDUsageDescription": "Xavier uses Face ID to authorise changes and unlock the terminal.",
+        "NSMicrophoneUsageDescription": "Xavier uses the microphone for live voice conversations."
       }
     },
     "android": {
@@ -76,7 +76,9 @@
           "photosPermission": "Hub attaches photos you pick to a message for Xavier.",
           "cameraPermission": "Hub can attach a photo you take to a message for Xavier."
         }
-      ]
+      ],
+      "expo-audio",
+      "expo-asset"
     ],
     "runtimeVersion": {
       "policy": "fingerprint"

@@ -3,8 +3,9 @@
 // Home answers three questions in five seconds: is Xavier alive, what did he
 // make for me today, does anything need me. Everything else lives in a tab.
 //
-// Two native-only pieces, both deliberate:
+// Three native-only pieces, all deliberate:
 //   • MoneyEntryCard — Money is no longer a tab, so Home carries the door.
+//   • LiveEntryCard — Live voice is a mode with one door, and it is here.
 //   • the gate toast — the Oura sync's write gate is not wired yet (Task 21),
 //     and a tap that silently does nothing is worse than one that says why.
 import { useState } from 'react';
@@ -18,6 +19,7 @@ import {
   DecisionsBanner,
   DiscordRow,
   Header,
+  LiveEntryCard,
   MoneyEntryCard,
   OuraRow,
   PagesShelf,
@@ -93,6 +95,13 @@ export default function HomeScreen() {
               runs={runs.data}
             />
           )}
+        </Rise>
+
+        <Rise index={2}>
+          {/* Live is a mode, not a report: its door sits above the report cards
+              so it is one tap from app-open, beside the other non-tab
+              destinations (the Money card, below with the cockpit doors). */}
+          <LiveEntryCard />
         </Rise>
 
         <Rise index={2}>

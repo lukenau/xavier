@@ -1,0 +1,13 @@
+# .fingerprintignore — sources that legitimately differ between this checkout and
+# the EAS builder, and must not feed the expo-updates runtime-version fingerprint.
+#
+# 1. node_modules/react-native-audio-api — the builder runs `pod install`, which
+#    writes generated files inside this package before EAS recomputes the
+#    fingerprint, so its dir hash can never match a machine that only ran
+#    `npm install`. Ignoring the source keeps the two fingerprints equal.
+# 2. ios/** — the native dir expo prebuild generates (git-ignored). EAS prebuilds
+#    before recomputing, so any local difference in generated code would shift the
+#    hash; the JS bundle runtime is fully described by the package + app config
+#    sources that remain included.
+ios/**/*
+node_modules/react-native-audio-api/**/*

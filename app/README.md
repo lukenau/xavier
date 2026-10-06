@@ -3,8 +3,9 @@
 The client half of Xavier. **Xavier** is both the app's name (what shows on the
 home screen) and the assistant it is built around; "the hub" is the server it
 talks to (`server/`, run with `./install.sh`). The app pairs with a hub you run
-yourself and gives you a native iOS app for it: chat, automations, the daily
-brief, the calendar, and the ops views your server exposes.
+yourself and gives you a native iOS app for it: chat, hands-free Live voice,
+automations, the daily brief, the calendar, and the ops views your server
+exposes.
 
 There is no public build: you build and sign the app yourself. See
 [`../docs/PUBLISH-APP.md`](../docs/PUBLISH-APP.md).
@@ -66,5 +67,5 @@ npm run check:web    # scan the artifact for leaked identifiers and secrets
 |---|---|
 | `app/` | Expo Router routes (home, chat, calendar, automations, ops…) |
 | `src/` | components, lib, chat rendering, terminal, theme |
-| `modules/` | local native modules (e.g. `paste-control`) |
+| `modules/` | local native modules: `paste-control`, and `live-audio` (Live voice's echo-cancelled audio engine) |
 | `assets/` | icons, fonts, the Xavier character art |

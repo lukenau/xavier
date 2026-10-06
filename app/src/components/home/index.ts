@@ -8,6 +8,7 @@ export { DecisionsBanner } from './DecisionsBanner';
 export { BrowserCard } from './BrowserCard';
 export { BriefCard } from './BriefCard';
 export { CalendarCard } from './CalendarCard';
+export { LiveEntryCard } from './LiveEntryCard';
 export { MoneyEntryCard } from './MoneyEntryCard';
 export { OuraRow } from './OuraRow';
 export { PagesShelf } from './PagesShelf';

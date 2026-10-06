@@ -140,6 +140,19 @@ describe('resolveDeepLink', () => {
     expect(resolveDeepLink('hub://+not-found')).toBe(UNKNOWN_FALLBACK);
   });
 
+  test('/live and /live-settings are in-app only — a deep link never opens the mic page', () => {
+    // Live is reached from the Home card; its settings sheet from the button on
+    // that page. Neither is a PWA route with a link to keep working, and
+    // nothing outside the app has any business opening a live-mic page.
+    for (const path of ['/live', '/live-settings']) {
+      expect(INTERNAL_ONLY_ROUTES).toContain(path);
+      expect(KNOWN_ROUTES).not.toContain(path);
+      expect(resolveDeepLink(`hub://${path.slice(1)}`)).toBe(UNKNOWN_FALLBACK);
+      expect(resolveDeepLink(`#${path}`)).toBe(UNKNOWN_FALLBACK);
+      expect(resolveDeepLink(`hub://${path.slice(1)}?fresh=1`)).toBe(UNKNOWN_FALLBACK);
+    }
+  });
+
   test('the config sheets are route files that are deliberately NOT externally deep-linkable', () => {
     // Each stands in for an in-page <Sheet> the PWA renders inside another
     // page — no PWA route, no link to keep working — and /config/device-code
