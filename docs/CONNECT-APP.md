@@ -4,6 +4,12 @@ The app needs one thing from your network: an **HTTPS address** for the server
 that your phone can reach. This guide covers giving the server that address,
 pointing the app at it, and pairing the phone.
 
+> **Try the demo first.** To look around before setting any of this up, tap
+> **Explore demo** on the app's first screen (or under **Config → Server
+> address**), or type `demo` as the address. The demo runs on fictional data
+> bundled with the app and sends nothing anywhere. **Config → Exit demo**
+> brings you back here.
+
 > **How the app authenticates (read this).** There is no login and no token to
 > type in. The app talks to the address you enter under
 > **Config → Server address**. Chat and the terminal need a Face ID session from

@@ -64,6 +64,10 @@ serves fictional CLI output for the bridge-backed ones:
   "Ordering a demo pitcher" (the shopping kinds — product, basket, receipt, plus a
   single-use card request drawn with the card + button_row widgets — inside a real
   back-and-forth). Seeded turns carry a `run_id`, as the gateway's do.
+- **Automations** — the four cron jobs and a few days of their runs, fed through
+  the server's own `AutomationStore` as the plugin's sync would. The
+  healthcheck's newest run is a warning, so one job needs you and the tab
+  carries a badge; the paused backup job's failure is background.
 - **Calendar** — a two-week snapshot at `HUB_CALENDAR` (events + fresh sync
   slices, so `stale_slices` is 0). Days are `HUB_TZ` days (UTC unless you set it).
 - **Ops → Claude shells** — served by a stub host shell manager inside `bridge.py`
@@ -74,6 +78,21 @@ serves fictional CLI output for the bridge-backed ones:
   stub those reads answer 503.
 - **Decisions / Finance / Files** — seeded cards, snapshot, and a browsable
   demo root.
+
+## The app's built-in demo
+
+The iOS app has a demo mode of its own (`app/src/demo/`) that needs no server at
+all. Its data is this seed: `app/scripts/demo-fixtures.py` builds the seed into a
+temporary directory, runs the server in-process against it, and records what
+every read the app makes returns, into `app/src/demo/fixtures.json`. Re-run it
+after changing the seed:
+
+```bash
+server/.venv/bin/python app/scripts/demo-fixtures.py
+```
+
+The app demo leaves out the shopping thread, and lets writes succeed in memory
+instead of refusing them.
 
 ## What is deliberately locked
 

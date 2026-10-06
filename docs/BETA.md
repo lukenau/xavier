@@ -94,6 +94,9 @@ when testers run their own servers: the unconfigured default is a placeholder
 
 For a small group, **internal** is the fast path. For a wider one, use
 **external** with a public TestFlight link and expect a review pass first.
+Apple's reviewers have no server to point the app at, so App Review uses the
+built-in demo: **Explore demo** on the first screen, or `demo` as the server
+address. Say so in the review notes.
 Submitting is an EAS command:
 
 ```bash

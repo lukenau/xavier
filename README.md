@@ -63,6 +63,13 @@ credit balance and spend.
 > The whole path, from Expo project to TestFlight to over-the-air updates:
 > **[docs/PUBLISH-APP.md](docs/PUBLISH-APP.md)**.
 
+> **Try the demo.** No server yet? Tap **Explore demo** on the app's first
+> screen, or type `demo` as the server address. Every tab then runs on
+> fictional data bundled with the app: chat answers with a canned reply,
+> changes still ask for Face ID or your passcode and stay on the phone, and the
+> parts that need a real machine (the terminal, Claude Code shells, pairing)
+> say so. **Config → Exit demo** leaves it.
+
 ## Quick start
 
 **You need:** a machine that stays on (VPS, home server, or Mac) with
@@ -299,7 +306,9 @@ crash-reporting SDK. Data leaves your machine only to services you turn on:
   `${HUB_DATA_DIR:-./data}` on the machine you installed it on. The app talks
   to the server address you enter (plus the web addresses of any product photos
   the agent puts in a shopping card); an unconfigured build points at a
-  placeholder (`https://hub.example.com`) that leads nowhere.
+  placeholder (`https://hub.example.com`) that leads nowhere. The demo makes
+  no requests of its own: its fictional data ships inside the app (a build with
+  over-the-air updates still checks for them on launch, as above).
 - **Loopback by default.** The server binds `127.0.0.1`, so nothing else can
   reach it until *you* add a mesh or a proxy. It never opens a port to the
   internet on its own.

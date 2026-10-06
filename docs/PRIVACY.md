@@ -52,7 +52,10 @@ someone else made, its update checks go to their EAS project, its push tokens
 are issued under their Expo project, and it can receive new JavaScript they
 publish. If you build the app yourself, all three point at you. An unconfigured
 build points at a placeholder server (`https://hub.example.com`) that leads
-nowhere, and there is no hidden fallback to any other server.
+nowhere, and there is no hidden fallback to any other server. The built-in demo
+(**Explore demo**, or `demo` as the server address) makes no network requests
+of its own: its fictional data is bundled with the app and what you change stays
+on the phone. The launch-time update check above still happens in a build that has one.
 
 ## What is stored, and where
 
