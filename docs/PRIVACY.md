@@ -73,7 +73,8 @@ keeps no copy anywhere else. The main things in it:
 - What you say in Live, as the text of your messages in the same database:
   a spoken turn is stored like a typed one. No audio is stored, on the server
   or the phone; the server only relays it. Live's diagnostics (the kind of
-  audio input and its format, mic level, timing; never your words or a device's
+  audio input and its format, mic level, timing, and for each turn a score of
+  how much it matched what Xavier had just said; never your words or a device's
   name) go to the server's console log, which Docker keeps beside its other
   output.
 - Device keys (the public halves of the keys that authorise writes) and

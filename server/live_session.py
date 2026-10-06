@@ -25,6 +25,7 @@ and the app says so.
 from __future__ import annotations
 
 import asyncio
+import difflib
 import json
 import logging
 import os
@@ -135,6 +136,25 @@ def _tts_config(raw: Any) -> dict[str, Any]:
     }
 
 
+# Measurement only: how much of each committed turn matches what Xavier said in
+# the last few seconds. A high score is his own voice leaking past echo
+# cancellation into the mic; the log line carries the score, never the words.
+ECHO_MEMORY_S = 10.0
+
+
+def _words(text: str) -> list[str]:
+    return re.findall(r"[a-z0-9']+", (text or "").lower())
+
+
+def _echo_score(said: str, heard: str) -> float:
+    """The share of the heard words that appear, in order, in what was said."""
+    h, s = _words(heard), _words(said)
+    if not h or not s:
+        return 0.0
+    matcher = difflib.SequenceMatcher(None, s, h, autojunk=False)
+    return sum(b.size for b in matcher.get_matching_blocks()) / len(h)
+
+
 def _real_words(text: str) -> int:
     words = re.findall(r"[a-z']+", (text or "").lower().replace("-", ""))
     return sum(1 for w in words if w.replace("'", "") not in BACKCHANNELS)
@@ -188,6 +208,8 @@ class LiveSession:
         self._drained_ev.set()
         # Listening.
         self._suspect: set[int] = set()
+        # What Live said lately, (when, text), for the echo score.
+        self._said: list[tuple[float, str]] = []
         # Turns that started while the phone was speaking (with AEC).
         self._over_speech: set[int] = set()
         self._ducked: int | None = None
@@ -549,6 +571,9 @@ class LiveSession:
             except asyncio.TimeoutError:
                 pass
         self._eot_at = self._now()
+        # Taken before this turn's own acknowledgement is spoken: the score is
+        # about Xavier's earlier speech reaching the mic.
+        recent = " ".join(x for t, x in self._said if self._eot_at - t < ECHO_MEMORY_S)
         notes, self._cut_note = ([self._cut_note] if self._cut_note else []), None
         # Spoken while Xavier works. Only when replies are spoken: with voice
         # replies off nothing is said, and the agent must not be told otherwise.
@@ -561,7 +586,8 @@ class LiveSession:
         if not message:
             await self._notice(THREAD_GONE)
             return
-        log.info("[live %s] turn committed (%d chars)", self._sid, len(text))
+        log.info("[live %s] turn committed (%d chars) echo_score=%.2f", self._sid, len(text),
+                 _echo_score(recent, text))
         await self._emit({"type": "turn", "message_id": message["id"], "seq": cursor})
         self._last_activity = self._now()
         if message.get("forward_status") != "forwarded":
@@ -592,6 +618,8 @@ class LiveSession:
             await self._emit({"type": "speak_start", "turn_id": self._turn_id})
             self._set_state("speaking")
         await self._emit({"type": "caption", "turn_id": self._turn_id, "text": text})
+        now = self._now()
+        self._said = [(t, x) for t, x in self._said if now - t < ECHO_MEMORY_S] + [(now, text)]
         await self._tts("speak", text)
 
     async def _wait_drained(self) -> None:

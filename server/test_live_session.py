@@ -1228,3 +1228,77 @@ def test_a_backchannel_inside_the_hold_does_not_lose_the_turn_being_held(env, mo
 
     run(go())
     assert env.sent_messages[-1] == ("thr_1", "Wait.")
+
+
+# ── echo measurement ───────────────────────────────────────────────────────
+
+def test_echo_score_measures_overlap_with_recent_speech():
+    assert ls._echo_score("Checking your calendar now.", "Checking your calendar.") == 1.0
+    assert ls._echo_score("Tomorrow you have five meetings.", "skip that and check my email") == 0.0
+    assert ls._echo_score("", "anything") == 0.0
+    assert ls._echo_score("Five things tomorrow.", "five things and lunch") == 0.5
+
+
+def test_each_committed_turn_logs_its_echo_score_but_never_its_words(env):
+    """Measurement only: the score against Xavier's last 10 s of speech goes to the
+    log; the turn is committed either way, and the words never are logged."""
+    lines: list[str] = []
+
+    class Grab(logging.Handler):
+        def emit(self, record):
+            lines.append(record.getMessage())
+
+    grab = Grab()
+    ls.log.addHandler(grab)
+    try:
+        async def go():
+            s = await started(env, aec=True)
+            env.listen.push("StartOfTurn", "cal", 0)
+            env.listen.push("EndOfTurn", "calendar please", 0)
+            assert await wait_for(lambda: len(env.sent_messages) == 1)
+            env.store.reply("a", "Checking your calendar now.")
+            assert await wait_for(lambda: "speak_end" in env.types())
+            await s.on_text({"type": "drained", "turn_id": s._turn_id})
+            env.clock.t += 3
+            # Xavier's own words come back through the mic as a turn...
+            env.listen.push("StartOfTurn", "checking", 1)
+            env.listen.push("EndOfTurn", "Checking your calendar.", 1)
+            assert await wait_for(lambda: len(env.sent_messages) == 2)
+            # ...and the same words long after he said them are not an echo.
+            env.clock.t += 20
+            env.listen.push("StartOfTurn", "checking", 2)
+            env.listen.push("EndOfTurn", "Checking your calendar.", 2)
+            assert await wait_for(lambda: len(env.sent_messages) == 3)
+            await s.close()
+
+        run(go())
+    finally:
+        ls.log.removeHandler(grab)
+    committed = [line for line in lines if "turn committed" in line]
+    assert [line.split("echo_score=")[1] for line in committed] == ["0.00", "1.00", "0.00"]
+    assert not any("calendar" in line.lower() for line in lines)
+
+
+def test_the_echo_score_ignores_the_acknowledgement_of_the_turn_itself(env, monkeypatch):
+    monkeypatch.setattr(ls, "ACKS", ("Okay.",))
+    lines: list[str] = []
+
+    class Grab(logging.Handler):
+        def emit(self, record):
+            lines.append(record.getMessage())
+
+    grab = Grab()
+    ls.log.addHandler(grab)
+    try:
+        async def go():
+            s = await started(env, aec=True)
+            env.listen.push("StartOfTurn", "okay", 0)
+            env.listen.push("EndOfTurn", "Okay.", 0)
+            assert await wait_for(lambda: env.sent_messages)
+            await s.close()
+
+        run(go())
+    finally:
+        ls.log.removeHandler(grab)
+    assert [line for line in lines if "turn committed" in line][0].endswith("echo_score=0.00")
+    assert env.spoken() == ["Okay."]
