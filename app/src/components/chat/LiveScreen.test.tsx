@@ -824,13 +824,12 @@ describe('mic mode', () => {
 describe('the voice-processing bypass switch (aec.ts LIVE_VP_BYPASS)', () => {
   test('on: voice processing is bypassed once the engine runs, and the server is told there is no echo cancellation', async () => {
     mockNative.bypass = true;
-    mockNative.mod = { ...fakeNative(), setVoiceProcessingBypassed: jest.fn() };
+    const setBypassed = jest.fn();
+    mockNative.mod = { ...fakeNative(), setVoiceProcessingBypassed: setBypassed };
     await mount();
     await tapStage();
-    expect(mockNative.mod.setVoiceProcessingBypassed).toHaveBeenCalledWith(true);
-    expect(mockNative.mod.start.mock.invocationCallOrder[0]).toBeLessThan(
-      mockNative.mod.setVoiceProcessingBypassed.mock.invocationCallOrder[0],
-    );
+    expect(setBypassed).toHaveBeenCalledWith(true);
+    expect(mockNative.mod.start.mock.invocationCallOrder[0]).toBeLessThan(setBypassed.mock.invocationCallOrder[0]);
     expect(mockConnectOpts?.aec).toBe(false);
   });
 
