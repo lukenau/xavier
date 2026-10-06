@@ -16,6 +16,12 @@
 //      gated call throws `GateNotWiredError` before the apply is posted.
 //      `createPasskey` stays unwired: WebAuthn registration has no native twin
 //      at all, and pairing replaces it (apps/hub SecurityPage mints the code).
+//
+// Demo mode (src/demo/) is not the PWA's mock mode: it is a user-visible mode
+// with its own badge, entered on purpose, and it changes only the transport.
+// While it is on, `get`/`post` hand the request to the demo's in-memory server
+// instead of fetch(), and the signing step asks for Face ID, Touch ID or the
+// passcode instead of the Secure Enclave key. Everything else here runs as is.
 import type {
   AdvisorPreset,
   AdvisorState,
@@ -71,6 +77,9 @@ import type { CalendarResponse } from './calendarTypes';
 import Constants from 'expo-constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { validateServerUrl, type ServerUrlCheck } from './serverUrl';
+import { DEMO_ORIGIN, demoReady, isDemoActive, useDemoMode } from '../demo/mode';
+import { demoFetch } from '../demo/server';
+import { demoAuthorize } from '../demo/auth';
 import type {
   ApprovalApplyResponse,
   ApprovalDecisionInput,
@@ -139,12 +148,16 @@ function apiPath(path: string): string {
 /** The hub host with no path — Task 19's WebView components resolve
  * `/my-pages/...` and `/oura/...` against this, same host `BASE` used to.
  * Live binding: reassigned whenever the effective base changes, so importers
- * (WebView screens, wsClients) pick up a user-set server too. */
+ * (WebView screens, wsClients) pick up a user-set server too. In the demo it
+ * is a reserved `.invalid` host, so a URL built from it can never reach the
+ * stored server. */
 export let HUB_ORIGIN = resolveApiBase().base;
 
 function refreshDerivedBase(): void {
-  HUB_ORIGIN = resolveApiBase().base;
+  HUB_ORIGIN = isDemoActive() ? DEMO_ORIGIN : resolveApiBase().base;
 }
+
+useDemoMode.subscribe(refreshDerivedBase);
 
 /** Reads the persisted override into effect. A stored value that no longer
  * validates (scheme rules tightened, hand-edited store) is ignored rather
@@ -190,7 +203,18 @@ export class ApiError extends Error {
   }
 }
 
-async function parseError(res: Response, path: string): Promise<ApiError> {
+/** What `get`/`post` read off a response — fetch()'s, or the demo's. */
+type Reply = Pick<Response, 'ok' | 'status' | 'json'>;
+
+/** The one door every request goes through. The demo's state is read before
+ * anything leaves, so a cold launch in the demo never reaches a server. */
+async function send(path: string, init: RequestInit): Promise<Reply> {
+  await demoReady();
+  if (isDemoActive()) return demoFetch(path, init);
+  return fetch(`${apiPath(path)}`, init);
+}
+
+async function parseError(res: Reply, path: string): Promise<ApiError> {
   const raw = await res.json().catch(() => null);
   const nested = typeof raw?.detail === 'object' && raw?.detail !== null ? raw.detail : null;
   const message: string =
@@ -199,13 +223,13 @@ async function parseError(res: Response, path: string): Promise<ApiError> {
 }
 
 async function get<T>(path: string): Promise<T> {
-  const res = await fetch(`${apiPath(path)}`, { credentials: 'include' });
+  const res = await send(path, { credentials: 'include' });
   if (!res.ok) throw await parseError(res, `GET ${path}`);
   return res.json() as Promise<T>;
 }
 
 async function post<T>(path: string, body: unknown): Promise<T> {
-  const res = await fetch(`${apiPath(path)}`, {
+  const res = await send(path, {
     method: 'POST',
     credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
@@ -302,6 +326,13 @@ export function registerGateSigner(signer: GateSigner): void {
 }
 
 async function requestActionAssertion(challenge: AssertionChallenge): Promise<GateProof> {
+  if (isDemoActive()) {
+    // The paired Enclave key is never touched in the demo, and its server
+    // ignores the proof; the owner's Face ID or passcode is the gate.
+    const outcome = await demoAuthorize();
+    if (!outcome.ok) throw new ApplyError(outcome.code, outcome.message);
+    return { devicekey_assertion: { key_id: 'demo', challenge_b64: challenge.challenge, signature_b64: '' } };
+  }
   if (!gateSigner) throw new GateNotWiredError();
   return gateSigner(challenge);
 }

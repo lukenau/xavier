@@ -14,6 +14,8 @@ import type { ChatFrame } from './types';
 import { queryClient } from '../lib/query';
 import { useChatLock } from './lock';
 import { useChatStore } from './store';
+import { isDemoActive } from '../demo/mode';
+import { createDemoSocket } from '../demo/server';
 
 let client: ChatSocketClient | null = null;
 let detachAppState: (() => void) | null = null;
@@ -107,6 +109,10 @@ export function getChatSocket(): ChatSocketClient {
       onFrame: queueFrame,
       onStatus: (status) => useChatStore.getState().setConnection(status),
       onLock: () => void useChatLock.getState().lock(),
+      // The demo's replies arrive over an in-memory socket, through the same
+      // client and queue a real reply does. Entering or leaving the demo drops
+      // this singleton (resetChatSocket), so the choice holds for its lifetime.
+      ...(isDemoActive() ? { socketFactory: createDemoSocket } : {}),
     });
     // Foreground is where a backgrounded socket is found dead. The terminal
     // wires this from its screen; chat's socket outlives any one screen, so
@@ -119,6 +125,13 @@ export function getChatSocket(): ChatSocketClient {
 /** Test-only: drops the singleton so each test file starts with a fresh
  * client instead of leaking connect() calls across test files. */
 export function resetChatSocketForTests(): void {
+  resetChatSocket();
+}
+
+/** Closes the socket and forgets every cursor, queued frame and timer, so the
+ * next getChatSocket() starts clean — entering or leaving the demo, where a
+ * thread from one side must never be resubscribed on the other. */
+export function resetChatSocket(): void {
   detachAppState?.();
   detachAppState = null;
   client?.close();

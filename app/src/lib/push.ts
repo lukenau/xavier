@@ -18,6 +18,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants';
 import { router } from 'expo-router';
 import { api } from './api';
+import { demoReady, isDemoActive } from '../demo/mode';
 
 /** Set once he declines, so the ask happens at most once per install. */
 const DECLINED_KEY = 'brief.push.declined';
@@ -66,6 +67,10 @@ async function lastRegistered(): Promise<{ token: string; at: number } | null> {
 }
 
 export async function registerForBrief(now: number = Date.now()): Promise<PushOutcome> {
+  // The demo has no server to send a notification: no permission ask, and no
+  // Expo token fetch, which is a request to Expo's servers.
+  await demoReady();
+  if (isDemoActive()) return 'unconfigured';
   try {
     if (await AsyncStorage.getItem(DECLINED_KEY)) return 'already-declined';
 
